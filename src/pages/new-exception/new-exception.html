@@ -1,0 +1,48 @@
+<!--
+  Generated template for the NewExceptionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>新增异常</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-item>
+            <ion-label>异常开始时间*</ion-label>
+            <ion-datetime displayFormat="YYYY-MM-DD" 
+              pickerFormat="YYYY-MM-DD" 
+              cancelText="取消"
+              doneText="确定"
+              [(ngModel)]="item.start_date" placeholder="设置"></ion-datetime>
+          </ion-item>
+          <ion-item>
+              <ion-label>计划完成时间*</ion-label>
+              <ion-datetime displayFormat="YYYY-MM-DD" 
+                pickerFormat="YYYY-MM-DD" 
+                cancelText="取消"
+                doneText="确定"
+                [(ngModel)]="item.done_date" placeholder="设置"></ion-datetime>
+            </ion-item>
+
+        <button ion-item (click)="selectExType();">
+          异常类型*
+          <ion-note item-right>
+            {{item.type_name || '请选择'}}
+          </ion-note>
+        </button>
+        <ion-item>
+          <ion-label>异常说明*</ion-label>
+          <ion-textarea rows="6" [(ngModel)]="item.memo" placeholder="输入异常说明"></ion-textarea>
+        </ion-item>
+        <div padding>
+          <button ion-button block (click)="commit();">提交</button>
+        </div>
+      </ion-card>
+</ion-content>

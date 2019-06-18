@@ -1,0 +1,33 @@
+page-calc-result {
+    .segment-md .segment-button {
+        height: 44px;
+    }
+
+    .table {
+        width: 100%;
+        // padding: 15px 0;
+        margin: 10px 0;
+        font-size: 14px;
+
+        .label {
+            width: 90px;
+            padding: 5px 10px;
+            text-align: right;
+            color: #787878;
+            vertical-align: top;
+        }
+        .value {
+            padding-left: 10px;
+            color: #333;
+            
+            img {
+                max-width: 80%;
+            }
+        }
+    }
+
+    .diff-value {
+        padding-left: 5px;
+        color: #999;
+    }
+}

@@ -1,0 +1,333 @@
+page-my-customer {
+    virtual-scroller {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+    .custom-card {
+        width: 100%;
+        ion-row, ion-col {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    ion-navbar {
+        position: relative;
+        .searchbar-wrap {
+            position: absolute;
+            top: 0;
+            left: 30px;
+            z-index: 100;
+            width: calc(100% - 30px);
+            height: 44px;
+            background: color($colors, primary);
+            // display: flex;
+            form {
+                width: 100%;
+            }
+
+            // .cancel-button {
+            //     display: inline-block;
+            //     flex: 0 0 60px;
+            //     width: 50px;
+            //     height: 44px;
+            //     line-height: 44px;
+            //     vertical-align: middle;
+            //     text-align: center;
+            //     color: white;
+            //     font-size: 14px;
+            // }
+        }
+    }
+
+    .filters-overlap {
+        position: absolute;
+        z-index: 100;
+        top: 128px;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 124px);
+        background: rgba(0,0,0,0.6);
+        .filter-wrap {
+            height: 100%;
+            overflow: auto;
+            
+            .name {
+                font-size: 14px;
+            }
+        }
+
+        .date-control-wrap {
+            width: 180px;
+            display: flex;
+            .date-line {
+                display: block;
+                flex: 0 0 10px;
+                line-height: 36px;
+                text-align: center;
+                color: #999;
+            }
+
+            .custom-date-control {
+                font-size: 12px;
+                flex: 1;
+                padding-left: 8px;
+                padding-right: 8px;
+                .item-cover {
+                    width: 0!important;
+                }
+                &:first-child {
+                    text-align: right;
+                }
+                &:last-child {
+                    text-align: left;
+                    // padding-left: 8px;
+                    // padding-right: 8px;
+                }
+                // padding: 10px 5px;
+            }
+        }
+    }
+
+    .filter-bar {
+        display: flex;
+        background: #fff;
+        padding: 5px 10px;
+        border-bottom: 0.5px solid #f2f2f2;
+        height: 40px;
+        box-sizing: border-box;
+        .filter-item {
+            flex: 1;
+            text-align: center;
+            // background: #f2f2f2;
+            border-radius: 4px; 
+            padding: 6px 0;
+            font-size: 12px;
+            font-family: -apple-system, 'Helvetica Neue', sans-serif;
+            color: #666;
+            // margin-right: 10px;
+            &:last-child {
+                // margin-right: 0;
+                border-right: 0;
+            }
+
+            // &.active {
+            //     color: color($colors, primary);
+
+            //     .icon-wrap {
+            //         ion-icon {
+            //             color: color($colors, primary);
+            //         }
+            //     }
+            // }
+
+            border-right: 0.5px solid #f2f2f2;
+
+            .name {
+                display: inline-block;
+                max-width: 75%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                vertical-align: top;
+            }
+            .icon-wrap {
+                display: inline-block;
+                margin-left: 5px;
+                // line-height: 17px;
+                vertical-align: top;
+                ion-icon {
+                    color: #999;
+                    margin-top: 2px;
+                }
+            }
+        }
+    }
+
+    .limit-width {
+        max-width: 110px;
+        font-size: 14px;
+    }
+    //     .title {
+    //         margin-bottom: 10px;
+    //         font-size: 14px;
+    //         font-weight: normal;
+    //         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    //     }
+
+    //     p {
+    //         font-size: 12px;
+    //     }
+
+    //     .custname, .house-no {
+    //         font-size: 14px;
+    //         color: #333;
+    //     }
+
+    //     .male {
+    //         color: rgb(101,142,223);
+    //     }
+
+    //     .female {
+    //         color: rgb(232, 83, 177);
+    //     }
+
+    //     .state {
+    //         // background: red;
+    //         display: inline-block;
+    //         font-size: 10px;
+    //         padding: 2px 5px;
+    //         border-radius: 2px;
+    //         color: white;
+    //         margin-left: 5px;
+    //         margin-bottom: 5px;
+    //         margin-top: 10px;
+    //     }
+    
+    //     .state-1 {
+    //         background: rgb(101,142,223);
+    //     }
+    
+    //     .state-2 {
+    //         background: rgb(132,196,159);
+    //     }
+
+    //     .right-section {
+    //         text-align: center;
+    //         p {
+    //             font-size: 12px;
+    //         }
+
+    //         .days {
+    //             color: color($colors, primary);
+    //             padding: 0 3px;
+    //             font-size: 18px;
+    //         }
+
+    //         ion-icon {
+    //             font-size: 32px;
+    //         }
+    //     }
+    // }
+
+    // .overlay-wrap {
+    //     position: absolute;
+    //     z-index: 100;
+    //     width: 100%;
+    //     height: 100%;
+    //     background: rgba(0,0,0,0.6);
+    //     top: 0;
+    //     left: 0;
+    //     .overlay-content {
+    //         width: 100%;
+    //         max-height: 60%;
+    //         height: 60%;
+    //         overflow: auto;
+    //         background: white;
+    //         border-top: 0.55px solid #e6e6e6;
+    //     }
+    // }
+
+    // .cell-box {
+    //     .custname, .house-info {
+    //         font-size: 14px;
+    //         color: #666;
+    //         line-height: 20px;
+    //     }
+
+    //     .call-btn {
+    //         display: inline-block;
+    //         width: 50px;
+    //         height: 40px;
+    //         line-height: 40px;
+    //         ion-icon {
+    //             font-size: 32px;
+    //             color: color($colors, primary);
+    //         }
+    //         text-align: center;
+    //     }
+
+    //     .house-info {
+    //         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    //         .house-no {
+    //             color: #666;
+    //         }
+    //         .outusertypename {
+    //             display: inline-block;
+    //             padding-right: 3px;
+    //             &.type-color-1 { // 住宅
+    //                 color: color($colors, primary);
+    //             }
+    //             &.type-color-2 { // 公寓
+    //                 color: rgb(143, 180, 56);
+    //             }
+    //             &.type-color-3 { // 商业
+    //                 color: rgb(49, 124, 204);
+    //             }
+    //             &.type-color-4 { // 车位
+    //                 color: rgb(125, 63, 63);
+    //             }
+    //             &.type-color-5 { // 其它
+    //                 color: rgb(184, 149, 96);
+    //             }
+    //             &.type-color-32 { // 办公
+    //                 color: rgb(37, 186, 219);
+    //             }
+    //         }
+
+    //     }
+
+    //     &.right {
+    //         text-align: right;
+    //     }
+
+    //     .money {
+    //         font-size: 14px;
+    //         color: color($colors, primary);
+    //         line-height: 20px;
+    //         font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    //         .unit {
+    //             font-size: 10px;
+    //             color: #999;
+    //             padding-left: 3px;
+    //         }
+    //     }
+
+    //     // &.center {
+    //     //     margin-left: 15px;
+    //     // }
+
+    //     .hor-item {
+    //         margin-top: 6px;
+    //     }
+
+    //     .ver-item {
+    //         margin-top: 6px;
+    //     }
+    
+    //     .label-text {
+    //         font-size: 12px;
+    //         color: #999;
+    //         padding-right: 3px;
+    //     }
+    
+    //     .value-text {
+    //         font-size: 12px;
+    //         color: #666;
+    //     }
+
+    //     .con-date {
+    //         font-size: 14px;
+    //         color: color($colors, primary);
+    //         margin-top: 6px;
+    //         .help-text {
+    //             color: #999;
+    //             padding-left: 3px;
+    //             font-size: 12px;
+    //         }
+    //     }
+    // }
+    
+}

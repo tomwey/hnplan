@@ -1,0 +1,88 @@
+page-mortgage-list {
+    .subnavbar {
+        color: #666;
+        text-align: center;
+        ion-icon {
+            color: #999;
+        }
+    }
+
+    .title {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .custname {
+        font-size: 12px;
+    }
+
+    .searchbar {
+        // border-top: 0.55px solid #e6e6e6;
+        margin-top: 1px;
+    }
+
+    .money-box {
+        text-align: right;
+        .money {
+            font-size: 16px;
+            color: color($colors, primary);
+            // text-align: right;
+            font-family: 'PingFang SC';
+        }
+        .help-text {
+            font-size: 12px;
+            color: #666;
+        }
+    }
+
+    .custom-badge {
+        display: inline-block;
+        border-radius: 2px;
+        padding: 2px 4px;
+        font-size: 10px;
+        color: white;
+
+        background: rgb(120,120,120);
+
+        &.ajstate-10 {
+            background: rgb(169, 199, 243);
+        }
+        &.ajstate-20 {
+            background: rgb(26, 47, 92);
+        }
+        &.ajstate-30 {
+            background: rgb(94, 117, 91);
+        }
+        &.ajstate-40 {
+            background: rgb(238, 182, 187);
+        }
+        &.ajstate-50 {
+            background: rgb(231,90,22);
+        }
+        &.ajstate-60 {
+            background: rgb(83, 77, 77);
+        }
+        &.ajstate-70 {
+            background: rgb(125, 63, 63);
+        }
+        &.ajstate-80 {
+            background: rgb(49, 124, 204);
+        }
+        &.ajstate-90 {
+            background: rgb(184, 149, 96);
+        }
+        &.ajstate-95 {
+            background: rgb(148, 25, 209);
+        }
+        &.ajstate-100 {
+            background: rgb(37, 186, 219);
+        }
+        &.ajstate-110 {
+            background: rgb(150, 22, 22);
+        }
+        &.ajstate-120 {
+            background: rgb(143, 180, 56);
+        }
+    }
+    
+}

@@ -1,0 +1,60 @@
+page-calculator {
+    .item-ios {
+        border-bottom: 0.55px solid #f2f2f2;
+        font-size: 14px !important;
+        color: #666;
+    }
+
+    ion-select {
+        max-width: 65%!important;
+        color: #666;
+    }
+
+    ion-label, ion-select, ion-input {
+        font-size: 14px;
+    }
+
+    .segment-md .segment-button {
+        height: 44px;
+    }
+
+    .select-box {
+        // background: red;
+        // margin-left: -16px;
+        // padding-right: 10px;
+        // margin-left: 50px;
+        margin-top: 2px;
+        .select-item {
+            display: inline-block;
+            padding-right: 5px;
+            color: #666;
+            font-size: 14px;
+            line-height: 14px;
+            vertical-align: top;
+        }
+
+        ion-icon {
+            vertical-align: top;
+            line-height: 14px;
+        }
+    }
+    
+    ion-input {
+        input {
+            text-align: right;
+            color: #666;
+            /* IF YOU ALSO WANT TO PUSH PLACHEHOLDER TO THE RIGHT USE THE FOLLOWING, IF NOT JUST DELETE THE ::-webkit-input-placeholder*/
+            ::-webkit-input-placeholder {
+            text-align: right;
+            }
+        }
+    }
+
+    .warn-text {
+        font-size: 10px;
+        color: #bbb;
+        text-align: center;
+        margin-top: 5px;
+        padding: 0 15px;
+    }
+}

@@ -1,0 +1,34 @@
+<!--
+  Generated template for the StatListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button class="limit-width" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}}
+        <ion-icon name="md-arrow-dropdown"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+  <div class="empty-error-box" *ngIf="!!error">
+    {{error}}
+  </div>
+  <ion-list [virtualScroll]="data" [approxItemHeight]=" '80px' ">
+    <div *virtualItem="let item" class="custom-card">
+      <man-item *ngIf="type === '1'" [item]="item" (onSelect)="selectItem(item);"></man-item>
+      <order-sign-item *ngIf="type === '2'" [item]="item" menuType='2'></order-sign-item>
+
+      <mortgage-item [item]="item" *ngIf="type === '4'" (onSelect)="selectItem(item);"></mortgage-item>
+
+      <payment-money-item [item]="item" *ngIf="type === '3'" (onSelect)="selectItem2($event);"></payment-money-item>
+
+    </div>
+  </ion-list>
+</ion-content>

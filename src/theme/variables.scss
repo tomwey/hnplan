@@ -1,0 +1,110 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+
+
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+
+
+@import "ionic.globals";
+@import "../assets/fonts/icons";
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+
+
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    rgb(231,90,22),//#488aff,
+  secondary:  #32db64,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #222,
+  white:      white,
+
+  reply-0:    rgb(231,90,22),
+  reply-1:    rgb(143, 180, 56),
+  
+  ajstate-10: rgb(169, 199, 243), // 未到银行
+  ajstate-20: rgb(26, 47, 92), // 网上备案中
+  ajstate-30: rgb(94, 117, 91), // 预告预抵 
+  ajstate-40: rgb(238, 182, 187), // 转现场全权处理
+  ajstate-50: rgb(231,90,22), // 现场处理完成
+  ajstate-60: rgb(83, 77, 77), // 银行受理中
+  ajstate-70: rgb(125, 63, 63), // 待放款
+  ajstate-80: rgb(49, 124, 204), // 修改备案中
+  ajstate-90: rgb(184, 149, 96), // 异常待处理
+  ajstate-95: rgb(148, 25, 209), // 异常退法务处理
+  ajstate-100: rgb(37, 186, 219), // 待撤消备案
+  ajstate-110: rgb(150, 22, 22), // 按揭中断
+  ajstate-120: rgb(143, 180, 56), // 已回款,
+  
+  btn-state-0: rgb(231,90,22),
+  btn-state-30: #222,
+  btn-state-40: #f53d3d,
+);
+
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";

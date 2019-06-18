@@ -1,0 +1,26 @@
+page-follow-detail {
+    .detail-box {
+        padding: 10px;
+    }
+
+    .table {
+        width: 100%;
+        font-size: 14px;
+        table-layout:fixed;
+        .label {
+            width: 100px;
+            padding: 5px 0;
+            text-align: right;
+            color: #666;
+            vertical-align: top;
+        }
+        .value {
+            padding: 5px 10px;
+            color: #333;
+            // word-wrap:break-word; /*old browsers*/
+            vertical-align: top;
+
+            // overflow-wrap:break-word;
+        }
+    }
+}

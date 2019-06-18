@@ -1,0 +1,182 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+.content {
+    background: rgb(247,247,247);
+    // background: transparent;
+}
+
+.required {
+    display: inline-block;
+    color: color($colors, primary);
+    font-size: 12px;
+    line-height: 12px;
+    vertical-align: top;
+    margin: 7px 2px 0 0;
+}
+
+.segment-md .segment-button {
+    border-bottom-color: rgba(0,0,0,0)!important;
+    &.segment-activated {
+        border-bottom-color: color($colors, primary)!important;
+    }
+}
+
+.loading-wrapper {
+    background: rgba(0,0,0,0.6)!important;
+    width: 120px;
+    height: 120px;
+    padding: 0!important;
+    color: white!important;
+    display: block!important;
+    text-align: center;
+    border-radius: 6px!important;
+    .loading-spinner {
+        margin: 35px 0 20px 0;
+        // ion-spinner * {
+        //     stroke: rgba(255,255,255,0.7);
+        //   }
+
+        ion-spinner {
+            * {
+              stroke: #fff;
+            }
+        
+            &.spinner-circles circle,
+            &.spinner-bubbles circle,
+            &.spinner-dots circle {
+              fill: #fff;
+            }
+          }
+    }
+    .loading-content {
+        margin-left: 0!important;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+        color: rgba(255,255,255,0.9);
+        // font-weight: normal;
+        // font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+    }
+}
+
+.toolbar .segment-md {
+    border-bottom: 0.5px solid #f2f2f2;
+    height: 44px;
+}
+
+.list-ios .item-block .item-inner {
+    border-bottom-color: #f2f2f2;
+}
+
+.list-ios > .item-block:first-child {
+    border-top-color: #f2f2f2;
+}
+
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom-color: #f2f2f2;
+}
+// .loading-spinner {
+
+// }
+
+// html {
+//     height: 100%;
+// }
+
+// body {
+//     background: rgb(231, 90, 22);
+// }
+
+.tabs-ios .tabbar
+{
+    background: white !important;
+}
+
+.toolbar-ios {
+    padding: 0;
+    margin: 0;
+}
+
+.segment-md .segment-button {
+    color: #666;
+    height: 44px;
+    line-height: 44px;
+    &.segment-activated {
+        color: color($colors,primary);
+    }
+}
+
+.custom-toast {
+    // text-align: center;
+    .toast-wrapper {
+        text-align: center;
+    }
+}
+
+input, textarea{
+    -webkit-appearance: none;
+}
+
+.card-ios {
+    box-shadow: none;
+}
+
+.label-ios {
+    color: #666;
+}
+
+.bar-buttons-ios,.back-button-ios {
+    margin: 0 12px;
+}
+
+ion-label[fixed] {
+    width: 80px;
+    flex: 0 0 80px;
+    min-width: 80px;
+}
+
+// .ios { .tabs { .tabbar { margin-top:25px; padding-bottom: 0px; } } }
+
+// .toolbar-ios {
+//     padding-top: 20px;
+// }
+
+// .header-ios {
+//     /* Status bar height on iOS 10 */
+//     padding-top: 20px;
+//     /* Status bar height on iOS 11.0 */
+//     padding-top: constant(safe-area-inset-top);
+//     /* Status bar height on iOS 11+ */
+//     padding-top: env(safe-area-inset-top);
+//     background: color($colors, primary);
+// }
+
+.empty-error-box {
+    // display: flex;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 120px;
+    text-align: center;
+    padding: 60px 30px;
+    color: #666;
+    font-size: 14px;
+    border: 2px dashed #ddd;
+    img {
+        max-width: 32px;
+    }
+}

@@ -1,0 +1,125 @@
+page-house-info {
+    
+    ion-segment.scrollable {
+        display: block;
+        white-space: nowrap;
+        font-size: 0;
+        overflow: auto;
+    
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+            display: none;
+        }
+    
+        ion-segment-button.segment-button {
+            display: inline-block;
+            min-width: 100px;
+            width: auto;
+        }
+    }
+
+    .help-box {
+        margin: 15px 0 5px 0;
+        text-align: center;
+        .color-item {
+            padding: 4px 6px;
+            display: inline-block;
+            font-size: 12px;
+            // line-height: 12px;
+            // vertical-align: top;
+            color: #333;
+        }
+        .count {
+            padding-left: 3px;
+        }
+    }
+
+    .segment-md .segment-button {
+        height: 44px;
+    }
+
+    .rooms-table {
+        // padding: 10px;
+        width: 100%;
+        .cell {
+            width: 16.666666667%;
+            text-align: center;
+            padding-right: 5px;
+            padding-bottom: 5px;
+            .room-box {
+                // padding: 20px;
+                background-color:white;
+                // padding: 20px 0;
+                width: 100%;
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+            }
+        }
+    }
+
+    // .rooms {
+    //     padding: 0;
+    //     margin: 0;
+    // }
+
+    // .cell {
+    //     max-width: 20%;
+    //     min-width: 20%;
+    //     .room-box {
+    //         background-color:white;
+    //             // padding: 20px 0;
+    //         width: 100%;
+    //         height: 44px;
+    //         line-height: 44px;
+    //         text-align: center;
+    //         position: relative;
+    //         ion-icon {
+    //             position: absolute;
+    //             bottom: 0;
+    //             right: 2px;
+    //             font-size: 16px;
+    //             font-weight: 700;
+    //             color: color($colors,primary);
+    //         }
+    //     }
+    // }
+
+    .rooms-wrap {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        .room-wrap {
+            flex: 0 0 20%;
+            width: 20%;
+            max-width: 20%;
+            margin-bottom: 6px;
+            padding: 0 3px;
+            // margin-right: 5px;
+        }
+        .room-box {
+            background-color:white;
+                // padding: 20px 0;
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            position: relative;
+            ion-icon {
+                position: absolute;
+                bottom: 0;
+                right: 2px;
+                font-size: 16px;
+                font-weight: 700;
+                color: color($colors,primary);
+            }
+        }
+    }
+
+    .floor-box {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+}
