@@ -1,0 +1,31 @@
+page-stat-home {
+    .date-buttons {
+        padding: 15px;
+        width: 100%;
+        text-align: center;
+        .date-btn {
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            text-align: center;
+            padding: 0 15px;
+            border-radius: 18px;
+            margin-right: 15px;
+            font-size: 14px;
+            color: color($colors, primary);
+            background: #fff;
+            border: 0.55px solid color($colors, primary);
+            vertical-align: middle;
+            // font-family: 'PingFang SC', Arial, Helvetica, sans-serif;
+            user-select: none;
+            cursor: pointer;
+            &:last-child {
+                margin-right: 0;
+            }
+            &.active {
+                background: color($colors, primary);
+                color: #fff;
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { /*IonicPage, */NavController, NavParams, Events, Content } from 'ionic-angular';
+import { /*IonicPage, */NavController, NavParams, Events, Content, App } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
@@ -126,6 +126,7 @@ export class HomePage {
     private tools: Tools,
     private iosFixed: iOSFixedScrollFreeze,
     private events: Events,
+    private app: App,
     public navParams: NavParams) {
     this.isAndroid = this.checkIsAndroid();
   }
@@ -171,7 +172,7 @@ export class HomePage {
   }
 
   changeStats() {
-
+    this.app.getRootNavs()[0].setRoot('StatHomePage');
   }
 
   back() {

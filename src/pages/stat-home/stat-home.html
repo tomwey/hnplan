@@ -1,0 +1,31 @@
+<!--
+  Generated template for the StatHomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>
+      <ion-segment [(ngModel)]="dataType" color="white" (ionChange)="segmentChanged($event)">
+        <ion-segment-button [value]="i" *ngFor="let type of dataTypes;let i=index;">
+          {{type}}
+        </ion-segment-button>
+      </ion-segment>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="togglePlan();">
+        <ion-icon name="ios-calendar-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content style="background: #fff">
+  <div class="date-buttons">
+    <span class="date-btn" [class.active]="currentType === i" tappable (click)="selectDate(i);"
+      *ngFor="let type of dateTypes; let i = index;">{{type}}</span>
+  </div>
+</ion-content>
