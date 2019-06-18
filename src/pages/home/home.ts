@@ -41,6 +41,32 @@ export class HomePage {
     }
   ];
 
+  weekIndex: number = 0;
+  weeks: any = [
+    {
+      name: '第1周',
+      date: '01~07'
+    },
+    {
+      name: '第2周',
+      date: '08~15'
+    },
+    {
+      name: '第3周',
+      date: '16~21'
+    },
+    {
+      name: '第4周',
+      date: '22~28'
+    },
+    {
+      name: '第5周',
+      date: '29~30'
+    },
+  ]
+
+  plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
+
   @ViewChild('calendar') calendar: CalendarComponent;
 
   currentDate: string = Utils.dateFormat(new Date());
@@ -110,6 +136,10 @@ export class HomePage {
 
   changeDate(ev) {
 
+  }
+
+  selectWeek(index) {
+    this.weekIndex = index;
   }
 
   segmentChanged(ev) {
