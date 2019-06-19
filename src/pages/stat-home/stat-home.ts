@@ -65,6 +65,87 @@ export class StatHomePage {
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+
+    var planBar = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
+    var option2 = {
+      legend: {
+        data: ['总计划', '完成计划', '预警计划', '计划完成率']
+      },
+      color: ['rgb(80,108,162)', 'rgb(155,210,60)', 'rgb(231,90,22)', 'rgb(155,210,60)'],
+      xAxis: [
+        {
+          type: 'category',
+          data: ['总裁交办', '职能计划', '项目计划', '专项计划'],
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          name: '计划数',
+          min: 0,
+          max: 130,
+          interval: 10,
+          axisLabel: {
+            formatter: '{value} ml'
+          },
+          show: false
+        },
+        {
+          type: 'value',
+          name: '完成率',
+          min: 0,
+          max: 100,
+          interval: 10,
+          axisLabel: {
+            formatter: '{value}%'
+          },
+          show: false
+        }
+      ],
+      series: [
+        {
+          name: '总计划',
+          type: 'bar',
+          data: [35, 122, 78, 15],
+          barMaxWidth: '15%',
+          barGap: '60%',
+          label: {
+            show: true,
+            position: 'top'
+          }
+        },
+        {
+          name: '完成计划',
+          type: 'bar',
+          data: [20, 90, 18, 5],
+          barMaxWidth: '15%',
+          barGap: '60%',
+          label: {
+            show: true,
+            position: 'top'
+          }
+        },
+        {
+          name: '预警计划',
+          type: 'bar',
+          data: [5, 32, 23, 10],
+          barMaxWidth: '15%',
+          barGap: '60%',
+          label: {
+            show: true,
+            position: 'top'
+          }
+        },
+        {
+          name: '计划完成率',
+          type: 'line',
+          yAxisIndex: 1,
+          smooth: true,
+          data: [59, 70, 26, 33]
+        }
+      ]
+    };
+    planBar.setOption(option2);
   }
 
   // ionViewDidEnter() {
