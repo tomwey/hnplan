@@ -76,6 +76,7 @@ export class StatHomePage {
         {
           type: 'category',
           data: ['总裁交办', '职能计划', '项目计划', '专项计划'],
+          triggerEvent: true,
         }
       ],
       yAxis: [
@@ -88,7 +89,8 @@ export class StatHomePage {
           axisLabel: {
             formatter: '{value} ml'
           },
-          show: false
+          show: false,
+          triggerEvent: true,
         },
         {
           type: 'value',
@@ -99,7 +101,8 @@ export class StatHomePage {
           axisLabel: {
             formatter: '{value}%'
           },
-          show: false
+          show: false,
+          triggerEvent: true,
         }
       ],
       series: [
@@ -151,6 +154,17 @@ export class StatHomePage {
       ]
     };
     planBar.setOption(option2);
+    planBar.on('click', (params) => {
+      // console.log(params);
+      let itemName = null;
+      if (params.componentType == 'series') {
+        itemName = params.name;
+      } else if (params.componentType == 'xAxis') {
+        itemName = params.value;
+      }
+
+
+    });
   }
 
   // ionViewDidEnter() {
