@@ -1,0 +1,38 @@
+<!-- Generated template for the PlanItemComponent component -->
+<div class="plan-item-wrap">
+  <ion-item-sliding>
+    <ion-item>
+      <div item-content>
+        <div class="plan-item type-{{item.type}}">
+          <div class="left">
+            <p class="date">6<span class="unit">日</span></p>
+            <p class="year-month">2019年6月</p>
+          </div>
+          <div class="center">
+            <h2 class="name">
+              {{item.name}}
+            </h2>
+            <div class="tags">
+              <span class="tag tag-{{item.type}}">{{item.typename}}</span>
+              <span class="tag">{{item.projectname}}</span>
+              <span class="tag">{{item.source}}</span>
+              <span class="tag">{{item.level}}</span>
+            </div>
+          </div>
+          <div class="right">
+            <div class="progress">
+              <p class="value">按期</p>
+              <p class="label">完成</p>
+            </div>
+            <div class="state state-{{item.state}}">已完成</div>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+    <ion-item-options side="right" *ngIf="item.can_cb">
+      <button ion-button color="primary">
+        &emsp;催&nbsp;办&emsp;
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+</div>

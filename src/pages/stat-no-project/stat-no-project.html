@@ -59,6 +59,8 @@
   </div>
   <div class="panel plan-list">
     <h2 class="title">高风险项</h2>
-    <div class="list"></div>
+    <ion-list>
+      <plan-item *ngFor="let plan of planList" [item]="plan"></plan-item>
+    </ion-list>
   </div>
 </ion-content>
