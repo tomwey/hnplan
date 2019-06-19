@@ -42,6 +42,21 @@ export class StatNoProjectPage {
     },
   ];
 
+  plans: any = [
+    {
+      name: '3级计划',
+      progress: 56.4,
+      done: 34,
+      total: 65
+    },
+    {
+      name: '4级计划',
+      progress: 72,
+      done: 54,
+      total: 85
+    },
+  ];
+
   currentOpt: any = '1';
   options: any = [
     {
