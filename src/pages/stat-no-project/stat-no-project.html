@@ -27,5 +27,23 @@
   <div class="filter-items-wrap">
     <filter-items [(items)]="filterItems" (itemsChange)="itemsChange();"></filter-items>
   </div>
-
+  <div class="panel graph">
+    <h2 class="title">按状态统计</h2>
+    <div class="state-graph" id="state-graph"></div>
+  </div>
+  <div class="panel graph">
+    <h2 class="title">按风险统计</h2>
+    <div class="fx-graph" id="fx-graph"></div>
+  </div>
+  <div class="panel other-stas">
+    <!-- <h2 class="title">按风险统计</h2> -->
+    <div class="options">
+      <span class="option" [class.active]="currentOpt === opt.value" *ngFor="let opt of options" tappable
+        (click)="selectOption(opt)">{{opt.label}}</span>
+    </div>
+  </div>
+  <div class="panel plan-list">
+    <h2 class="title">高风险项</h2>
+    <div class="list"></div>
+  </div>
 </ion-content>

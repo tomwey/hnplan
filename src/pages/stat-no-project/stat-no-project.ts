@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import ECharts from 'echarts';
+
 /**
  * Generated class for the StatNoProjectPage page.
  *
@@ -40,11 +42,128 @@ export class StatNoProjectPage {
     },
   ];
 
+  currentOpt: any = '1';
+  options: any = [
+    {
+      label: '按级别',
+      value: '1'
+    },
+    {
+      label: '按来源',
+      value: '2'
+    },
+    {
+      label: '按项目',
+      value: '3'
+    },
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad StatNoProjectPage');
+    this.createGraph1();
+
+    this.createGraph2();
+  }
+
+  createGraph1() {
+    var myChart = ECharts.init(document.getElementById('state-graph') as HTMLDivElement);
+    // 指定图表的配置项和数据
+    var option = {
+      title: {
+        text: ''
+      },
+      legend: {
+        orient: 'vertical',
+        right: 15,
+        top: 100,
+        data: ['到期未完成', '未到期', '已超期', '已完成'],
+        formatter: (name) => {
+          return `${name} 30`;
+        }
+      },
+      series: [{
+        name: '',
+        type: 'pie',
+        radius: ['50%', '60%'],
+        center: ['30%', '50%'],
+        silent: true,
+        data: [
+          { value: 15, name: '到期未完成' },
+          { value: 15, name: '未到期' },
+          { value: 35, name: '已超期' },
+          { value: 15, name: '已完成' }
+        ],
+        itemStyle: {
+          normal: {
+            label: {
+              show: false
+            },
+            labelLine: {
+              show: false
+            }
+          },
+
+        },
+      }],
+      color: ['rgb(225,164,53)', 'rgb(100,142,223)', 'rgb(177,52,33)', 'rgb(155,210,60)'],
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+  }
+
+  createGraph2() {
+    var myChart = ECharts.init(document.getElementById('fx-graph') as HTMLDivElement);
+    // 指定图表的配置项和数据
+    var option = {
+      title: {
+        text: ''
+      },
+      legend: {
+        orient: 'vertical',
+        right: 15,
+        top: 100,
+        data: ['高风险', '中风险', '低风险', '无风险'],
+        formatter: (name) => {
+          return `${name} 30`;
+        }
+      },
+      series: [{
+        name: '',
+        type: 'pie',
+        radius: ['50%', '60%'],
+        center: ['30%', '50%'],
+        silent: true,
+        data: [
+          { value: 35, name: '低风险' },
+          { value: 5, name: '中风险' },
+          { value: 5, name: '高风险' },
+          { value: 15, name: '无风险' }
+        ],
+        itemStyle: {
+          normal: {
+            label: {
+              show: false
+            },
+            labelLine: {
+              show: false
+            }
+          },
+
+        },
+      }],
+      color: ['rgb(225,164,53)', 'rgb(100,142,223)', 'rgb(177,52,33)', 'rgb(155,210,60)'],
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+  }
+
+  selectOption(opt) {
+    this.currentOpt = opt.value;
   }
 
   openFilter() {
