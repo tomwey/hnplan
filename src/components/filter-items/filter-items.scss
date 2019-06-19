@@ -1,0 +1,27 @@
+filter-items {
+    .filter-items {
+        .filter-item {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 10px;
+            border-radius: 16px;
+            color: rgb(231, 90, 22);
+            background: rgb(229,229,229);
+            margin-right: 10px;
+            margin-bottom: 10px;
+            &:last-child {
+                margin-right: 0;
+            }
+            .name {
+                font-size: 12px;
+                // vertical-align: middle;
+                line-height: 12px;
+            }
+            ion-icon {
+                vertical-align: -2px;
+                padding-left: 2px;
+            }
+        }
+    }
+}

@@ -67,7 +67,7 @@ export class StatHomePage {
     myChart.setOption(option);
 
     var planBar = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
-    var option2 = {
+    var option2: any = {
       legend: {
         data: ['总计划', '完成计划', '预警计划', '计划完成率']
       },
@@ -163,7 +163,11 @@ export class StatHomePage {
         itemName = params.value;
       }
 
-
+      if (itemName == '项目计划') {
+        this.navCtrl.push('StatProjectPage');
+      } else {
+        this.navCtrl.push('StatNoProjectPage');
+      }
     });
   }
 

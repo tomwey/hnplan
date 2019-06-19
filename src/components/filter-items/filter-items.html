@@ -1,0 +1,7 @@
+<!-- Generated template for the FilterItemsComponent component -->
+<div class="filter-items">
+  <span class="filter-item" *ngFor="let item of items" tappable (click)="close(item)">
+    <span class="name">{{item.name}}</span>
+    <ion-icon name="ios-close-outline" *ngIf="item.closable"></ion-icon>
+  </span>
+</div>
