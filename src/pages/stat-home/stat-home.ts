@@ -141,7 +141,12 @@ export class StatHomePage {
           type: 'line',
           yAxisIndex: 1,
           smooth: true,
-          data: [59, 70, 26, 33]
+          data: [59, 70, 26, 33],
+          label: {
+            show: true,
+            position: 'top',
+            formatter: '{c}%'
+          }
         }
       ]
     };
