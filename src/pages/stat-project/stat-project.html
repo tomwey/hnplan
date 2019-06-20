@@ -29,4 +29,11 @@
     <filter-items [(items)]="filterItems" (itemsChange)="itemsChange();"></filter-items>
   </div>
 
+  <ion-fab right bottom>
+    <button ion-fab (click)="gotoBottom();">
+      <div class="digit">13</div>
+      <div class="label">高风险</div>
+    </button>
+  </ion-fab>
+
 </ion-content>

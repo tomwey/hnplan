@@ -69,10 +69,16 @@
       </div>
     </div>
   </div>
-  <div class="panel plan-list">
+  <div class="panel plan-list" id="fx-plans">
     <h2 class="title">高风险项</h2>
     <ion-list>
       <plan-item *ngFor="let plan of planList" [item]="plan"></plan-item>
     </ion-list>
   </div>
+  <ion-fab right bottom>
+    <button ion-fab (click)="gotoBottom();">
+      <div class="digit">13</div>
+      <div class="label">高风险</div>
+    </button>
+  </ion-fab>
 </ion-content>

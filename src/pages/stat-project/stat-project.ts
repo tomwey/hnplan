@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 
 /**
  * Generated class for the StatProjectPage page.
@@ -14,6 +14,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'stat-project.html',
 })
 export class StatProjectPage {
+
+  @ViewChild(Content) content: Content;
 
   dataType: number = 0;
   dataTypes: any = [
@@ -55,5 +57,10 @@ export class StatProjectPage {
   }
 
   itemsChange() { }
+
+  gotoBottom() {
+    let el = document.getElementById('fx-plans');
+    this.content.scrollTo(0, el.offsetTop, 800);
+  }
 
 }

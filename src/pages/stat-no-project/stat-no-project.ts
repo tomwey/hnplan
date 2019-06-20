@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 
 import ECharts from 'echarts';
 
@@ -16,6 +16,8 @@ import ECharts from 'echarts';
   templateUrl: 'stat-no-project.html',
 })
 export class StatNoProjectPage {
+
+  @ViewChild(Content) content: Content;
 
   dataType: number = 0;
   dataTypes: any = [
@@ -220,6 +222,11 @@ export class StatNoProjectPage {
 
   itemsChange() {
     console.log(this.filterItems);
+  }
+
+  gotoBottom() {
+    let el = document.getElementById('fx-plans');
+    this.content.scrollTo(0, el.offsetTop, 800);
   }
 
 }
