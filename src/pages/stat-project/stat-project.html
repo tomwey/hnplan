@@ -76,6 +76,29 @@
 
   <div class="panel projects">
     <h2 class="title">所属项目</h2>
+    <div class="list">
+      <ion-row>
+        <ion-col col-6 *ngFor="let proj of projects">
+          <div class="project" tappable (click)="selectProject(proj);">
+            <h3 class="name">枫丹西悦三期</h3>
+            <div class="stats">
+              <div class="stat">
+                <div class="label">总计划</div>
+                <div class="digit">123</div>
+              </div>
+              <div class="stat center">
+                <div class="label">已完成</div>
+                <div class="digit">39</div>
+              </div>
+              <div class="stat right">
+                <div class="label">预警计划</div>
+                <div class="digit">39</div>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
   </div>
 
   <div class="panel plan-list" id="fx-plans">

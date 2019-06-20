@@ -73,6 +73,8 @@ export class StatProjectPage {
     }
   ];
 
+  projects: any = [{}, {}, {}, {}, {}, {}, {}];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -118,6 +120,10 @@ export class StatProjectPage {
 
   segmentChanged(ev) {
 
+  }
+
+  selectProject(proj) {
+    this.navCtrl.push('ProjectDetailStatPage');
   }
 
   openFilter() {
