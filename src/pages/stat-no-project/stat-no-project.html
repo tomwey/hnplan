@@ -72,7 +72,8 @@
   <div class="panel plan-list" id="fx-plans">
     <h2 class="title">高风险项</h2>
     <ion-list>
-      <plan-item *ngFor="let plan of planList" [item]="plan"></plan-item>
+      <plan-item *ngFor="let plan of planList" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
+        [item]="plan"></plan-item>
     </ion-list>
   </div>
   <ion-fab right bottom>

@@ -122,6 +122,16 @@ export class StatProjectPage {
     myChart.setOption(option);
   }
 
+  selectPlan(ev) {
+    // console.log(ev);
+    this.navCtrl.push('PlanDetailPage', ev);
+  }
+
+  doUrge(ev) {
+    // console.log(ev);
+    // console.log(124);
+  }
+
   segmentChanged(ev) {
 
   }

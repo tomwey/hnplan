@@ -232,6 +232,16 @@ export class StatNoProjectPage {
 
   }
 
+  selectPlan(ev) {
+    // console.log(ev);
+    this.navCtrl.push('PlanDetailPage', ev);
+  }
+
+  doUrge(ev) {
+    // console.log(ev);
+    // console.log(124);
+  }
+
   itemsChange() {
     // console.log(this.filterItems);
   }

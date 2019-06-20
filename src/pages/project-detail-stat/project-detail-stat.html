@@ -26,7 +26,8 @@
     <div class="rightside">
       <div class="plan-list-wrap" *ngIf="planDataType === 0">
         <ion-list>
-          <plan-item2 [item]="item" *ngFor="let item of planList"></plan-item2>
+          <plan-item2 [item]="item" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
+            *ngFor="let item of planList"></plan-item2>
         </ion-list>
       </div>
       <div class="plan-graph-wrap" *ngIf="planDataType === 1">
@@ -43,11 +44,11 @@
           <div class="cells">
             <div class="row-box" *ngFor="let item of floorsData">
               <span class="cell">{{item.floor}}</span>
-              <span class="cell block cell-{{item.l1}}"></span>
-              <span class="cell block cell-{{item.l2}}"></span>
-              <span class="cell block cell-{{item.l3}}"></span>
-              <span class="cell block cell-{{item.l4}}"></span>
-              <span class="cell block cell-{{item.l5}}"></span>
+              <span class="cell block cell-{{item.l1}}" tappable (click)="selectPlan(item)"></span>
+              <span class="cell block cell-{{item.l2}}" tappable (click)="selectPlan(item)"></span>
+              <span class="cell block cell-{{item.l3}}" tappable (click)="selectPlan(item)"></span>
+              <span class="cell block cell-{{item.l4}}" tappable (click)="selectPlan(item)"></span>
+              <span class="cell block cell-{{item.l5}}" tappable (click)="selectPlan(item)"></span>
             </div>
           </div>
           <div class="foot caption">

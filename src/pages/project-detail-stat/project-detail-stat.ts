@@ -56,6 +56,16 @@ export class ProjectDetailStatPage {
     // console.log('ionViewDidLoad ProjectDetailStatPage');
   }
 
+  selectPlan(ev) {
+    // console.log(ev);
+    this.navCtrl.push('PlanDetailPage', ev);
+  }
+
+  doUrge(ev) {
+    // console.log(ev);
+    // console.log(124);
+  }
+
   selectMenu(index) {
     this.currentIndex = index;
     this.planDataType = this.menus[index].type;
