@@ -168,6 +168,14 @@ export class HomePage {
 
   }
 
+  prev() {
+
+  }
+
+  next() {
+
+  }
+
   selectPlan(ev) {
     // console.log(ev);
     this.navCtrl.push('PlanDetailPage', ev);

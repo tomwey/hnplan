@@ -40,10 +40,10 @@
     <button ion-button clear class="switch-btn">
       2019 年 06 月&nbsp;<ion-icon name="md-arrow-dropdown"></ion-icon>
     </button>
-    <button ion-button class="back" clear>
+    <button ion-button class="back" clear (click)="prev();">
       <ion-icon name="ios-arrow-back"></ion-icon>
     </button>
-    <button ion-button class="forward" clear>
+    <button ion-button class="forward" clear (click)="next();">
       <ion-icon name="ios-arrow-forward"></ion-icon>
     </button>
   </div>
