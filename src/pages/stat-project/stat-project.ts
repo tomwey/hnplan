@@ -1,6 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content, ModalController } from 'ionic-angular';
-
 import ECharts from 'echarts';
 
 /**
@@ -18,6 +17,8 @@ import ECharts from 'echarts';
 export class StatProjectPage {
 
   @ViewChild(Content) content: Content;
+
+  @ViewChild('myCharts') myCharts: ElementRef;
 
   dataType: number = 0;
   dataTypes: any = [
@@ -86,8 +87,14 @@ export class StatProjectPage {
 
   }
 
+  ionViewDidEnter() {
+    // this.createGraph();
+  }
+
   createGraph() {
-    var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
+    // var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
+    var myChart = ECharts.init(this.myCharts.nativeElement);
+    // console.log(ECharts);
     // console.log(myChart);
     // 指定图表的配置项和数据
     var option = {
