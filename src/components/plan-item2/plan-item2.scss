@@ -1,0 +1,114 @@
+plan-item2 {
+    .item-ios {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        border-bottom: 0.55px solid #f7f7f7;
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+    .item-ios.item-block .item-inner {
+        padding-right: 0;
+        border-bottom: 0!important;
+    }
+    .label-ios {
+        margin: 0!important;
+    }
+    .plan-item {
+        
+        background: #fff;
+        padding: 10px 0;
+        display: flex;
+        align-items: center;     /* 垂直居中 */
+        // border-left: 2px solid #999;
+        .left, .right {
+            display: block;
+            font-size: 10px;
+            text-align: center;
+            color: #333;
+            box-sizing: border-box;
+        }
+        // .left {
+        //     flex: 0 0 90px;
+        //     width: 90px;
+        //     padding: 0 15px;
+        //     font-family: 'PingFang SC';
+        //     .date {
+        //         font-size: 20px!important;
+        //         color: #333!important;
+        //         .unit {
+        //             font-size: 10px!important;
+        //         }
+        //     }
+        //     .year-month {
+        //         font-size: 12px !important;
+        //         color: #333!important;
+        //     }
+        // }
+        .center {
+            flex: 1;
+            padding-left: 15px;
+            // border-left: 0.55px solid #ddd;
+            .name {
+                font-size: 14px;
+                color: #333;
+                font-weight:  normal;
+            }
+            .time {
+                font-size: 12px;
+                color: #333;
+                margin: 5px 0 0;
+            }
+            .summary {
+                // margin-top: 10px;
+                font-size: 12px;
+                color: #999;
+            }
+            .tags {
+                font-size: 0;
+            }
+            .tag {
+                display: inline-block;
+                height: 20px;
+                line-height: 20px;
+                font-size: 10px;
+                padding: 0 5px;
+                color: #fff;
+                margin: 5px 5px 0 0;
+                border-radius: 2px;
+                vertical-align: middle;
+                background: #f7f7f7;
+                color: #666;
+            }
+        }
+        .right {
+            flex: 0 0 90px;
+            width: 90px;
+            .progress {
+                width: 60px;
+                height: 60px;
+                // line-height: 60px;
+                border: 0.55px solid rgb(231,90,22);
+                border-radius: 50%;
+                text-align: center;
+                margin: 0 auto;
+                padding-top: 16px;
+                .label,.value {
+                    font-size: 12px!important;
+                    color: #333!important;
+                    margin: 0;
+                    padding: 0;
+                    line-height: 14px;
+                }
+                
+            }
+            .state {
+                text-align: center;
+                margin-top: 5px;
+                font-size: 12px!important;
+            }
+        }
+        
+    }
+}

@@ -4,15 +4,34 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
 
-  <ion-navbar>
-    <ion-title>project-detail-stat</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>枫丹西悦二期计划分析</ion-title>
   </ion-navbar>
 
 </ion-header>
 
+<ion-content style="background: #fff;">
+  <div class="main">
+    <div class="leftside">
+      <div class="menu">
+        <div class="menu-item" [class.active]="currentIndex === i" tappable (click)="selectMenu(i);"
+          *ngFor="let menu of menus;let i = index;">
+          <span class="name">{{menu.name}}</span>
+          <span class="badge" *ngIf="menu.badge > 0">{{menu.badge}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="rightside">
+      <div class="plan-list-wrap" *ngIf="planDataType === 0">
+        <ion-list>
+          <plan-item2 [item]="item" *ngFor="let item of planList"></plan-item2>
+        </ion-list>
+      </div>
+      <div class="plan-graph-wrap" *ngIf="planDataType === 1">
 
-<ion-content padding>
-
+      </div>
+    </div>
+  </div>
 </ion-content>
