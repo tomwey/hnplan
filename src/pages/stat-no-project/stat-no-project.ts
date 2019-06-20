@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, ModalController } from 'ionic-angular';
 
 import ECharts from 'echarts';
 
@@ -104,7 +104,9 @@ export class StatNoProjectPage {
     },
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+    private modalCtrl: ModalController,
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -213,7 +215,13 @@ export class StatNoProjectPage {
   }
 
   openFilter() {
-
+    let modal = this.modalCtrl.create('FilterOptionsPage', this.filterItems);
+    modal.onDidDismiss((res) => {
+      if (res) {
+        this.filterItems = Object.assign([], res);
+      }
+    });
+    modal.present();
   }
 
   segmentChanged(ev) {
@@ -221,7 +229,7 @@ export class StatNoProjectPage {
   }
 
   itemsChange() {
-    console.log(this.filterItems);
+    // console.log(this.filterItems);
   }
 
   gotoBottom() {

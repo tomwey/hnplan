@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TestabilityRegistry } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
@@ -15,17 +15,33 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 })
 export class FilterOptionsPage {
 
-  selectedOpts: any = {
-    date: null,
-    plan_level: null,
-    plan_type: null,
-    project: null
-  };
+  filterItems: any = [];
   constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams) {
+    this.navParams.data.forEach(item => {
+      this.filterItems.push(item.name);
+    });
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad FilterOptionsPage');
+    this.prepareOptions();
+  }
+
+  prepareOptions() {
+    this.options.forEach(opt => {
+      // opt.options.forEach(item => {
+      //   if (this.filterItems.indexOf(item.name)) {
+      //     opt.selected = item;
+      //   }
+      // });
+      for (let i = 0; i < opt.options.length; i++) {
+        let item = opt.options[i];
+        if (this.filterItems.indexOf(item.name) !== -1) {
+          opt.selected = item;
+          break;
+        }
+      }
+    });
   }
 
   close() {
@@ -34,7 +50,7 @@ export class FilterOptionsPage {
 
   selectOpt(opt, item) {
     if (opt.selected) {
-      if (opt.selected == item) {
+      if (opt.selected == item && opt.id !== 'date') {
         opt.selected = null;
       } else {
         opt.selected = item;
@@ -45,11 +61,23 @@ export class FilterOptionsPage {
   }
 
   reset() {
-
+    this.prepareOptions();
   }
 
   confirm() {
-
+    let temp = [];
+    this.options.forEach(opt => {
+      // console.log(opt.selected);
+      if (opt.selected) {
+        let obj = Object.assign({}, opt.selected);
+        obj.closable = true;
+        if (obj.name == '本月' || obj.name == '本季' || obj.name == '本年') {
+          obj.closable = false;
+        }
+        temp.push(obj);
+      }
+    });
+    this.viewCtrl.dismiss(temp);
   }
 
   options: any = [
@@ -102,7 +130,7 @@ export class FilterOptionsPage {
           value: 2039283
         },
         {
-          name: '枫丹铂麓2期',
+          name: '枫丹铂麓一期',
           value: 1837362
         },
         {

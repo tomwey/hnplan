@@ -131,9 +131,11 @@ export class StatProjectPage {
   }
 
   openFilter() {
-    let modal = this.modalCtrl.create('FilterOptionsPage');
+    let modal = this.modalCtrl.create('FilterOptionsPage', this.filterItems);
     modal.onDidDismiss((res) => {
-
+      if (res) {
+        this.filterItems = Object.assign([], res);
+      }
     });
     modal.present();
   }
