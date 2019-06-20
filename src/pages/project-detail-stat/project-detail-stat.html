@@ -36,6 +36,24 @@
             {{b.name}}
           </span>
         </div>
+        <div class="floors">
+          <div class="head caption">
+            <span class="cell" *ngFor="let n of names">{{n}}</span>
+          </div>
+          <div class="cells">
+            <div class="row-box" *ngFor="let item of floorsData">
+              <span class="cell">{{item.floor}}</span>
+              <span class="cell block cell-{{item.l1}}"></span>
+              <span class="cell block cell-{{item.l2}}"></span>
+              <span class="cell block cell-{{item.l3}}"></span>
+              <span class="cell block cell-{{item.l4}}"></span>
+              <span class="cell block cell-{{item.l5}}"></span>
+            </div>
+          </div>
+          <div class="foot caption">
+            <span class="cell" *ngFor="let n of names">{{n}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

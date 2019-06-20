@@ -48,12 +48,12 @@ export class ProjectDetailStatPage {
     },
   ];
   currentIndex: number = 0;
-  planDataType: number = 1;
+  planDataType: number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProjectDetailStatPage');
+    // console.log('ionViewDidLoad ProjectDetailStatPage');
   }
 
   selectMenu(index) {
@@ -125,5 +125,208 @@ export class ProjectDetailStatPage {
       name: '#9楼'
     },
   ];
+
+  floorsData: any = [
+    {
+      floor: 20,
+      name: '20',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 0,
+      l5: 0
+    },
+    {
+      floor: 19,
+      name: '19',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 0,
+      l5: 0
+    },
+    {
+      floor: 18,
+      name: '18',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 0,
+      l5: 0
+    },
+    {
+      floor: 17,
+      name: '17',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 2,
+      l5: 0
+    },
+    {
+      floor: 16,
+      name: '16',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 2,
+      l5: 0
+    },
+    {
+      floor: 15,
+      name: '15',
+      l1: 2,
+      l2: 0,
+      l3: 0,
+      l4: 0,
+      l5: 0
+    },
+    {
+      floor: 14,
+      name: '14',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 0,
+      l5: 2
+    },
+    {
+      floor: 13,
+      name: '13',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 12,
+      name: '12',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 11,
+      name: '11',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 10,
+      name: '10',
+      l1: 0,
+      l2: 0,
+      l3: 0,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 9,
+      name: '9',
+      l1: 1,
+      l2: 0,
+      l3: 2,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 8,
+      name: '8',
+      l1: 1,
+      l2: 0,
+      l3: 2,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 7,
+      name: '7',
+      l1: 1,
+      l2: 0,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 6,
+      name: '6',
+      l1: 1,
+      l2: 0,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 5,
+      name: '5',
+      l1: 1,
+      l2: 0,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 4,
+      name: '4',
+      l1: 1,
+      l2: 0,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 3,
+      name: '3',
+      l1: 1,
+      l2: 1,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 2,
+      name: '2',
+      l1: 1,
+      l2: 1,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: 1,
+      name: '1',
+      l1: 1,
+      l2: 1,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: -1,
+      name: '-1',
+      l1: 1,
+      l2: 1,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+    {
+      floor: -2,
+      name: '-2',
+      l1: 1,
+      l2: 1,
+      l3: 1,
+      l4: 1,
+      l5: 1
+    },
+  ]
+
+  names: any = ['楼层', '主体', '砌体', '内抹', '外抹', '地坪'];
 
 }
