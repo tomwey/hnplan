@@ -23,4 +23,113 @@ page-stat-project {
         }
         
     }
+
+    .panel {
+        background: white;
+        margin-bottom: 10px;
+        .title {
+            font-size: 14px;
+            color: #333;
+            padding: 10px 15px;
+        }
+    }
+
+    .pie-wrapper {
+        width: 100%;
+        height: 300px;
+        position: relative;
+        .top-graphic {
+            width: 100%;
+            height: 100%;
+            padding: 0 15px;
+            text-align: center;
+        }
+
+        .value-show {
+            position: absolute;
+            width: 100%;
+            height: 300px;
+            top: 0;
+            left: 0;
+            display: flex;
+            // flex-wrap: wrap;
+            align-items: center;
+            .value-inner {
+                flex: 1;
+                width: 100%;
+                text-align: center;
+            }
+            .complete-rate {
+                width: 50%;
+                margin: 0 auto;
+                font-size: 12px;
+                color: #999;
+                .digit {
+                    font-size: 28px;
+                    font-family: 'PingFang SC';
+                    color: color($colors, primary);
+                }
+                .unit {
+                    font-size: 12px;
+                    color: color($colors, primary);
+                    padding-left: 2px;
+                }
+            }
+            .plan-stats {
+                display: flex;
+                width: 40%;
+                margin: 10px auto 0;
+                color: #999;
+                font-size: 12px;
+                .value {
+                    font-size: 18px;
+                    font-family: 'PingFang SC';
+                    color: color($colors, primary);
+                }
+                .done {
+                    flex: 1;
+                }
+                .total {
+                    flex: 1;
+                }
+                .splitor {
+                    flex: 0 0 30px;
+                    width: 30px;
+                    color: color($colors, primary);
+                    font-size: 18px;
+                    padding-top: 3px;
+                }
+            }
+        }
+
+    }
+
+    .other-stats {
+        padding: 0 20px 20px;
+        display: flex;
+        justify-content: center;
+        .stat-box {
+            flex: 1;
+            text-align: center;
+            font-size: 12px;
+            color: #333;
+            border-right: 0.55px solid #f2f2f2;
+            &:last-child {
+                border-right: 0;
+            }
+            .value {
+                color: color($colors, primary);
+                font-size: 18px;
+                .splitor {
+                    padding: 0 5px;
+                }
+                .done {
+                    color: #7FB762;
+                }
+            }
+            .label {
+                color: #999;
+            }
+        }
+    }
 }

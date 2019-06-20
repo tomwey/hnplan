@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 
+import ECharts from 'echarts';
+
 /**
  * Generated class for the StatProjectPage page.
  *
@@ -41,11 +43,77 @@ export class StatProjectPage {
       closable: true
     },
   ];
+
+  planList: any = [
+    {
+      type: 1,
+      typename: '职能计划',
+      can_cb: true,
+      level: '四级',
+      name: '计划管理系统APP端功能规划初稿',
+      source: '部门内部',
+      projectname: '集团管理类'
+    },
+    {
+      type: 2,
+      typename: '项目计划',
+      can_cb: true,
+      name: '计划管理系统APP端功能规划初稿',
+      level: '四级',
+      source: '部门内部',
+      projectname: '集团管理类'
+    },
+    {
+      type: 3,
+      typename: '专项计划',
+      name: '计划管理系统APP端功能规划初稿',
+      level: '四级',
+      source: '部门内部',
+      projectname: '集团管理类'
+    }
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad StatProjectPage');
+    this.createGraph();
+  }
+
+  createGraph() {
+    var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
+    // 指定图表的配置项和数据
+    var option = {
+      title: {
+        text: ''
+      },
+      series: [{
+        name: '',
+        type: 'pie',
+        radius: ['60%', '62%'],
+        silent: true,
+        data: [
+          { value: 132, name: '已完成计划' },
+          { value: 290, name: '未完成计划' }
+        ],
+        itemStyle: {
+          normal: {
+            label: {
+              show: false
+            },
+            labelLine: {
+              show: false
+            }
+          },
+
+        },
+      }],
+      color: ['rgb(231,90,22)', 'rgb(159,159,159)'],
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
   }
 
   segmentChanged(ev) {
