@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content, ModalController } from 'ionic-angular';
 
 import ECharts from 'echarts';
 
@@ -39,7 +39,7 @@ export class StatProjectPage {
       closable: true
     },
     {
-      name: '3级计划',
+      name: '三级',
       closable: true
     },
   ];
@@ -75,7 +75,7 @@ export class StatProjectPage {
 
   projects: any = [{}, {}, {}, {}, {}, {}, {}];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, private modalCtrl: ModalController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -88,7 +88,7 @@ export class StatProjectPage {
 
   createGraph() {
     var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
-    console.log(myChart);
+    // console.log(myChart);
     // 指定图表的配置项和数据
     var option = {
       title: {
@@ -131,7 +131,11 @@ export class StatProjectPage {
   }
 
   openFilter() {
+    let modal = this.modalCtrl.create('FilterOptionsPage');
+    modal.onDidDismiss((res) => {
 
+    });
+    modal.present();
   }
 
   itemsChange() { }

@@ -63,7 +63,8 @@
   </div>
   <div class="plan-list">
     <ion-list>
-      <div class="plan-item type-{{item.type}}" *ngFor="let item of plans">
+      <plan-item [item]="item" *ngFor="let item of planList"></plan-item>
+      <!-- <div class="plan-item type-{{item.type}}" *ngFor="let item of plans">
         <div class="left">
           <p class="date">6<span class="unit">日</span></p>
           <p class="year-month">2019年6月</p>
@@ -78,8 +79,6 @@
             <span class="tag">部门内部</span>
             <span class="tag">四级</span>
           </div>
-
-          <!-- <p class="summary">&nbsp;部门内部&nbsp;四级</p> -->
         </div>
         <div class="right">
           <div class="progress">
@@ -88,7 +87,7 @@
           </div>
           <div class="state state-{{item.state}}">已完成</div>
         </div>
-      </div>
+      </div> -->
     </ion-list>
   </div>
 </ion-content>

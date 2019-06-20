@@ -19,4 +19,8 @@ export class PlanItemComponent {
     // this.text = 'Hello World';
   }
 
+  doClick(item, sliding) {
+    sliding.close();
+  }
+
 }

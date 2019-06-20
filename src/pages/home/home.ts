@@ -65,6 +65,35 @@ export class HomePage {
     },
   ]
 
+  planList: any = [
+    {
+      type: 1,
+      typename: '职能计划',
+      can_cb: true,
+      level: '四级',
+      name: '计划管理系统APP端功能规划初稿',
+      source: '部门内部',
+      projectname: '集团管理类'
+    },
+    {
+      type: 2,
+      typename: '项目计划',
+      can_cb: true,
+      name: '计划管理系统APP端功能规划初稿',
+      level: '四级',
+      source: '部门内部',
+      projectname: '集团管理类'
+    },
+    {
+      type: 3,
+      typename: '专项计划',
+      name: '计划管理系统APP端功能规划初稿',
+      level: '四级',
+      source: '部门内部',
+      projectname: '集团管理类'
+    }
+  ];
+
   plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
 
   @ViewChild('calendar') calendar: CalendarComponent;
