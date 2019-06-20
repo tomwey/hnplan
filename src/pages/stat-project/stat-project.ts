@@ -80,11 +80,15 @@ export class StatProjectPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad StatProjectPage');
+    // setTimeout(() => {
     this.createGraph();
+    // }, 300);
+
   }
 
   createGraph() {
     var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
+    console.log(myChart);
     // 指定图表的配置项和数据
     var option = {
       title: {
