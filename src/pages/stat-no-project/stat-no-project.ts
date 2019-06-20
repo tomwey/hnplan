@@ -121,8 +121,8 @@ export class StatNoProjectPage {
       },
       legend: {
         orient: 'vertical',
-        right: 15,
-        top: 100,
+        right: 30,
+        top: 72,
         data: ['到期未完成', '未到期', '已超期', '已完成'],
         formatter: (name) => {
           return `${name} 30`;
@@ -131,7 +131,7 @@ export class StatNoProjectPage {
       series: [{
         name: '',
         type: 'pie',
-        radius: ['50%', '60%'],
+        radius: ['40%', '50%'],
         center: ['30%', '50%'],
         silent: true,
         data: [
@@ -168,8 +168,8 @@ export class StatNoProjectPage {
       },
       legend: {
         orient: 'vertical',
-        right: 15,
-        top: 100,
+        right: 30,
+        top: 72,
         data: ['高风险', '中风险', '低风险', '无风险'],
         formatter: (name) => {
           return `${name} 30`;
@@ -178,7 +178,7 @@ export class StatNoProjectPage {
       series: [{
         name: '',
         type: 'pie',
-        radius: ['50%', '60%'],
+        radius: ['40%', '50%'],
         center: ['30%', '50%'],
         silent: true,
         data: [
