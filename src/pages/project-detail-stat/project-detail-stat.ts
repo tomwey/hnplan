@@ -48,7 +48,7 @@ export class ProjectDetailStatPage {
     },
   ];
   currentIndex: number = 0;
-  planDataType: number = 0;
+  planDataType: number = 1;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -59,6 +59,10 @@ export class ProjectDetailStatPage {
   selectMenu(index) {
     this.currentIndex = index;
     this.planDataType = this.menus[index].type;
+  }
+
+  selectBuild(index) {
+    this.currBuildIndex = index;
   }
 
   planList: any = [
@@ -91,6 +95,35 @@ export class ProjectDetailStatPage {
       projectname: '集团管理类',
       manname: '鲜代明'
     }
+  ];
+
+  currBuildIndex: number = 0;
+
+  buildings: any = [
+    {
+      name: '#1楼'
+    },
+    {
+      name: '#2楼'
+    },
+    {
+      name: '#3楼'
+    },
+    {
+      name: '#5楼'
+    },
+    {
+      name: '#6楼'
+    },
+    {
+      name: '#7楼'
+    },
+    {
+      name: '#8楼'
+    },
+    {
+      name: '#9楼'
+    },
   ];
 
 }

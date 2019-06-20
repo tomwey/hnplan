@@ -30,7 +30,12 @@
         </ion-list>
       </div>
       <div class="plan-graph-wrap" *ngIf="planDataType === 1">
-
+        <div class="buildings">
+          <span class="building-item" [class.active]="currBuildIndex === i" tappable (click)="selectBuild(i);"
+            *ngFor="let b of buildings; let i = index;">
+            {{b.name}}
+          </span>
+        </div>
       </div>
     </div>
   </div>

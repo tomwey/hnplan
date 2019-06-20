@@ -41,6 +41,43 @@ page-project-detail-stat {
         .rightside {
             flex: 1;
             min-height: 100%;
+            width: calc(100% - 100px);
+        }
+    }
+
+    .buildings {
+        padding: 10px 15px;
+        width: 100%;
+        // height: 56px;
+        overflow: auto;
+        white-space: nowrap;
+        &::-webkit-scrollbar {
+            display: none;
+            width: 0!important;
+        }
+        -ms-overflow-style: none;
+        // overflow: -moz-scrollbars-none;
+
+        .building-item {
+            display: inline-block;
+            height: 36px;
+            line-height: 36px;
+            background: #fff;
+            border: 1px solid color($colors,primary);
+            border-radius: 18px;
+            padding: 0 15px;
+            margin-right: 10px;
+            color: color($colors,primary);
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'PingFang SC',Arial, Helvetica, sans-serif;
+            &.active {
+                background: color($colors,primary);
+                color: #fff;
+            }
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 }
