@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { StatProjectPage } from './stat-project';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { StatProjectPage } from './stat-project';
   ],
   imports: [
     IonicPageModule.forChild(StatProjectPage),
+    ComponentsModule
   ],
 })
-export class StatProjectPageModule {}
+export class StatProjectPageModule { }
