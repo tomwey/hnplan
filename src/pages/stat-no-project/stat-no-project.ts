@@ -39,7 +39,7 @@ export class StatNoProjectPage {
       closable: true
     },
     {
-      name: '3级计划',
+      name: '三级',
       closable: true
     },
   ];
