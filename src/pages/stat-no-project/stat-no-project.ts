@@ -116,6 +116,10 @@ export class StatNoProjectPage {
     this.createGraph2();
   }
 
+  gotoPlanList(type) {
+    this.navCtrl.push('PlanListPage');
+  }
+
   createGraph1() {
     var myChart = ECharts.init(document.getElementById('state-graph') as HTMLDivElement);
     // 指定图表的配置项和数据

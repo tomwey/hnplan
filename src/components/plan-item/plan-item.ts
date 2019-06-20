@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * Generated class for the PlanItemComponent component.
@@ -13,14 +13,20 @@ import { Component, Input } from '@angular/core';
 export class PlanItemComponent {
 
   @Input() item: any = {};
-
+  @Output() onSelect: EventEmitter<any> = new EventEmitter();
+  @Output() onUrge: EventEmitter<any> = new EventEmitter();
   constructor() {
     // console.log('Hello PlanItemComponent Component');
     // this.text = 'Hello World';
   }
 
-  doClick(item, sliding) {
+  doClick(sliding) {
+    this.onUrge.emit(this.item);
     sliding.close();
+  }
+
+  doTap() {
+    this.onSelect.emit(this.item);
   }
 
 }

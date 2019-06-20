@@ -63,7 +63,8 @@
   </div>
   <div class="plan-list">
     <ion-list>
-      <plan-item [item]="item" *ngFor="let item of planList"></plan-item>
+      <plan-item [item]="item" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
+        *ngFor="let item of planList"></plan-item>
       <!-- <div class="plan-item type-{{item.type}}" *ngFor="let item of plans">
         <div class="left">
           <p class="date">6<span class="unit">日</span></p>

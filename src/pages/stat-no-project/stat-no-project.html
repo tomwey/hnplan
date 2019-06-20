@@ -29,7 +29,7 @@
   </div>
   <div class="panel graph">
     <h2 class="title">按状态统计</h2>
-    <div class="total-wrap">
+    <div class="total-wrap" tappable (click)="gotoPlanList(1);">
       <div class="state-graph" id="state-graph"></div>
       <div class="total-box">
         <div class="value">83</div>
@@ -39,7 +39,7 @@
   </div>
   <div class="panel graph">
     <h2 class="title">按风险统计</h2>
-    <div class="total-wrap">
+    <div class="total-wrap" tappable (click)="gotoPlanList(2);">
       <div class="fx-graph" id="fx-graph"></div>
       <div class="total-box">
         <div class="value">83</div>

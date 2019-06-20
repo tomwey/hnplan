@@ -1,7 +1,7 @@
 <!-- Generated template for the PlanItemComponent component -->
 <div class="plan-item-wrap">
-  <ion-item-sliding>
-    <ion-item>
+  <ion-item-sliding #sliding>
+    <ion-item tappable (click)="doTap(sliding);">
       <div item-content>
         <div class="plan-item">
           <!-- <div class="left">
@@ -32,7 +32,7 @@
       </div>
     </ion-item>
     <ion-item-options side="right" *ngIf="item.can_cb">
-      <button ion-button color="primary">
+      <button ion-button color="primary" (click)="doClick(sliding)">
         &emsp;催&nbsp;办&emsp;
       </button>
     </ion-item-options>
