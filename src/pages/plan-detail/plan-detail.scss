@@ -1,3 +1,62 @@
 page-plan-detail {
+    .content {
+        background: #fff;
+    }
+    .body {
+        padding: 15px;
+    }
+    .table {
+        width: 100%;
+        // padding: 15px;
+        font-size: 14px;
+        td {
+            vertical-align: top;
+            padding: 3px 0;
+        }
+        .label {
+            width: 100px;
+            text-align: right;
+            color: #333;
+            // padding: 5px 0;
+        }
+        .value {
+            color: #999;
+            // padding: 5px 0 5px 10px;
+            padding-left: 10px;
+        }
+        .value2 {
+            color: color($colors, primary);
+            clear: right;
+            .right-icon {
+                float: right;
+                padding: 5px 10px 0 0;
+            }
+        }
+    }
+    ion-footer {
+        ion-row, ion-col {
+            margin: 0!important;
+            padding: 0!important;
+        }
 
+        .custom-btn {
+            background: color($colors,primary);
+            text-align: center;
+            height: 44px;
+            line-height: 44px;
+            font-size: 14px;
+            width: 100%;
+            color: #fff;
+            border-top: 0.55px solid color($colors,primary);
+            &.outline {
+                background: #fff;
+                color: color($colors,primary);
+                border-top-color: #eee;
+            }
+            &.blue {
+                background: #4990E2;
+                border-top-color: #4990E2;
+            }
+        }
+    }
 }
