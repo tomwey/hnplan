@@ -30,7 +30,7 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-  <ion-toolbar color="white">
+  <ion-toolbar color="white" *ngIf="funcType === 0">
     <ion-segment [(ngModel)]="dataType" mode="md" (ionChange)="segmentChanged($event)">
       <ion-segment-button value="{{type.value}}" *ngFor="let type of dataTypes">
         {{type.label}}
@@ -41,62 +41,93 @@
 </ion-header>
 
 <ion-content>
-  <ion-calendar *ngIf="dataType === '0'" [(ngModel)]="currentDate" #calendar [options]="dateOptions"
-    (onChange)="changeDate($event);" (monthChange)="changeMonth($event);" [format]="'YYYY-MM-DD'">
-  </ion-calendar>
-  <div class="custom-select-month" *ngIf="dataType != '0'">
-    <button ion-button clear class="switch-btn">
-      2019 年 06 月&nbsp;<ion-icon name="md-arrow-dropdown"></ion-icon>
-    </button>
-    <button ion-button class="back" clear (click)="prev();">
-      <ion-icon name="ios-arrow-back"></ion-icon>
-    </button>
-    <button ion-button class="forward" clear (click)="next();">
-      <ion-icon name="ios-arrow-forward"></ion-icon>
-    </button>
-  </div>
-  <div class="weeks" *ngIf="dataType === '1'">
-    <!-- <ion-segment [(ngModel)]="weekIndex" mode="md" (ionChange)="segmentChanged($event)">
-      <ion-segment-button [value]="i" *ngFor="let week of weeks;let i = index">
-        {{week.name}}<br>{{week.date}}
-      </ion-segment-button>
-    </ion-segment> -->
-    <div class="week-wrap">
-      <div class="week" [class.active]="weekIndex === i" tappable (click)="selectWeek(i);"
-        *ngFor="let week of weeks;let i = index">
-        <h4 class="name">{{week.name}}</h4>
-        <p class="date">{{week.date}}</p>
+  <div *ngIf="funcType === 0">
+    <ion-calendar *ngIf="dataType === '0'" [(ngModel)]="currentDate" #calendar [options]="dateOptions"
+      (onChange)="changeDate($event);" (monthChange)="changeMonth($event);" [format]="'YYYY-MM-DD'">
+    </ion-calendar>
+    <div class="custom-select-month" *ngIf="dataType != '0'">
+      <button ion-button clear class="switch-btn">
+        2019 年 06 月&nbsp;<ion-icon name="md-arrow-dropdown"></ion-icon>
+      </button>
+      <button ion-button class="back" clear (click)="prev();">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+      </button>
+      <button ion-button class="forward" clear (click)="next();">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+      </button>
+    </div>
+    <div class="weeks" *ngIf="dataType === '1'">
+      <div class="week-wrap">
+        <div class="week" [class.active]="weekIndex === i" tappable (click)="selectWeek(i);"
+          *ngFor="let week of weeks;let i = index">
+          <h4 class="name">{{week.name}}</h4>
+          <p class="date">{{week.date}}</p>
+        </div>
       </div>
     </div>
+    <div class="plan-list">
+      <ion-list>
+        <plan-item [item]="item" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
+          *ngFor="let item of planList"></plan-item>
+      </ion-list>
+    </div>
   </div>
-  <div class="plan-list">
-    <ion-list>
-      <plan-item [item]="item" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
-        *ngFor="let item of planList"></plan-item>
-      <!-- <div class="plan-item type-{{item.type}}" *ngFor="let item of plans">
-        <div class="left">
-          <p class="date">6<span class="unit">日</span></p>
-          <p class="year-month">2019年6月</p>
-        </div>
-        <div class="center">
-          <h2 class="name">
-            计划管理系统APP端功能规划初稿
-          </h2>
-          <div class="tags">
-            <span class="tag tag-{{item.type}}">{{item.typename}}</span>
-            <span class="tag">集团管理类</span>
-            <span class="tag">部门内部</span>
-            <span class="tag">四级</span>
+
+  <div *ngIf="funcType === 1">全景计划</div>
+  <div *ngIf="funcType === 2">
+    <div class="timeline-wrap">
+      <ul class="timeline">
+
+        <li class="timeline-item">
+          <div class="tail"></div>
+          <div class="node node-normal"></div>
+          <div class="content-wrapper">
+            <div class="timestamp is-top">
+              2018/4/12
+            </div>
+            <div class="item-content">
+              123456
+            </div>
           </div>
-        </div>
-        <div class="right">
-          <div class="progress">
-            <p class="value">按期</p>
-            <p class="label">完成</p>
+        </li>
+        <li class="timeline-item">
+          <div class="tail"></div>
+          <div class="node node-normal"></div>
+          <div class="content-wrapper">
+            <div class="timestamp is-top">
+              2018/4/12
+            </div>
+            <div class="item-content">
+              123456
+            </div>
           </div>
-          <div class="state state-{{item.state}}">已完成</div>
-        </div>
-      </div> -->
-    </ion-list>
+        </li>
+        <li class="timeline-item">
+          <div class="tail"></div>
+          <div class="node node-normal"></div>
+          <div class="content-wrapper">
+            <div class="timestamp is-top">
+              2018/4/12
+            </div>
+            <div class="item-content">
+              123456
+            </div>
+          </div>
+        </li>
+        <li class="timeline-item">
+          <div class="tail"></div>
+          <div class="node node-normal"></div>
+          <div class="content-wrapper">
+            <div class="timestamp is-top">
+              2018/4/12
+            </div>
+            <div class="item-content">
+              123456
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
+
 </ion-content>

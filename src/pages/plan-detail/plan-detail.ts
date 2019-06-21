@@ -15,11 +15,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PlanDetailPage {
 
+  dataTypes: any = ['基本信息', '反馈记录'];
+  dataType: number = 0;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad PlanDetailPage');
+  }
+
+  segmentChanged(ev) {
+
   }
 
   doClick(type) {

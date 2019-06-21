@@ -100,6 +100,7 @@ export class HomePage {
   plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
 
   @ViewChild('calendar') calendar: CalendarComponent;
+  @ViewChild(Content) content: Content;
 
   currentDate: string = Utils.dateFormat(new Date());
 
@@ -152,7 +153,6 @@ export class HomePage {
     from: new Date(2000, 0, 1),
   };
 
-  @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
@@ -202,7 +202,7 @@ export class HomePage {
   }
 
   segChanged(ev) {
-
+    this.content.resize();
   }
 
   changeMonth(ev) {

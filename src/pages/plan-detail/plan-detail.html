@@ -8,7 +8,18 @@
 
   <ion-navbar color="primary">
     <ion-title>计划详情</ion-title>
+    <ion-buttons end>
+      <button ion-button>反馈记录</button>
+    </ion-buttons>
   </ion-navbar>
+
+  <!-- <ion-toolbar color="white">
+    <ion-segment [(ngModel)]="dataType" mode="md" (ionChange)="segmentChanged($event)">
+      <ion-segment-button [value]="i" *ngFor="let type of dataTypes;let i=index;">
+        {{type}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar> -->
 
 </ion-header>
 

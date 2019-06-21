@@ -208,4 +208,62 @@ page-home {
         }
         
     }
+
+    .timeline-wrap {
+        .timeline {
+            margin: 0;
+            font-size: 14px;
+            list-style: none;
+            .timeline-item {
+                position: relative;
+                padding-bottom: 20px;
+                .tail {
+                    position: absolute;
+                    left: 4px;
+                    height: 100%;
+                    border-left: 2px solid #e4e7ed;
+                }
+                &:last-child {
+                    .tail {
+                        display: none;
+                    }
+                }
+                .node {
+                    position: absolute;
+                    background-color: #e4e7ed;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .node-normal {
+                    left: -1px;
+                    width: 12px;
+                    height: 12px;
+                }
+
+                .content-wrapper {
+                    position: relative;
+                    padding-left: 28px;
+                    top: -3px;
+                    .timestamp {
+                        color: #909399;
+                        line-height: 1;
+                        font-size: 13px;
+                        &.is-top {
+                            margin-bottom: 8px;
+                            padding-top: 4px;
+                        }
+                    }
+                    .item-content {
+
+                    }
+                }
+            }
+            li {
+                display: list-item;
+                text-align: -webkit-match-parent;
+            }
+        }
+    }
 }
