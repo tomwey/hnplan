@@ -13,6 +13,12 @@
 </ion-header>
 
 <ion-content style="background: #fff">
+  <ion-toolbar color="white">
+    <ion-searchbar [(ngModel)]="keyword" cancelButtonText="取消" placeholder="输入计划名称、责任人、经办人" [showCancelButton]="true"
+      [animated]="false" name="search">
+    </ion-searchbar>
+  </ion-toolbar>
+
   <div class="panel" *ngFor="let opt of options">
     <h2 class="title">
       {{opt.name}}

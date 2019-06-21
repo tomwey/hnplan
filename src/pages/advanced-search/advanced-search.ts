@@ -16,6 +16,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class AdvancedSearchPage {
 
   title: any = '高级搜索';
+  keyword: any = null;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.title = this.navParams.data.title;
     this.options[0].name = this.title == '计划搜索' ? '计划完成时间' : '反馈进度时间';
