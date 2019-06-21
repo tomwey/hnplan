@@ -73,59 +73,50 @@
     </div>
   </div>
 
-  <div *ngIf="funcType === 1">全景计划</div>
+  <div *ngIf="funcType === 1">
+    <div class="projects-list">
+      <ion-row>
+        <ion-col col-6 *ngFor="let proj of projects">
+          <div class="project-item" tappable (click)="selectProject(proj);">
+            <h3 class="name">枫丹西悦三期</h3>
+            <div class="stats-box">
+              <div class="stat">
+                <div class="label">总计划</div>
+                <div class="digit">123</div>
+              </div>
+              <div class="stat center">
+                <div class="label">已完成</div>
+                <div class="digit">39</div>
+              </div>
+              <div class="stat right">
+                <div class="label">预警计划</div>
+                <div class="digit">39</div>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+  </div>
   <div *ngIf="funcType === 2">
     <div class="timeline-wrap">
       <ul class="timeline">
+        <li class="timeline-item" *ngFor="let item of feedbackList">
+          <div class="tail"></div>
+          <div class="node node-normal"></div>
+          <div class="content-wrapper">
+            <div class="timestamp is-top">
+              2018-04-12
+            </div>
+            <div class="item-content">
+              <div class="feedback-item" *ngFor="let obj of item.list">
+                <div class="name">反馈记录说明1</div>
+                <div class="time">2018-04-12 12:30:40</div>
+              </div>
+            </div>
+          </div>
+        </li>
 
-        <li class="timeline-item">
-          <div class="tail"></div>
-          <div class="node node-normal"></div>
-          <div class="content-wrapper">
-            <div class="timestamp is-top">
-              2018/4/12
-            </div>
-            <div class="item-content">
-              123456
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item">
-          <div class="tail"></div>
-          <div class="node node-normal"></div>
-          <div class="content-wrapper">
-            <div class="timestamp is-top">
-              2018/4/12
-            </div>
-            <div class="item-content">
-              123456
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item">
-          <div class="tail"></div>
-          <div class="node node-normal"></div>
-          <div class="content-wrapper">
-            <div class="timestamp is-top">
-              2018/4/12
-            </div>
-            <div class="item-content">
-              123456
-            </div>
-          </div>
-        </li>
-        <li class="timeline-item">
-          <div class="tail"></div>
-          <div class="node node-normal"></div>
-          <div class="content-wrapper">
-            <div class="timestamp is-top">
-              2018/4/12
-            </div>
-            <div class="item-content">
-              123456
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
   </div>

@@ -98,6 +98,18 @@ export class HomePage {
   ];
 
   plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
+  projects: any = [{}, {}, {}, {}, {}, {}];
+
+  feedbackList: any = [
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+  ];
 
   @ViewChild('calendar') calendar: CalendarComponent;
   @ViewChild(Content) content: Content;
@@ -207,6 +219,10 @@ export class HomePage {
 
   changeMonth(ev) {
 
+  }
+
+  selectProject(proj) {
+    this.navCtrl.push('ProjectDetailStatPage');
   }
 
   checkIsAndroid() {
