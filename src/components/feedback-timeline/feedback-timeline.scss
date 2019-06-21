@@ -1,0 +1,75 @@
+feedback-timeline {
+    .timeline-wrap {
+        padding: 15px;
+        .timeline {
+            margin: 0;
+            font-size: 14px;
+            list-style: none;
+            .timeline-item {
+                position: relative;
+                padding-bottom: 20px;
+                .tail {
+                    position: absolute;
+                    left: 4px;
+                    height: 100%;
+                    border-left: 2px solid #ccc;
+                }
+                &:last-child {
+                    .tail {
+                        display: none;
+                    }
+                }
+                .node {
+                    position: absolute;
+                    background-color: #ccc;
+                    border-radius: 50%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .node-normal {
+                    left: -1px;
+                    width: 12px;
+                    height: 12px;
+                }
+
+                .content-wrapper {
+                    position: relative;
+                    padding-left: 28px;
+                    top: -3px;
+                    .timestamp {
+                        color: #333;
+                        line-height: 1;
+                        font-size: 14px;
+                        font-weight: bold;
+                        &.is-top {
+                            margin-bottom: 8px;
+                            padding-top: 4px;
+                        }
+                    }
+                    .item-content {
+                        padding-right: 30px;
+                        .feedback-item {
+                            padding: 10px;
+                            font-size: 12px;
+                            line-height: 14px;
+                            color: #999;
+                            // border-bottom: 0.55px solid #ccc;
+                            background: #fff;
+                            margin-bottom: 5px;
+                            border-radius: 4px;
+                            .name {
+                                color: #333;
+                                margin-bottom: 3px;
+                            }
+                        }
+                    }
+                }
+            }
+            li {
+                display: list-item;
+                text-align: -webkit-match-parent;
+            }
+        }
+    }
+}

@@ -29,6 +29,10 @@ export class PlanDetailPage {
 
   }
 
+  gotoFeedbackList() {
+    this.navCtrl.push('FeedbackListPage');
+  }
+
   doClick(type) {
     switch (type) {
       case 1:

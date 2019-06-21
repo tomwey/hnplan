@@ -15,11 +15,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FeedbackListPage {
 
+  feedbackList: any = [
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+    { list: [{}, {}, {}] },
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedbackListPage');
+    // console.log('ionViewDidLoad FeedbackListPage');
   }
 
 }

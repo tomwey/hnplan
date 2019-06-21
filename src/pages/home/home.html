@@ -99,26 +99,7 @@
     </div>
   </div>
   <div *ngIf="funcType === 2">
-    <div class="timeline-wrap">
-      <ul class="timeline">
-        <li class="timeline-item" *ngFor="let item of feedbackList">
-          <div class="tail"></div>
-          <div class="node node-normal"></div>
-          <div class="content-wrapper">
-            <div class="timestamp is-top">
-              2018-04-12
-            </div>
-            <div class="item-content">
-              <div class="feedback-item" *ngFor="let obj of item.list">
-                <div class="name">反馈记录说明1</div>
-                <div class="time">2018-04-12 12:30:40</div>
-              </div>
-            </div>
-          </div>
-        </li>
-
-      </ul>
-    </div>
+    <feedback-timeline [list]="feedbackList"></feedback-timeline>
   </div>
 
 </ion-content>
