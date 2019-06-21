@@ -58,6 +58,10 @@ export class AdvancedSearchPage {
 
   reset() {
     // this.prepareOptions();
+    this.options.forEach(opt => {
+      opt.selected = null;
+      this.keyword = null;
+    });
   }
 
   confirm() {
