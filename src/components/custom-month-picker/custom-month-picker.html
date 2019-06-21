@@ -1,0 +1,21 @@
+<!-- Generated template for the CustomMonthPickerComponent component -->
+<div class="custom-month-picker">
+  <div class="toggle-buttons">
+    <button ion-button clear class="switch-btn" (click)="togglePicker();">
+      {{currYear}} 年 {{currMonth < 10 ? '0' : ''}}{{currMonth}} 月&nbsp;<ion-icon
+        name="{{openPicker ? 'md-arrow-dropup' : 'md-arrow-dropdown'}}"></ion-icon>
+    </button>
+    <button ion-button class="back" clear (click)="prev();">
+      <ion-icon name="ios-arrow-back"></ion-icon>
+    </button>
+    <button ion-button class="forward" clear (click)="next();">
+      <ion-icon name="ios-arrow-forward"></ion-icon>
+    </button>
+  </div>
+  <div class="month-picker" *ngIf="openPicker">
+    <div class="month-picker-item" *ngFor="let month of months">
+      <span class="custom-btn" [class.active]="currMonth === month" tappable
+        (click)="selectMonth(month);">{{month}}月</span>
+    </div>
+  </div>
+</div>

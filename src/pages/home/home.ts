@@ -116,6 +116,8 @@ export class HomePage {
 
   currentDate: string = Utils.dateFormat(new Date());
 
+  currDate: any = new Date();
+
   dateOptions: CalendarComponentOptions = {
     monthFormat: 'YYYY 年 MM 月 ',
     weekdays: ['日', '一', '二', '三', '四', '五', '六'],
@@ -181,6 +183,10 @@ export class HomePage {
 
   changeDate(ev) {
 
+  }
+
+  dateChanged(ev) {
+    console.log(ev);
   }
 
   prev() {

@@ -12,41 +12,13 @@ page-home {
         }
     }
 
-    .custom-select-month {
-        padding: 10px 60px 0 60px;
-        overflow: hidden;
-
-        .button-ios {
-            color: #757575;
-        }
-        .switch-btn {
-            width: 100%;
-            text-align: center;
-            line-height: 32px;
-        }
-        .switch-btn, .back, .forward {
-            display: block;
-            position: relative;
-            float: left;
-            min-height: 32px;
-            margin: 0;
-            padding: 0;
-            font-size: 15px;
-        }
-        .back {
-            margin-left: -100%;
-            left: -40px;
-            width: 40px;
-        }
-        .forward {
-            margin-left: -40px;
-            right: -40px;
-            width: 40px;
-        }
-    }
-
     .toolbar-ios .segment-button {
         max-width: 64px;
+    }
+
+    .custom-select-month {
+        // padding-top: 10px;
+        margin-bottom: 1px;
     }
 
     .weeks {

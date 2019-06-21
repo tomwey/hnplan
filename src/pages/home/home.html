@@ -46,15 +46,7 @@
       (onChange)="changeDate($event);" (monthChange)="changeMonth($event);" [format]="'YYYY-MM-DD'">
     </ion-calendar>
     <div class="custom-select-month" *ngIf="dataType != '0'">
-      <button ion-button clear class="switch-btn">
-        2019 年 06 月&nbsp;<ion-icon name="md-arrow-dropdown"></ion-icon>
-      </button>
-      <button ion-button class="back" clear (click)="prev();">
-        <ion-icon name="ios-arrow-back"></ion-icon>
-      </button>
-      <button ion-button class="forward" clear (click)="next();">
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
+      <custom-month-picker [(date)]="currDate" (dateChange)="dateChanged($event);"></custom-month-picker>
     </div>
     <div class="weeks" *ngIf="dataType === '1'">
       <div class="week-wrap">
