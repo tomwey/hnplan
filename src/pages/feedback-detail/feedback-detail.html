@@ -7,11 +7,46 @@
 <ion-header no-border>
 
   <ion-navbar color="primary">
-    <ion-title>反馈详情</ion-title>
+    <ion-title>反馈进度详情</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header>
+      反馈信息
+    </ion-card-header>
+    <div class="body">
+      <table class="table">
+        <tr *ngFor="let item of data">
+          <td class="label">
+            {{item.label}}
+          </td>
+          <td class="value">
+            {{item.value}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </ion-card>
 
+  <ion-card>
+    <ion-card-header>
+      反馈问题
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item *ngFor="let obj of data2">
+        <h2 text-wrap>{{obj.name}}</h2>
+        <p text-wrap>相关人员: {{obj.mannames}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
 </ion-content>
+<ion-footer>
+  <div padding>
+    <button ion-button block>再次催办</button>
+  </div>
+
+</ion-footer>
