@@ -32,9 +32,14 @@
       </div>
     </ion-item>
     <ion-item-options side="right" *ngIf="item.can_cb">
+      <button ion-button color="lightGray" (click)="doClick(sliding)">
+        <!-- &emsp;全&nbsp;景&emsp; -->
+        &emsp;全景&emsp;<br>&emsp;计划&emsp;
+      </button>
       <button ion-button color="primary" (click)="doClick(sliding)">
         &emsp;催&nbsp;办&emsp;
       </button>
+
     </ion-item-options>
   </ion-item-sliding>
 </div>

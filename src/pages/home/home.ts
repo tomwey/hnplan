@@ -25,6 +25,9 @@ export class HomePage {
   showLoading: boolean = true;
   isAndroid: boolean = false;
 
+  funcType: number = 0;
+  funcTypes: any = ['个人计划', '全景计划', '反馈记录'];
+
   dataType: any = '0';
   dataTypes: any = [
     {
@@ -176,6 +179,10 @@ export class HomePage {
 
   }
 
+  search() {
+
+  }
+
   selectPlan(ev) {
     // console.log(ev);
     this.navCtrl.push('PlanDetailPage', ev);
@@ -191,6 +198,10 @@ export class HomePage {
   }
 
   segmentChanged(ev) {
+
+  }
+
+  segChanged(ev) {
 
   }
 

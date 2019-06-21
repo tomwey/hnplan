@@ -13,11 +13,19 @@
       </button>
     </ion-buttons>
     <ion-title>
-      计划
+      <ion-segment [(ngModel)]="funcType" color="white" (ionChange)="segChanged($event)">
+        <ion-segment-button [value]="i" *ngFor="let type of funcTypes;let i=index;">
+          {{type}}
+        </ion-segment-button>
+      </ion-segment>
       <!-- <button ion-button class="limit-width1" text-wrap (click)="selectProject();">{{currentProject.name || '选择项目'}} <ion-icon name="md-arrow-dropdown"></ion-icon></button> -->
     </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="changeStats();">
+      <button ion-button icon-only small (click)="search();">
+        <ion-icon name="ios-search-outline"></ion-icon>
+      </button>
+      &nbsp;
+      <button ion-button icon-only small (click)="changeStats();">
         <ion-icon name="ios-stats-outline"></ion-icon>
       </button>
     </ion-buttons>

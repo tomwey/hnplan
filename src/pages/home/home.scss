@@ -45,6 +45,10 @@ page-home {
         }
     }
 
+    .toolbar-ios .segment-button {
+        max-width: 64px;
+    }
+
     .weeks {
         padding: 0 10px;
         // display: flex;
