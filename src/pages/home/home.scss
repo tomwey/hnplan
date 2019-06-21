@@ -208,7 +208,7 @@ page-home {
                     position: absolute;
                     left: 4px;
                     height: 100%;
-                    border-left: 2px solid #999;
+                    border-left: 2px solid #ccc;
                 }
                 &:last-child {
                     .tail {
@@ -217,7 +217,7 @@ page-home {
                 }
                 .node {
                     position: absolute;
-                    background-color: #999;
+                    background-color: #ccc;
                     border-radius: 50%;
                     display: flex;
                     justify-content: center;
