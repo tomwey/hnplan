@@ -205,6 +205,10 @@ export class HomePage {
     // console.log(124);
   }
 
+  doFullScape(ev) {
+    this.navCtrl.push('ProjectDetailStatPage');
+  }
+
   selectWeek(index) {
     this.weekIndex = index;
   }

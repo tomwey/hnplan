@@ -67,8 +67,8 @@
     </div>
     <div class="plan-list">
       <ion-list>
-        <plan-item [item]="item" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
-          *ngFor="let item of planList"></plan-item>
+        <plan-item [item]="item" (onSelect)="selectPlan($event);" (onFullScape)="doFullScape($event);"
+          (onUrge)="doUrge($event);" *ngFor="let item of planList"></plan-item>
       </ion-list>
     </div>
   </div>

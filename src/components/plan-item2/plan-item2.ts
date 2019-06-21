@@ -15,6 +15,7 @@ export class PlanItem2Component {
   @Input() item: any = {};
   @Output() onSelect: EventEmitter<any> = new EventEmitter();
   @Output() onUrge: EventEmitter<any> = new EventEmitter();
+  @Output() onFullScape: EventEmitter<any> = new EventEmitter();
 
   constructor() {
 
@@ -22,6 +23,11 @@ export class PlanItem2Component {
 
   doClick(sliding) {
     this.onUrge.emit(this.item);
+    sliding.close();
+  }
+
+  doClick2(sliding) {
+    this.onFullScape.emit(this.item);
     sliding.close();
   }
 
