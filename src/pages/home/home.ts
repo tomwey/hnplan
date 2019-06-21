@@ -192,7 +192,7 @@ export class HomePage {
   }
 
   search() {
-
+    this.navCtrl.push('AdvancedSearchPage', { title: this.funcType === 0 ? '计划搜索' : '反馈搜索' });
   }
 
   selectPlan(ev) {
