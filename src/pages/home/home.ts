@@ -46,57 +46,9 @@ export class HomePage {
   ];
 
   weekIndex: number = 0;
-  weeks: any = [
-    {
-      name: '第1周',
-      date: '01~07'
-    },
-    {
-      name: '第2周',
-      date: '08~15'
-    },
-    {
-      name: '第3周',
-      date: '16~21'
-    },
-    {
-      name: '第4周',
-      date: '22~28'
-    },
-    {
-      name: '第5周',
-      date: '29~30'
-    },
-  ]
+  weeks: any = [];
 
-  planList: any = [
-    // {
-    //   type: 1,
-    //   typename: '职能计划',
-    //   can_cb: true,
-    //   level: '四级',
-    //   name: '计划管理系统APP端功能规划初稿',
-    //   source: '部门内部',
-    //   projectname: '集团管理类'
-    // },
-    // {
-    //   type: 2,
-    //   typename: '项目计划',
-    //   can_cb: true,
-    //   name: '计划管理系统APP端功能规划初稿',
-    //   level: '四级',
-    //   source: '部门内部',
-    //   projectname: '集团管理类'
-    // },
-    // {
-    //   type: 3,
-    //   typename: '专项计划',
-    //   name: '计划管理系统APP端功能规划初稿',
-    //   level: '四级',
-    //   source: '部门内部',
-    //   projectname: '集团管理类'
-    // }
-  ];
+  planList: any = [];
 
   plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
   projects: any = [{}, {}, {}, {}, {}, {}];
@@ -142,6 +94,10 @@ export class HomePage {
     private app: App,
     public navParams: NavParams) {
     this.isAndroid = this.checkIsAndroid();
+
+    // console.log(this.getMonthWeek());
+    // console.log(this.getWeeksInMonth(2019, 5));
+    // console.log(this.getWeekOfMonth());
   }
 
   ionViewDidLoad() {
@@ -151,6 +107,7 @@ export class HomePage {
   }
 
   loadPlans(bDate, eDate) {
+    this.error = null;
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '获取计划明细APP',
@@ -254,6 +211,26 @@ export class HomePage {
 
   dateChanged(ev) {
     // console.log(ev);
+
+    if (this.dataType == '2') {
+      this.loadPlansByMonth();
+    } else if (this.dataType == '1') {
+      this.weeks = this.getWeeksInMonth(this.currDate.getFullYear(), this.currDate.getMonth());
+      this.selectWeek(this.getWeekOfMonth());
+    }
+  }
+
+  loadPlansByMonth() {
+
+    let date = new Date();
+    date.setFullYear(this.currDate.getFullYear());
+    date.setMonth(this.currDate.getMonth());
+    date.setDate(1);
+    let start = Utils.dateFormat(date);
+    date.setMonth(this.currDate.getMonth() + 1);
+    date.setDate(0);
+    let end = Utils.dateFormat(date);
+    this.loadPlans(start, end);
   }
 
   search() {
@@ -276,14 +253,90 @@ export class HomePage {
 
   selectWeek(index) {
     this.weekIndex = index;
+
+    if (index < this.weeks.length) {
+      let w = this.weeks[index];
+      let start = Utils.dateFormat(new Date(w.year, w.month, w.start));
+      let end = Utils.dateFormat(new Date(w.year, w.month, w.end));
+      this.loadPlans(start, end);
+    }
+    // this.loadPlans()
+  }
+
+  getWeekOfMonth() {
+    // var d = new Date();
+    let y = this.currDate.getFullYear();
+    let m = this.currDate.getMonth();
+    let now = new Date();
+    if (y == now.getFullYear() && m == now.getMonth()) {
+      // var date = this.currDate,
+      //   w = date.getDay(),
+      //   d = date.getDate();
+      // return Math.ceil((d + 6 - w) / 7);
+      var firstWeekday = new Date(this.currDate.getFullYear(), this.currDate.getMonth(), 1).getDay();
+      var offsetDate = this.currDate.getDate() + firstWeekday - 1;
+      return Math.floor(offsetDate / 7);
+    }
+
+    return 0;
+  }
+
+  getWeeksInMonth(year: number, month: number) {
+
+    const weeks = [];
+    const firstDay: Date = new Date(year, month, 1);
+    const lastDay: Date = new Date(year, month + 1, 0);
+    const daysInMonth: number = lastDay.getDate();
+    let dayOfWeek: number = firstDay.getDay();
+    let start: number;
+    let end: number;
+    for (let i = 1; i < daysInMonth + 1; i++) {
+      dayOfWeek = new Date(year, month, i).getDay();
+      if (dayOfWeek === 0 || i === 1) {
+        start = i;
+      }
+
+      if (dayOfWeek === 6 || i === daysInMonth) {
+
+        end = i;
+
+        // if (start !== end) {
+
+        weeks.push({
+          start: start,
+          end: end,
+          year: year,
+          month: month
+        });
+        // } else {
+        // }
+      }
+
+      // dayOfWeek = new Date(year, month, i).getDay();
+      // console.log(dayOfWeek);
+    }
+
+    return weeks;
   }
 
   segmentChanged(ev) {
-    console.log(ev);
+    // console.log(this.dataType);
+    if (this.dataType == '1') {
+      // 按周
+      // this.planList = [];
+      this.weeks = this.getWeeksInMonth(this.currDate.getFullYear(), this.currDate.getMonth());
+      this.selectWeek(this.getWeekOfMonth());
+
+    } else if (this.dataType == '2') {
+      // 按月
+      // this.currDate.setDate(1);
+      // this.dateChanged(null);
+      this.loadPlansByMonth();
+    }
   }
 
   segChanged(ev) {
-    console.log(ev);
+    // console.log(ev);
     this.content.resize();
   }
 

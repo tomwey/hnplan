@@ -28,10 +28,12 @@ export class CustomMonthPickerComponent {
     return date;
   }
   set date(d: Date) {
-    this._date = d;
     this.currMonth = d.getMonth() + 1;
     this.currYear = d.getFullYear();
-    this.dateChange.emit(d);
+    if (this._date) { // 表示不是第一次设置
+      this.dateChange.emit(d);
+    }
+    this._date = d;
   }
 
   constructor() {

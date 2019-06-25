@@ -52,8 +52,8 @@
       <div class="week-wrap">
         <div class="week" [class.active]="weekIndex === i" tappable (click)="selectWeek(i);"
           *ngFor="let week of weeks;let i = index">
-          <h4 class="name">{{week.name}}</h4>
-          <p class="date">{{week.date}}</p>
+          <h4 class="name">第{{i+1}}周</h4>
+          <p class="date">{{week.start == week.end ? week.start : (week.start + '~' + week.end)}}</p>
         </div>
       </div>
     </div>
