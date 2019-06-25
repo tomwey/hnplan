@@ -14,7 +14,13 @@
             // data = JSON.stringify(data || {});
             callbacks[cbid] = callback;
             if (nativeBridge) {
-                nativeBridge.postMessage({ cbid: cbid, data: data || {} });
+                if (window.HNNativeBridge) {
+                    // android
+                    nativeBridge.postMessage(JSON.stringify({ cbid: cbid, data: data || {} }));
+                } else {
+                    nativeBridge.postMessage({ cbid: cbid, data: data || {} });
+                }
+
             }
         },
 
