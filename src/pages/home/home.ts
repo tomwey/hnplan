@@ -166,6 +166,9 @@ export class HomePage {
             } else if (ele.planstate == '2') {
               cssClass = 'pending'
             }
+            if (Utils.dateFormat(new Date()) == ele.planenddate) {
+              cssClass += ' today';
+            }
             _daysConfig.push({
               date: new Date(ele.planenddate),
               subTitle: '●',
