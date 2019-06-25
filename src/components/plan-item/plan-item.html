@@ -5,18 +5,18 @@
       <div item-content style="width: 100%;">
         <div class="plan-item type-{{item.type}}">
           <div class="left">
-            <p class="date">6<span class="unit">日</span></p>
-            <p class="year-month">2019年6月</p>
+            <p class="date">{{parseDate(item.planoverdate)}}<span class="unit">日</span></p>
+            <p class="year-month">{{parseYearMonth(item.planoverdate)}}</p>
           </div>
           <div class="center">
             <h2 class="name">
-              {{item.name}}
+              {{item.itemname}}
             </h2>
             <div class="tags">
-              <span class="tag tag-{{item.type}}">{{item.typename}}</span>
+              <span class="tag tag-{{item.plantypeid}}">{{item.plantypename}}</span>
               <span class="tag">{{item.projectname}}</span>
-              <span class="tag">{{item.source}}</span>
-              <span class="tag">{{item.level}}</span>
+              <span class="tag">{{item.plansource}}</span>
+              <span class="tag">{{item.plangrade}}</span>
             </div>
           </div>
           <div class="right">
@@ -29,11 +29,11 @@
         </div>
       </div>
     </ion-item>
-    <ion-item-options side="right" *ngIf="item.can_cb">
-      <button ion-button color="lightGray" (click)="doClick2(itemSliding)">
+    <ion-item-options side="right" *ngIf="item.showprjlink || item.showurge">
+      <button ion-button color="lightGray" (click)="doClick2(itemSliding)" *ngIf="item.showprjlink">
         &emsp;全景&emsp;<br>&emsp;计划&emsp;
       </button>
-      <button ion-button color="primary" (click)="doClick(itemSliding)">
+      <button ion-button color="primary" (click)="doClick(itemSliding)" *ngIf="item.showurge">
         &emsp;催&nbsp;办&emsp;
       </button>
     </ion-item-options>

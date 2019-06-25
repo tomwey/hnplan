@@ -70,32 +70,32 @@ export class HomePage {
   ]
 
   planList: any = [
-    {
-      type: 1,
-      typename: '职能计划',
-      can_cb: true,
-      level: '四级',
-      name: '计划管理系统APP端功能规划初稿',
-      source: '部门内部',
-      projectname: '集团管理类'
-    },
-    {
-      type: 2,
-      typename: '项目计划',
-      can_cb: true,
-      name: '计划管理系统APP端功能规划初稿',
-      level: '四级',
-      source: '部门内部',
-      projectname: '集团管理类'
-    },
-    {
-      type: 3,
-      typename: '专项计划',
-      name: '计划管理系统APP端功能规划初稿',
-      level: '四级',
-      source: '部门内部',
-      projectname: '集团管理类'
-    }
+    // {
+    //   type: 1,
+    //   typename: '职能计划',
+    //   can_cb: true,
+    //   level: '四级',
+    //   name: '计划管理系统APP端功能规划初稿',
+    //   source: '部门内部',
+    //   projectname: '集团管理类'
+    // },
+    // {
+    //   type: 2,
+    //   typename: '项目计划',
+    //   can_cb: true,
+    //   name: '计划管理系统APP端功能规划初稿',
+    //   level: '四级',
+    //   source: '部门内部',
+    //   projectname: '集团管理类'
+    // },
+    // {
+    //   type: 3,
+    //   typename: '专项计划',
+    //   name: '计划管理系统APP端功能规划初稿',
+    //   level: '四级',
+    //   source: '部门内部',
+    //   projectname: '集团管理类'
+    // }
   ];
 
   plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
@@ -122,42 +122,6 @@ export class HomePage {
   dateOptions: CalendarComponentOptions = {
     monthFormat: 'YYYY 年 MM 月 ',
     weekdays: ['日', '一', '二', '三', '四', '五', '六'],
-    // daysConfig: [
-    //   {
-    //     date: new Date('2019-06-02'),
-    //     subTitle: '●',
-    //     cssClass: 'pending'
-    //   },
-    //   {
-    //     date: new Date('2019-06-03'),
-    //     subTitle: '●',
-    //     cssClass: 'pending'
-    //   },
-    //   {
-    //     date: new Date('2019-06-04'),
-    //     subTitle: '●',
-    //     // cssClass: 'pending'
-    //   },
-    //   {
-    //     date: new Date('2019-06-12'),
-    //     subTitle: '●',
-    //     cssClass: 'success'
-    //   },
-    //   {
-    //     date: new Date('2019-06-13'),
-    //     subTitle: '●',
-    //     cssClass: 'success'
-    //   },
-    //   {
-    //     date: new Date('2019-06-14'),
-    //     subTitle: '●'
-    //   },
-    //   {
-    //     date: new Date('2019-06-15'),
-    //     subTitle: '●',
-    //     // cssClass: 'success'
-    //   },
-    // ],
     monthPickerFormat: [
       '1月', '2月', '3月',
       '4月', '5月', '6月',
@@ -167,6 +131,8 @@ export class HomePage {
     weekStart: 0,
     from: new Date(2000, 0, 1),
   };
+
+  error: any = null;
 
   constructor(public navCtrl: NavController,
     private api: ApiService,
@@ -180,10 +146,41 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
-    this.loadData();
+    this.loadPlans(this.currentDate, this.currentDate);
+    this.loadCalendarData('', '');
   }
 
-  loadData() {
+  loadPlans(bDate, eDate) {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划明细APP',
+      param1: '', // 关键字搜索
+      param2: '0', // 计划类型
+      param3: '0', // 项目
+      param4: '0', // 计划级别 
+      param5: '', // 风险等级
+      param6: '', // 完成状态
+      param7: bDate, // 开始日期
+      param8: eDate, // 结束日期
+      param9: '1', // 个人计划，组织计划
+      param10: Utils.getManID(), // man id
+      param11: '1'
+    })
+      .then(data => {
+        console.log(data);
+        if (data['data']) {
+          this.planList = data['data'];
+        }
+
+        this.error = this.planList.length === 0 ? '暂无计划事项' : null;
+      })
+      .catch(error => {
+        // console.log(error);
+        this.error = error.message || '服务器超时';
+      });
+  }
+
+  loadCalendarData(bDate, eDate) {
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '获取计划日历APP',
@@ -193,12 +190,12 @@ export class HomePage {
       param4: '0', // 计划级别 
       param5: '', // 风险等级
       param6: '', // 完成状态
-      param7: '', // 开始日期
-      param8: '', // 结束日期
+      param7: bDate, // 开始日期
+      param8: eDate, // 结束日期
       param9: '1', // 个人计划，组织计划
-      param10: '1008058', // man id
+      param10: Utils.getManID(), // man id
       param11: '1'
-    })
+    }, '', false)
       .then(data => {
         // console.log(data);
         let temp = [];
@@ -230,7 +227,29 @@ export class HomePage {
   }
 
   changeDate(ev) {
+    // console.log(ev);
+    this.loadPlans(ev, ev);
+  }
 
+  changeMonth(ev) {
+    let year = ev.newMonth.years;
+    let month = ev.newMonth.months;
+    // 获取当月最大日期；
+    let date = new Date(year, month, 0);
+    let end = Utils.dateFormat(date);
+    date.setDate(1);
+    let start = Utils.dateFormat(date);
+    // console.log(start);
+    this.loadCalendarData(start, end);
+    // this.currentDate = start;
+    let now = new Date();
+    if (now.getFullYear() == year && (now.getMonth() + 1) == month) {
+      this.currentDate = Utils.dateFormat(now);
+    } else {
+      this.currentDate = start;
+    }
+
+    this.loadPlans(this.currentDate, this.currentDate);
   }
 
   dateChanged(ev) {
@@ -260,15 +279,12 @@ export class HomePage {
   }
 
   segmentChanged(ev) {
-
+    console.log(ev);
   }
 
   segChanged(ev) {
+    console.log(ev);
     this.content.resize();
-  }
-
-  changeMonth(ev) {
-
   }
 
   selectProject(proj) {

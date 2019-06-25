@@ -26,6 +26,18 @@ export class PlanItemComponent {
     sliding.close();
   }
 
+  parseDate(dateStr) {
+    let date = new Date(dateStr);
+    if (!date) return '--';
+    return date.getDate();
+  }
+
+  parseYearMonth(dateStr) {
+    let date = new Date(dateStr);
+    if (!date) return '--年--月';
+    return `${date.getFullYear()}年${date.getMonth() + 1}月`;
+  }
+
   doClick2(sliding) {
     this.onFullScape.emit(this.item);
     sliding.close();

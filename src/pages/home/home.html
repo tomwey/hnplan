@@ -57,6 +57,7 @@
         </div>
       </div>
     </div>
+    <div class="empty-error-box1" *ngIf="!!error">{{error}}</div>
     <div class="plan-list">
       <ion-list>
         <plan-item [item]="item" (onSelect)="selectPlan($event);" (onFullScape)="doFullScape($event);"

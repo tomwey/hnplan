@@ -151,6 +151,7 @@ export class ApiService {
 
     // params.i  = i;
     // params.ak = ak; 
+    console.log('请求参数: ' + JSON.stringify(params));
 
     // 封装请求
     let headers = new Headers({ 'Content-Type': 'application/json' });

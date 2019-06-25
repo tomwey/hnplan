@@ -33,10 +33,10 @@ export class Utils {
         let result = this.aesDecrypt(encrypted, 'HN_GroupAES_2018');
         this.params = JSON.parse(result);
       }
-      console.log('解析参数');
+      // console.log('解析参数');
     } else {
       // console.info('params:', this.params);
-      console.log('参数已经解析');
+      // console.log('参数已经解析');
     }
 
     if (!this.params) {
@@ -44,6 +44,10 @@ export class Utils {
     }
 
     return this.params[name];
+  }
+
+  static getManID(): string {
+    return this.getQueryString('manid') ? this.getQueryString('manid') : '1008058';
   }
 
   static _getQueryString(name): string {
