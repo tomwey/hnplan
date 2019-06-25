@@ -50,7 +50,7 @@ export class HomePage {
 
   planList: any = [];
 
-  plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
+  // plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
   projects: any = [{}, {}, {}, {}, {}, {}];
 
   feedbackList: any = [
@@ -332,12 +332,57 @@ export class HomePage {
       // this.currDate.setDate(1);
       // this.dateChanged(null);
       this.loadPlansByMonth();
+    } else if (this.dataType == '0') {
+      // 按天
+      this.loadPlans(this.currentDate, this.currentDate);
+
+      let date = new Date(this.currentDate);
+      date.setDate(1);
+      let start = Utils.dateFormat(date);
+
+      date.setMonth(date.getMonth() + 1);
+      date.setDate(0);
+      let end = Utils.dateFormat(date);
+
+      this.loadCalendarData(start, end);
     }
   }
 
   segChanged(ev) {
-    // console.log(ev);
     this.content.resize();
+    // console.log(ev);
+    if (this.funcType == 1) {
+      // 全景计划
+      this.loadProjectPlans();
+    } else if (this.funcType == 2) {
+      // 反馈记录
+    } else if (this.funcType == 0) {
+      // 个人计划
+    }
+
+  }
+
+  loadProjectPlans() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取项目全景计划汇总APP',
+      param1: '', // 关键字搜索
+      param2: '42', // 计划类型
+      param3: '0', // 项目
+      param4: '0', // 计划级别 
+      param5: '', // 风险等级
+      param6: '', // 开始日期
+      param7: '', // 结束日期
+      param8: '1', // 个人计划，组织计划
+      param9: Utils.getManID(), // man id
+      param10: '1'
+    })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   selectProject(proj) {
