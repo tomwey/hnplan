@@ -122,42 +122,42 @@ export class HomePage {
   dateOptions: CalendarComponentOptions = {
     monthFormat: 'YYYY 年 MM 月 ',
     weekdays: ['日', '一', '二', '三', '四', '五', '六'],
-    daysConfig: [
-      {
-        date: new Date('2019-06-02'),
-        subTitle: '●',
-        cssClass: 'pending'
-      },
-      {
-        date: new Date('2019-06-03'),
-        subTitle: '●',
-        cssClass: 'pending'
-      },
-      {
-        date: new Date('2019-06-04'),
-        subTitle: '●',
-        // cssClass: 'pending'
-      },
-      {
-        date: new Date('2019-06-12'),
-        subTitle: '●',
-        cssClass: 'success'
-      },
-      {
-        date: new Date('2019-06-13'),
-        subTitle: '●',
-        cssClass: 'success'
-      },
-      {
-        date: new Date('2019-06-14'),
-        subTitle: '●'
-      },
-      {
-        date: new Date('2019-06-15'),
-        subTitle: '●',
-        // cssClass: 'success'
-      },
-    ],
+    // daysConfig: [
+    //   {
+    //     date: new Date('2019-06-02'),
+    //     subTitle: '●',
+    //     cssClass: 'pending'
+    //   },
+    //   {
+    //     date: new Date('2019-06-03'),
+    //     subTitle: '●',
+    //     cssClass: 'pending'
+    //   },
+    //   {
+    //     date: new Date('2019-06-04'),
+    //     subTitle: '●',
+    //     // cssClass: 'pending'
+    //   },
+    //   {
+    //     date: new Date('2019-06-12'),
+    //     subTitle: '●',
+    //     cssClass: 'success'
+    //   },
+    //   {
+    //     date: new Date('2019-06-13'),
+    //     subTitle: '●',
+    //     cssClass: 'success'
+    //   },
+    //   {
+    //     date: new Date('2019-06-14'),
+    //     subTitle: '●'
+    //   },
+    //   {
+    //     date: new Date('2019-06-15'),
+    //     subTitle: '●',
+    //     // cssClass: 'success'
+    //   },
+    // ],
     monthPickerFormat: [
       '1月', '2月', '3月',
       '4月', '5月', '6月',
@@ -180,6 +180,53 @@ export class HomePage {
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
+    this.loadData();
+  }
+
+  loadData() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划日历APP',
+      param1: '', // 关键字搜索
+      param2: '0', // 计划类型
+      param3: '0', // 项目
+      param4: '0', // 计划级别 
+      param5: '', // 风险等级
+      param6: '', // 完成状态
+      param7: '', // 开始日期
+      param8: '', // 结束日期
+      param9: '1', // 个人计划，组织计划
+      param10: '1008058', // man id
+      param11: '1'
+    })
+      .then(data => {
+        // console.log(data);
+        let temp = [];
+        let arr = data['data'];
+        if (arr) {
+          let _daysConfig: DayConfig[] = [];
+          arr.forEach(ele => {
+            let cssClass = '';
+            if (ele.planstate == '1') {
+              cssClass = 'success'
+            } else if (ele.planstate == '2') {
+              cssClass = 'pending'
+            }
+            _daysConfig.push({
+              date: new Date(ele.planenddate),
+              subTitle: '●',
+              cssClass: cssClass
+            });
+          });
+          this.dateOptions.daysConfig = _daysConfig;
+        } else {
+          this.dateOptions.daysConfig = [];
+        }
+        this.calendar.options = this.dateOptions;
+      })
+      .catch(error => {
+        // console.log(error);
+      });
   }
 
   changeDate(ev) {
@@ -187,15 +234,7 @@ export class HomePage {
   }
 
   dateChanged(ev) {
-    console.log(ev);
-  }
-
-  prev() {
-
-  }
-
-  next() {
-
+    // console.log(ev);
   }
 
   search() {
