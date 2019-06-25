@@ -22,10 +22,80 @@ export class PlanDetailPage {
 
   msg: any = null;
 
+  plan: any = {};
+
   constructor(public navCtrl: NavController,
     // private events: Events,
     private zone: NgZone,
     public navParams: NavParams) {
+
+    let object = Object.assign({}, this.navParams.data);
+    for (const key in object) {
+      if (object.hasOwnProperty(key)) {
+        let element = (object[key] || '').toString();
+        element = element.replace('NULL', '无');
+        let arr = element.split('T');
+        if (arr.length > 0) {
+          element = arr[0];
+        }
+        this.plan[key] = element;
+      }
+    }
+
+    this.data = [
+      {
+        label: '计划来源',
+        value: this.plan.plansource
+      },
+      {
+        label: '计划类型',
+        value: this.plan.plantypename
+      },
+      {
+        label: '项目名称',
+        value: this.plan.projectname
+      },
+      {
+        label: '计划名称',
+        value: this.plan.itemname
+      },
+      {
+        label: '计划层级',
+        value: this.plan.plangrade
+      },
+      {
+        label: '责任部门',
+        value: this.plan.liabledeptname
+      },
+      {
+        label: '第一责任人',
+        value: this.plan.liablemanname
+      },
+      {
+        label: '第二责任人',
+        value: this.plan.otherliablemannamelist
+      },
+      {
+        label: '经办人',
+        value: this.plan.domanname
+      },
+      {
+        label: '计划开始日期',
+        value: this.plan.planbegindate
+      },
+      {
+        label: '计划结束日期',
+        value: this.plan.planoverdate
+      },
+      {
+        label: '实际完成日期',
+        value: this.plan.actualoverdate
+      },
+      {
+        label: '计划状态',
+        value: '已完成'
+      },
+    ];
   }
 
   ionViewDidLoad() {
@@ -75,59 +145,6 @@ export class PlanDetailPage {
 
   }
 
-  data: any = [
-    {
-      label: '计划来源',
-      value: '部门内部'
-    },
-    {
-      label: '计划类型',
-      value: '职能计划'
-    },
-    {
-      label: '项目名称',
-      value: '集团管理类'
-    },
-    {
-      label: '计划名称',
-      value: '计划管理系统APP端项目计划统计功能开发完成—iOS'
-    },
-    {
-      label: '计划层级',
-      value: '四级'
-    },
-    {
-      label: '责任部门',
-      value: '运营'
-    },
-    {
-      label: '第一责任人',
-      value: '唐伟'
-    },
-    {
-      label: '第二责任人',
-      value: '无'
-    },
-    {
-      label: '经办人',
-      value: '唐伟'
-    },
-    {
-      label: '计划开始日期',
-      value: '2019-06-20'
-    },
-    {
-      label: '计划结束日期',
-      value: '2019-06-24'
-    },
-    {
-      label: '实际完成日期',
-      value: '无'
-    },
-    {
-      label: '计划状态',
-      value: '已完成'
-    },
-  ];
+  data: any = [];
 
 }

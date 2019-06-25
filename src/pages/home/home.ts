@@ -67,7 +67,7 @@ export class HomePage {
   @ViewChild('calendar') calendar: CalendarComponent;
   @ViewChild(Content) content: Content;
 
-  currentDate: string = Utils.dateFormat(new Date());
+  currentDate: string = null;//Utils.dateFormat(new Date());
 
   currDate: any = new Date();
 
@@ -177,6 +177,7 @@ export class HomePage {
           this.dateOptions.daysConfig = [];
         }
         this.calendar.options = this.dateOptions;
+        this.currentDate = Utils.dateFormat(new Date());//"2019-06-29";
       })
       .catch(error => {
         // console.log(error);
