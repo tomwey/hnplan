@@ -155,7 +155,7 @@ export class HomePage {
     }, '', false)
       .then(data => {
         // console.log(data);
-        let temp = [];
+        // let temp = [];
         let arr = data['data'];
         if (arr) {
           let _daysConfig: DayConfig[] = [];
