@@ -6,6 +6,7 @@ import { Tools } from '../../provider/Tools';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 import { CalendarComponentOptions, DayConfig, CalendarComponent } from 'ion2-calendar';
 
+declare var HNJSBridge;
 
 /**
  * Generated class for the HomePage page.
@@ -260,7 +261,8 @@ export class HomePage {
   }
 
   back() {
-    window.location.href = 'plan://back';
+    // window.location.href = 'plan://back';
+    HNJSBridge.invoke('back', null, null);
   }
 
 }

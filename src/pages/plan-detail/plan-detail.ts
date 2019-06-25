@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 
 /**
  * Generated class for the PlanDetailPage page.
@@ -7,6 +7,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+
+declare var HNJSBridge;
 
 @IonicPage()
 @Component({
@@ -18,7 +20,12 @@ export class PlanDetailPage {
   dataTypes: any = ['基本信息', '反馈记录'];
   dataType: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  msg: any = null;
+
+  constructor(public navCtrl: NavController,
+    // private events: Events,
+    private zone: NgZone,
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -38,16 +45,26 @@ export class PlanDetailPage {
       case 1:
         {
           // 变更
+          let that = this;
+          HNJSBridge.invoke(null, { foo: 'bar' }, function (msg) {
+            alert(msg);
+          });
         }
         break;
       case 2:
         {
           // 进度反馈
+          HNJSBridge.invoke('进度反馈', (msg) => {
+
+          });
         }
         break;
       case 3:
         {
           // 完成确认
+          HNJSBridge.invoke('完成确认', (msg) => {
+
+          });
         }
         break;
       default:

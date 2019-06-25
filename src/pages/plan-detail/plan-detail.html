@@ -25,6 +25,7 @@
 
 <ion-content>
   <div class="body">
+    <span *ngIf="!!msg">收到消息了</span>
     <table class="table">
       <tr *ngFor="let item of data">
         <td class="label">
