@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import ECharts from 'echarts';
+import { ApiService } from '../../provider/api-service';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the StatHomePage page.
@@ -26,13 +28,30 @@ export class StatHomePage {
   dateTypes: any = ['本月', '本季', '本年'];
   currentType: number = 0;
 
+  totalStat: any = {};
+
   constructor(public navCtrl: NavController,
     private app: App,
+    private api: ApiService,
     public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad StatHomePage');
+    this.loadPlanStats();
+
+    // this.createGraph();
+  }
+
+  getDigitValue(stat, key) {
+    let val = (stat[key] || 0).toString().replace('NULL', 0);
+    // console.log(stat);
+    return parseInt(val);
+  }
+
+  createGraph() {
+    let done = this.getDigitValue(this.totalStat, 'plantotalovernum');
+    let undone = this.getDigitValue(this.totalStat, 'plantotalnum') - this.getDigitValue(this.totalStat, 'plantotalovernum');
     var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
     // 指定图表的配置项和数据
     var option = {
@@ -45,8 +64,8 @@ export class StatHomePage {
         radius: ['60%', '62%'],
         silent: true,
         data: [
-          { value: 132, name: '已完成计划' },
-          { value: 290, name: '未完成计划' }
+          { value: done, name: '已完成计划' },
+          { value: undone, name: '未完成计划' }
         ],
         itemStyle: {
           normal: {
@@ -63,8 +82,12 @@ export class StatHomePage {
       color: ['rgb(231,90,22)', 'rgb(159,159,159)'],
     };
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+    // console.log(option);
+
+    if (!(done == 0 && undone == 0)) {
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    }
 
     var planBar = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
     var option2: any = {
@@ -171,9 +194,37 @@ export class StatHomePage {
     });
   }
 
-  // ionViewDidEnter() {
-
-  // }
+  loadPlanStats() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划统计APP',
+      param1: '',
+      param2: '1',
+      param3: '',
+      param4: '0',
+      param5: '0',
+      param6: '0',
+      param7: '0',
+      param8: '',
+      param9: '',
+      param10: '1',
+      param11: Utils.getManID(),
+      param12: '1'
+    })
+      .then(data => {
+        // console.log(data);
+        if (data['data']) {
+          if (data['data'].length > 0) {
+            let item = data['data'][0];
+            this.totalStat = item;
+          }
+        }
+        this.createGraph();
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 
   segmentChanged(ev) {
 

@@ -53,6 +53,9 @@ export class HomePage {
   // plans: any = [{ type: 1, typename: '职能计划' }, { type: 2, typename: '项目计划' }, { type: 3, typename: '专项计划' }];
   projects: any = [{}, {}, {}, {}, {}, {}];
 
+  areas: any = [];
+  areaProjects: any = {};
+
   feedbackList: any = [
     { list: [{}, {}, {}] },
     { list: [{}, {}, {}] },
@@ -375,17 +378,49 @@ export class HomePage {
       param3: '0', // 项目
       param4: '0', // 计划级别 
       param5: '', // 风险等级
-      param6: '', // 开始日期
-      param7: '', // 结束日期
-      param8: '1', // 个人计划，组织计划
-      param9: Utils.getManID(), // man id
-      param10: '1'
+      param6: '', // 完成状态
+      param7: '', // 开始日期
+      param8: '', // 结束日期
+      param9: '1', // 个人计划，组织计划
+      param10: Utils.getManID(), // man id
+      param11: '0'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
+        if (data && data['data']) {
+          // area_id: "1679352"
+          // area_name: "成都"
+          // area_order: "2"
+          // project_id: "1291509"
+          // project_name: "珍宝锦城二期"
+          // project_order: "4300"
+          // projectovernum: "28"
+          // projecttotalnum: "234"
+          // projectwarningnum: "0"
+          let arr = data['data'];
+          let temp = [];
+          let temp2 = [];
+          let projectTemp = {};
+          arr.forEach(ele => {
+            if (temp.indexOf(ele.area_name) === -1) {
+              temp.push(ele.area_name);
+              temp2.push({
+                id: ele.area_id,
+                name: ele.area_name
+              });
+            }
+
+            let items = projectTemp[ele.area_name] || [];
+            items.push(ele);
+            projectTemp[ele.area_name] = items;
+          });
+          this.areas = temp2;
+          this.areaProjects = Object.assign({}, projectTemp);
+        }
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
+        this.error = error.message || "服务器出错了~";
       });
   }
 

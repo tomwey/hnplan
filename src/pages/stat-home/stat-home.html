@@ -33,17 +33,19 @@
     <div class="value-show">
       <div class="value-inner">
         <div class="complete-rate">
-          <div class="value"><span class="digit">58.3</span><span class="unit">%</span></div>
+          <div class="value"><span
+              class="digit">{{totalStat.plantotaloverrate == 'NULL' ? '--' : totalStat.plantotaloverrate}}</span><span
+              class="unit">%</span></div>
           <div class="label">计划完成率</div>
         </div>
         <div class="plan-stats">
           <div class="done">
-            <div class="value">267</div>
+            <div class="value">{{totalStat.plantotalovernum == 'NULL' ? '--' : totalStat.plantotalovernum}}</div>
             <div class="label">已完成</div>
           </div>
           <div class="splitor">/</div>
           <div class="total">
-            <div class="value">512</div>
+            <div class="value">{{totalStat.plantotalnum == 'NULL' ? '--' : totalStat.plantotalnum}}</div>
             <div class="label">总计划</div>
           </div>
         </div>
@@ -54,18 +56,18 @@
   <div class="other-stats">
     <div class="stat-box">
       <div class="value">
-        <span class="done">12</span>
+        <span class="done">{{totalStat.plantodaytotalovernum == 'NULL' ? '--' : totalStat.plantodaytotalovernum}}</span>
         <span class="splitor">/</span>
-        <span class="total">32</span>
+        <span class="total">{{totalStat.plantodaytotalnum == 'NULL' ? '--' : totalStat.plantodaytotalnum}}</span>
       </div>
       <div class="label">今日计划</div>
     </div>
     <div class="stat-box">
-      <div class="value">16</div>
+      <div class="value">{{totalStat.planoverduenum == 'NULL' ? '--' : totalStat.planoverduenum}}</div>
       <div class="label">超期计划</div>
     </div>
     <div class="stat-box">
-      <div class="value">16</div>
+      <div class="value">{{totalStat.plantotalwarningnum == 'NULL' ? '--' : totalStat.plantotalwarningnum}}</div>
       <div class="label">预警计划</div>
     </div>
   </div>
