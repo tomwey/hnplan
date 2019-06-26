@@ -21,6 +21,7 @@ export class FeedbackListPage {
   feedbackDates: any = [];
   fbDatesList: any = {};
 
+  error: any = null;
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
@@ -37,14 +38,14 @@ export class FeedbackListPage {
       dotype: 'GetData',
       funname: '查询进度反馈记录APP',
       param1: Utils.getManID(),
-      param2: this.navParams.data.itemname || '', // 关键字搜索
-      param3: '-1', // 计划类型
-      param4: '-1', // 计划级别 
-      param5: '-1', // 项目
-      param6: '', // 开始日期
-      param7: '', // 结束日期
-      param8: '', // 风险等级
-      param9: '-1', // 催办范围
+      param2: this.navParams.data.keyword || '', // 关键字搜索
+      param3: this.navParams.data.plan_type || '-1', // 计划类型
+      param4: this.navParams.data.plan_level || '-1', // 计划级别 
+      param5: this.navParams.data.project || '-1', // 项目
+      param6: this.navParams.data.begin_date || '', // 开始日期
+      param7: this.navParams.data.end_date || '', // 结束日期
+      param8: this.navParams.data.fx_level || '', // 风险等级
+      param9: this.navParams.data.cb_type || '-1', // 催办范围
     })
       .then(data => {
         // console.log(data);
@@ -74,11 +75,15 @@ export class FeedbackListPage {
         }
         this.feedbackDates = temp;
         this.fbDatesList = dateData;
+        if (JSON.stringify(this.fbDatesList) === '{}') {
+          this.error = '无反馈记录';
+        } else {
+          this.error = null;
+        }
       })
       .catch(error => {
-        this.tools.showToast(error.message || '服务器出错了~');
-        // console.log(error);
-        // this.error = error.message || "服务器出错了~";
+        // this.tools.showToast(error.message || '服务器出错了~');
+        this.error = error.message || '服务器出错了~';
       });
   }
 

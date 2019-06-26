@@ -71,7 +71,7 @@ export class ProjectDetailStatPage {
       funname: '获取项目全景计划APP',
       param1: '1',
       param2: '',
-      param3: '42',
+      param3: '1040',
       param4: this.item.project_id,
       param5: '0',
       param6: '0',

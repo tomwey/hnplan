@@ -420,7 +420,7 @@ export class HomePage {
       dotype: 'GetData',
       funname: '获取项目全景计划汇总APP',
       param1: '', // 关键字搜索
-      param2: '42', // 计划类型
+      param2: '1040', // 计划类型
       param3: '0', // 项目
       param4: '0', // 计划级别 
       param5: '', // 风险等级

@@ -13,5 +13,6 @@
 </ion-header>
 
 <ion-content>
+  <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
   <feedback-timeline [dates]="feedbackDates" [data]="fbDatesList"></feedback-timeline>
 </ion-content>
