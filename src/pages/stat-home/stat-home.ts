@@ -30,6 +30,9 @@ export class StatHomePage {
 
   totalStat: any = {};
 
+  pieChart: any = null;
+  barChart: any = null;
+
   constructor(public navCtrl: NavController,
     private app: App,
     private api: ApiService,
@@ -52,7 +55,10 @@ export class StatHomePage {
   createGraph1() {
     let done = this.getDigitValue(this.totalStat, 'plantotalovernum');
     let undone = this.getDigitValue(this.totalStat, 'plantotalnum') - this.getDigitValue(this.totalStat, 'plantotalovernum');
-    var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
+
+    if (!this.pieChart) {
+      this.pieChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
+    }
     // 指定图表的配置项和数据
     var option = {
       title: {
@@ -86,7 +92,9 @@ export class StatHomePage {
 
     if (!(done == 0 && undone == 0)) {
       // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
+      this.pieChart.setOption(option);
+    } else {
+      this.pieChart.setOption(null);
     }
   }
 
@@ -114,7 +122,25 @@ export class StatHomePage {
       warningPlans.push(warning);
       planRates.push(parseFloat((ele.overrate || '0.00').replace('NULL', '0.00')));
     });
-    var planBar = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
+    if (!this.barChart) {
+      this.barChart = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
+      this.barChart.on('click', (params) => {
+        // console.log(params);
+        let itemName = null;
+        if (params.componentType == 'series') {
+          itemName = params.name;
+        } else if (params.componentType == 'xAxis') {
+          itemName = params.value;
+        }
+
+        if (itemName == '项目计划') {
+          this.navCtrl.push('StatProjectPage');
+        } else {
+          this.navCtrl.push('StatNoProjectPage');
+        }
+      });
+    }
+
     var option2: any = {
       legend: {
         data: ['总计划', '完成计划', '预警计划', '计划完成率']
@@ -201,22 +227,7 @@ export class StatHomePage {
         }
       ]
     };
-    planBar.setOption(option2);
-    planBar.on('click', (params) => {
-      // console.log(params);
-      let itemName = null;
-      if (params.componentType == 'series') {
-        itemName = params.name;
-      } else if (params.componentType == 'xAxis') {
-        itemName = params.value;
-      }
-
-      if (itemName == '项目计划') {
-        this.navCtrl.push('StatProjectPage');
-      } else {
-        this.navCtrl.push('StatNoProjectPage');
-      }
-    });
+    this.barChart.setOption(option2);
   }
 
   loadPlanStats() {
