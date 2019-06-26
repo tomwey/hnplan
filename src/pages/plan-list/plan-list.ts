@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
-import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 import { Utils } from '../../provider/Utils';
 
 /**

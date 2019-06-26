@@ -3,7 +3,7 @@
   <ion-item-sliding #itemSliding>
     <ion-item tappable (click)="doTap();">
       <div item-content style="width: 100%;">
-        <div class="plan-item type-{{item.type}}">
+        <div class="plan-item type-{{item.bigtypeid}}">
           <div class="left">
             <p class="date">{{parseDate(item.planoverdate)}}<span class="unit">日</span></p>
             <p class="year-month">{{parseYearMonth(item.planoverdate)}}</p>
