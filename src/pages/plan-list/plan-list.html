@@ -14,6 +14,7 @@
 
 
 <ion-content>
+  <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
   <ion-list>
     <plan-item *ngFor="let plan of planList" [item]="plan" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);">
     </plan-item>

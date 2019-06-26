@@ -53,8 +53,9 @@ export class SelectProjectPage {
   loadData() {
     this.api.POST(null, {
       "dotype": "GetData",
-      "funname": "案场获取项目列表APP",
-      "param1": Utils.getQueryString("manid")
+      "funname": "获取进度反馈记录查询条件APP",
+      "param1": '3',
+      "param2": Utils.getManID()
     })
       .then(data => {
         if (data && data['data']) {
