@@ -49,7 +49,7 @@ export class StatHomePage {
     return parseInt(val);
   }
 
-  createGraph() {
+  createGraph1() {
     let done = this.getDigitValue(this.totalStat, 'plantotalovernum');
     let undone = this.getDigitValue(this.totalStat, 'plantotalnum') - this.getDigitValue(this.totalStat, 'plantotalovernum');
     var myChart = ECharts.init(document.getElementById('top-graphic') as HTMLDivElement);
@@ -88,7 +88,32 @@ export class StatHomePage {
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
     }
+  }
 
+  createGraph2(data) {
+    // overnum: "0"
+    // overrate: "0.00"
+    // plantypeid: "1030"
+    // plantypename: "总裁交办"
+    // totalnum: "4"
+    // warningnum: "0"
+    let xAxisData = [];
+    let maxVal = 0;
+    let totalPlans = [];
+    let overPlans = [];
+    let warningPlans = [];
+    let planRates = [];
+    data.forEach(ele => {
+      xAxisData.push(ele.plantypename);
+      let total = parseInt((ele.totalnum || '0').replace('NULL', '0'));
+      let over = parseInt((ele.overnum || '0').replace('NULL', '0'));
+      let warning = parseInt((ele.warningnum || '0').replace('NULL', '0'));
+      maxVal = Math.max(maxVal, total, over, warning);
+      totalPlans.push(total);
+      overPlans.push(over);
+      warningPlans.push(warning);
+      planRates.push(parseFloat((ele.overrate || '0.00').replace('NULL', '0.00')));
+    });
     var planBar = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
     var option2: any = {
       legend: {
@@ -98,7 +123,7 @@ export class StatHomePage {
       xAxis: [
         {
           type: 'category',
-          data: ['总裁交办', '职能计划', '项目计划', '专项计划'],
+          data: xAxisData,
           triggerEvent: true,
         }
       ],
@@ -107,7 +132,7 @@ export class StatHomePage {
           type: 'value',
           name: '计划数',
           min: 0,
-          max: 130,
+          max: maxVal,
           interval: 10,
           axisLabel: {
             formatter: '{value} ml'
@@ -132,7 +157,7 @@ export class StatHomePage {
         {
           name: '总计划',
           type: 'bar',
-          data: [35, 122, 78, 15],
+          data: totalPlans,
           barMaxWidth: '15%',
           barGap: '60%',
           label: {
@@ -143,7 +168,7 @@ export class StatHomePage {
         {
           name: '完成计划',
           type: 'bar',
-          data: [20, 90, 18, 5],
+          data: overPlans,
           barMaxWidth: '15%',
           barGap: '60%',
           label: {
@@ -154,7 +179,7 @@ export class StatHomePage {
         {
           name: '预警计划',
           type: 'bar',
-          data: [5, 32, 23, 10],
+          data: warningPlans,
           barMaxWidth: '15%',
           barGap: '60%',
           label: {
@@ -167,7 +192,7 @@ export class StatHomePage {
           type: 'line',
           yAxisIndex: 1,
           smooth: true,
-          data: [59, 70, 26, 33],
+          data: planRates,
           label: {
             show: true,
             position: 'top',
@@ -195,19 +220,43 @@ export class StatHomePage {
   }
 
   loadPlanStats() {
+    let start = '', end = '';
+    if (this.currentType === 0) {
+      // 本月
+      var date = new Date();
+      date.setDate(1);
+      start = Utils.dateFormat(date);
+      date.setMonth(date.getMonth() + 1);
+      date.setDate(0);
+      end = Utils.dateFormat(date);
+    } else if (this.currentType === 1) {
+      // 本季
+      var now = new Date();
+      var quarter = Math.floor((now.getMonth() / 3));
+      var firstDate = new Date(now.getFullYear(), quarter * 3, 1);
+      var endDate = new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0);
+      start = Utils.dateFormat(firstDate);
+      end = Utils.dateFormat(endDate);
+    } else if (this.currentType === 2) {
+      // 本年
+      var first = new Date(new Date().getFullYear(), 0, 1);
+      var last = new Date(new Date().getFullYear(), 11, 31);
+      start = Utils.dateFormat(first);
+      end = Utils.dateFormat(last);
+    }
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '获取计划统计APP',
-      param1: '',
-      param2: '1',
-      param3: '',
+      param1: '1',
+      param2: '',
+      param3: '0',
       param4: '0',
       param5: '0',
-      param6: '0',
-      param7: '0',
-      param8: '',
-      param9: '',
-      param10: '1',
+      param6: '',
+      param7: '',
+      param8: start,
+      param9: end,
+      param10: this.dataType == 0 ? '1' : '2',
       param11: Utils.getManID(),
       param12: '1'
     })
@@ -219,19 +268,46 @@ export class StatHomePage {
             this.totalStat = item;
           }
         }
-        this.createGraph();
+        this.createGraph1();
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
+      });
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划统计APP',
+      param1: '2',
+      param2: '',
+      param3: '0',
+      param4: '0',
+      param5: '0',
+      param6: '',
+      param7: '',
+      param8: start,
+      param9: end,
+      param10: this.dataType == 0 ? '1' : '2',
+      param11: Utils.getManID(),
+      param12: '1'
+    })
+      .then(data => {
+        console.log(data);
+        if (data['data']) {
+          this.createGraph2(data['data']);
+        }
+        // this.createGraph2();
       })
+      .catch(error => {
+        // console.log(error);
+      });
   }
 
   segmentChanged(ev) {
-
+    this.loadPlanStats();
   }
 
   selectDate(t) {
     this.currentType = t;
+    this.loadPlanStats();
   }
 
   togglePlan() {
