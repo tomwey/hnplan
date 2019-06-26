@@ -13,8 +13,8 @@ import { App } from 'ionic-angular';
 })
 export class FeedbackTimelineComponent {
 
-  @Input() list: any = [];
-
+  @Input() dates: any = [];
+  @Input() data: any = {};
   constructor(private app: App) {
 
   }

@@ -1,16 +1,16 @@
 <div class="timeline-wrap">
   <ul class="timeline">
-    <li class="timeline-item" *ngFor="let item of list">
+    <li class="timeline-item" *ngFor="let date of dates">
       <div class="tail"></div>
       <div class="node node-normal"></div>
       <div class="content-wrapper">
         <div class="timestamp is-top">
-          2018-04-12
+          {{date}}
         </div>
         <div class="item-content">
-          <div class="feedback-item" *ngFor="let obj of item.list" tappable (click)="doClick(obj)">
-            <div class="name">反馈记录说明1</div>
-            <div class="time">2018-04-12 12:30:40</div>
+          <div class="feedback-item" *ngFor="let obj of data[date]" tappable (click)="doClick(obj)">
+            <div class="name">{{obj.billdesc}}</div>
+            <div class="time">{{obj.create_date}}</div>
           </div>
         </div>
       </div>
