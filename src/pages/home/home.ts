@@ -97,16 +97,23 @@ export class HomePage {
     private app: App,
     public navParams: NavParams) {
     this.isAndroid = this.checkIsAndroid();
-
-    // console.log(this.getMonthWeek());
-    // console.log(this.getWeeksInMonth(2019, 5));
-    // console.log(this.getWeekOfMonth());
   }
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
+    this.currentDate = Utils.dateFormat(new Date());
+
     this.loadPlans(this.currentDate, this.currentDate);
-    this.loadCalendarData('', '');
+
+    let date = new Date(this.currentDate);
+    date.setDate(1);
+    let start = Utils.dateFormat(date);
+
+    date.setMonth(date.getMonth() + 1);
+    date.setDate(0);
+    let end = Utils.dateFormat(date);
+
+    this.loadCalendarData(start, end);
   }
 
   loadPlans(bDate, eDate) {
@@ -183,7 +190,7 @@ export class HomePage {
           this.dateOptions.daysConfig = [];
         }
         this.calendar.options = this.dateOptions;
-        this.currentDate = Utils.dateFormat(new Date());//"2019-06-29";
+        // this.currentDate = Utils.dateFormat(new Date());//"2019-06-29";
       })
       .catch(error => {
         // console.log(error);
@@ -255,7 +262,7 @@ export class HomePage {
   }
 
   doFullScape(ev) {
-    this.navCtrl.push('ProjectDetailStatPage', ev);
+    this.navCtrl.push('ProjectDetailStatPage', { item: ev, title: `${ev.project_name || ev.projectname}全景计划` });
   }
 
   selectWeek(index) {
@@ -425,7 +432,7 @@ export class HomePage {
   }
 
   selectProject(proj) {
-    this.navCtrl.push('ProjectDetailStatPage', proj);
+    this.navCtrl.push('ProjectDetailStatPage', { item: proj, title: `${proj.project_name}全景计划` });
   }
 
   checkIsAndroid() {

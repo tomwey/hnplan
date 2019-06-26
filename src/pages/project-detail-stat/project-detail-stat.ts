@@ -52,10 +52,12 @@ export class ProjectDetailStatPage {
   currentIndex: number = 0;
   planDataType: number = 0;
   item: any;
+  title: any;
   constructor(public navCtrl: NavController,
     private api: ApiService,
     public navParams: NavParams) {
-    this.item = Object.assign({}, this.navParams.data);
+    this.item = Object.assign({}, this.navParams.data.item || this.navParams.data);
+    this.title = this.navParams.data.title;
   }
 
   ionViewDidLoad() {

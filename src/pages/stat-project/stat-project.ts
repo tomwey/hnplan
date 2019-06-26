@@ -144,7 +144,7 @@ export class StatProjectPage {
   }
 
   selectProject(proj) {
-    this.navCtrl.push('ProjectDetailStatPage', proj);
+    this.navCtrl.push('ProjectDetailStatPage', { item: proj, title: `${proj.project_name}计划分析` });
   }
 
   openFilter() {
