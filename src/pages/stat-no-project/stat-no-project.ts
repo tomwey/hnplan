@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content, ModalController } from 'ionic-angular';
 
 import ECharts from 'echarts';
+import { ApiService } from '../../provider/api-service';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the StatNoProjectPage page.
@@ -25,24 +27,11 @@ export class StatNoProjectPage {
     '部门计划统计'
   ];
 
-  filterItems: any = [
-    {
-      name: '本月',
-      closable: false
-    },
-    {
-      name: '总裁交办',
-      closable: true
-    },
-    {
-      name: '枫丹西悦二期',
-      closable: true
-    },
-    {
-      name: '三级',
-      closable: true
-    },
-  ];
+  totalPlans: number = 0;
+
+  filterItems: any = [];
+
+  globalConds: any = {};
 
   plans: any = [
     {
@@ -60,43 +49,18 @@ export class StatNoProjectPage {
   ];
 
   planList: any = [
-    {
-      type: 1,
-      typename: '职能计划',
-      can_cb: true,
-      level: '四级',
-      name: '计划管理系统APP端功能规划初稿',
-      source: '部门内部',
-      projectname: '集团管理类'
-    },
-    {
-      type: 2,
-      typename: '项目计划',
-      can_cb: true,
-      name: '计划管理系统APP端功能规划初稿',
-      level: '四级',
-      source: '部门内部',
-      projectname: '集团管理类'
-    },
-    {
-      type: 3,
-      typename: '专项计划',
-      name: '计划管理系统APP端功能规划初稿',
-      level: '四级',
-      source: '部门内部',
-      projectname: '集团管理类'
-    }
+
   ];
 
-  currentOpt: any = '1';
+  currentOpt: any = '4';
   options: any = [
     {
       label: '按级别',
-      value: '1'
+      value: '4'
     },
     {
       label: '按来源',
-      value: '2'
+      value: '7'
     },
     {
       label: '按项目',
@@ -104,24 +68,211 @@ export class StatNoProjectPage {
     },
   ];
 
+  statePieChart: any = null;
+  warningPieChart: any = null;
+
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
+    private api: ApiService,
     public navParams: NavParams) {
+    this.dataType = this.navParams.data.dataType;
+    this.filterItems = this.navParams.data.filters;
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad StatNoProjectPage');
-    this.createGraph1();
+    // this.createGraph1();
 
-    this.createGraph2();
+    // this.createGraph2();
+  }
+
+  calcConds() {
+    let planType = '0', project = '0', planLevel = '0', start = '', end = '';
+    this.filterItems.forEach(item => {
+      if (item.type == 'plan_type') {
+        planType = item.value;
+      } else if (item.type == 'plan_level') {
+        planLevel = item.value;
+      } else if (item.type == 'project') {
+        project = item.value;
+      } else if (item.type == 'date') {
+        if (item.name == '本月') {
+          var date = new Date();
+          date.setDate(1);
+          start = Utils.dateFormat(date);
+          date.setMonth(date.getMonth() + 1);
+          date.setDate(0);
+          end = Utils.dateFormat(date);
+        } else if (item.name == '本季') {
+          var now = new Date();
+          var quarter = Math.floor((now.getMonth() / 3));
+          var firstDate = new Date(now.getFullYear(), quarter * 3, 1);
+          var endDate = new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0);
+          start = Utils.dateFormat(firstDate);
+          end = Utils.dateFormat(endDate);
+        } else if (item.name == '本年') {
+          var first = new Date(new Date().getFullYear(), 0, 1);
+          var last = new Date(new Date().getFullYear(), 11, 31);
+          start = Utils.dateFormat(first);
+          end = Utils.dateFormat(last);
+        }
+      }
+    });
+    this.globalConds = {
+      plan_type: planType,
+      project: project,
+      plan_level: planLevel,
+      start: start,
+      end: end
+    };
+  }
+
+  loadStatePlanStats() {
+
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划统计APP',
+      param1: '5',
+      param2: '',
+      param3: this.globalConds.plan_type || '0',
+      param4: this.globalConds.project || '0',
+      param5: this.globalConds.plan_level || '0',
+      param6: '',
+      param7: '',
+      param8: this.globalConds.start,
+      param9: this.globalConds.end,
+      param10: this.dataType == 0 ? '1' : '2',
+      param11: Utils.getManID(),
+      param12: '1'
+    })
+      .then(data => {
+        // console.log('状态：', data);
+        if (data && data['data']) {
+          this.createGraph1(data['data']);
+        }
+      })
+      .catch(error => {
+
+      });
+  }
+
+  loadWarningPlanStats() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划统计APP',
+      param1: '6',
+      param2: '',
+      param3: this.globalConds.plan_type || '0',
+      param4: this.globalConds.project || '0',
+      param5: this.globalConds.plan_level || '0',
+      param6: '',
+      param7: '',
+      param8: this.globalConds.start,
+      param9: this.globalConds.end,
+      param10: this.dataType == 0 ? '1' : '2',
+      param11: Utils.getManID(),
+      param12: '1'
+    })
+      .then(data => {
+        // console.log('风险：', data);
+        if (data && data['data']) {
+          this.createGraph2(data['data']);
+        }
+      })
+      .catch(error => {
+
+      });
+  }
+
+  loadOtherPlanStats() {
+    this.plans = [];
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划统计APP',
+      param1: this.currentOpt,
+      param2: '',
+      param3: this.globalConds.plan_type || '0',
+      param4: this.globalConds.project || '0',
+      param5: this.globalConds.plan_level || '0',
+      param6: '',
+      param7: '',
+      param8: this.globalConds.start,
+      param9: this.globalConds.end,
+      param10: this.dataType == 0 ? '1' : '2',
+      param11: Utils.getManID(),
+      param12: '1'
+    })
+      .then(data => {
+        console.log('其他：', data);
+        if (data && data['data']) {
+          this.plans = data['data'];
+        }
+      })
+      .catch(error => {
+
+      });
+  }
+
+  loadWarningPlans() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划明细APP',
+      param1: '', // 关键字搜索
+      param2: this.globalConds.plan_type || '0', // 计划类型
+      param3: this.globalConds.project || '0', // 项目
+      param4: this.globalConds.plan_level || '0', // 计划级别 
+      param5: '高', // 风险等级
+      param6: '', // 完成状态
+      param7: this.globalConds.start, // 开始日期
+      param8: this.globalConds.end, // 结束日期
+      param9: this.dataType == 0 ? '1' : '2', // 个人计划，组织计划
+      param10: Utils.getManID(), // man id
+      param11: '1'
+    })
+      .then(data => {
+        console.log(data);
+        if (data['data']) {
+          this.planList = data['data'];
+        }
+
+        // this.error = this.planList.length === 0 ? '暂无计划事项' : null;
+      })
+      .catch(error => {
+        // console.log(error);
+        // this.error = error.message || '服务器超时';
+      });
+  }
+
+  loadAll() {
+    this.loadStatePlanStats();
+    this.loadWarningPlanStats();
+    this.loadOtherPlanStats();
+    this.loadWarningPlans();
   }
 
   gotoPlanList(type) {
-    this.navCtrl.push('PlanListPage');
+    let obj = Object.assign({}, this.globalConds);
+    obj['data_type'] = this.dataType == 0 ? '1' : '2';
+    this.navCtrl.push('PlanListPage', obj);
   }
 
-  createGraph1() {
-    var myChart = ECharts.init(document.getElementById('state-graph') as HTMLDivElement);
+  // 状态图标
+  createGraph1(data) {
+    if (!this.statePieChart) {
+      this.statePieChart = ECharts.init(document.getElementById('state-graph') as HTMLDivElement);
+    }
+
+    let legData = [];
+    let value = {};
+    let sdata = [];
+    let sum = 0;
+    data.forEach(ele => {
+      legData.push(ele.overdesc);
+      sdata.push({ value: ele.totalnum, name: ele.overdesc });
+      value[ele.overdesc] = ele.totalnum;
+      sum += parseInt(ele.totalnum);
+    });
+    this.totalPlans = sum;
     // 指定图表的配置项和数据
     var option = {
       title: {
@@ -131,9 +282,9 @@ export class StatNoProjectPage {
         orient: 'vertical',
         right: 30,
         top: 72,
-        data: ['到期未完成', '未到期', '已超期', '已完成'],
+        data: legData,
         formatter: (name) => {
-          return `${name} 30`;
+          return `${name} ${value[name]}`;
         }
       },
       series: [{
@@ -142,12 +293,7 @@ export class StatNoProjectPage {
         radius: ['40%', '50%'],
         center: ['30%', '50%'],
         silent: true,
-        data: [
-          { value: 15, name: '到期未完成' },
-          { value: 15, name: '未到期' },
-          { value: 35, name: '已超期' },
-          { value: 15, name: '已完成' }
-        ],
+        data: sdata,
         itemStyle: {
           normal: {
             label: {
@@ -164,11 +310,24 @@ export class StatNoProjectPage {
     };
 
     // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+    this.statePieChart.setOption(option);
   }
 
-  createGraph2() {
-    var myChart = ECharts.init(document.getElementById('fx-graph') as HTMLDivElement);
+  createGraph2(data) {
+    if (!this.warningPieChart) {
+      this.warningPieChart = ECharts.init(document.getElementById('fx-graph') as HTMLDivElement);
+    }
+
+    let legData = [];
+    let value = {};
+    let sdata = [];
+    data.forEach(ele => {
+      let name = !ele.riskgrade || ele.riskgrade == 'NULL' ? '无风险' : ele.riskgrade + '风险';
+      legData.push(name);
+      sdata.push({ value: ele.totalnum, name: name });
+      value[name] = ele.totalnum;
+    });
+
     // 指定图表的配置项和数据
     var option = {
       title: {
@@ -178,9 +337,9 @@ export class StatNoProjectPage {
         orient: 'vertical',
         right: 30,
         top: 72,
-        data: ['高风险', '中风险', '低风险', '无风险'],
+        data: legData,
         formatter: (name) => {
-          return `${name} 30`;
+          return `${name} ${value[name]}`;
         }
       },
       series: [{
@@ -189,12 +348,7 @@ export class StatNoProjectPage {
         radius: ['40%', '50%'],
         center: ['30%', '50%'],
         silent: true,
-        data: [
-          { value: 35, name: '低风险' },
-          { value: 5, name: '中风险' },
-          { value: 5, name: '高风险' },
-          { value: 15, name: '无风险' }
-        ],
+        data: sdata,
         itemStyle: {
           normal: {
             label: {
@@ -211,11 +365,12 @@ export class StatNoProjectPage {
     };
 
     // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+    this.warningPieChart.setOption(option);
   }
 
   selectOption(opt) {
     this.currentOpt = opt.value;
+    this.loadOtherPlanStats();
   }
 
   openFilter() {
@@ -229,7 +384,7 @@ export class StatNoProjectPage {
   }
 
   segmentChanged(ev) {
-
+    this.loadAll();
   }
 
   selectPlan(ev) {
@@ -244,6 +399,8 @@ export class StatNoProjectPage {
 
   itemsChange() {
     // console.log(this.filterItems);
+    this.calcConds();
+    this.loadAll();
   }
 
   gotoBottom() {

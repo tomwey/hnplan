@@ -31,6 +31,21 @@ page-filter-options {
         }
     }
 
+    .select-project {
+        .item-ios.item-block .item-inner {
+            border-bottom: 0!important;
+        }
+        .label-ios {
+            font-size: 14px!important;
+            color: #999!important;
+        }   
+        ion-note {
+            font-size: 14px!important;
+            color: #333;
+        }
+        
+    }
+
     ion-footer {
         ion-row, ion-col {
             margin: 0!important;

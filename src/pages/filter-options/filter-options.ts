@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { Utils } from '../../provider/Utils';
+import { ApiService } from '../../provider/api-service';
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the FilterOptionsPage page.
@@ -16,24 +19,31 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 export class FilterOptionsPage {
 
   filterItems: any = [];
-  constructor(public navCtrl: NavController, private viewCtrl: ViewController, public navParams: NavParams) {
-    this.navParams.data.forEach(item => {
+  currentProject: any = { value: '', name: '' };
+  originProject: any = { value: '', name: '' };
+  constructor(public navCtrl: NavController,
+    private viewCtrl: ViewController,
+    private modalCtrl: ModalController,
+    private api: ApiService,
+    private tools: Tools,
+    public navParams: NavParams) {
+    console.log(this.navParams.data);
+    (this.navParams.data || []).forEach(item => {
       this.filterItems.push(item.name);
+      if (item.type === 'project') {
+        this.currentProject = Object.assign({}, item);
+        this.originProject = Object.assign({}, item);
+      }
     });
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad FilterOptionsPage');
-    this.prepareOptions();
+    this.loadOptions();
   }
 
   prepareOptions() {
     this.options.forEach(opt => {
-      // opt.options.forEach(item => {
-      //   if (this.filterItems.indexOf(item.name)) {
-      //     opt.selected = item;
-      //   }
-      // });
       for (let i = 0; i < opt.options.length; i++) {
         let item = opt.options[i];
         if (this.filterItems.indexOf(item.name) !== -1) {
@@ -60,23 +70,113 @@ export class FilterOptionsPage {
     }
   }
 
+  loadOptions() {
+    let promises: any = [];
+
+    // 计划类型
+    promises.push(this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取进度反馈记录查询条件APP',
+      param1: '1',
+      param2: Utils.getManID()
+    }, '', false)
+      .then(data => {
+        // console.info('types:', data);
+        let arr = data['data'];
+        for (let i = 0; i < this.options.length; i++) {
+          let opt = this.options[i];
+          if (opt.id == 'plan_type') {
+            let temp = [];
+            arr.forEach(ele => {
+              temp.push({ name: ele.bigtypename, value: ele.bigtypeid, type: 'plan_type' });
+            })
+            opt.options = temp;
+            break;
+          }
+        }
+      })
+      .catch(error => {
+        // console.info('types error:', error);
+      }));
+
+    // 计划级别
+    promises.push(this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取进度反馈记录查询条件APP',
+      param1: '2',
+      param2: Utils.getManID()
+    }, '', false)
+      .then(data => {
+        if (data && data['data']) {
+          let arr = data['data'];
+          for (let i = 0; i < this.options.length; i++) {
+            let opt = this.options[i];
+            if (opt.id == 'plan_level') {
+              let temp = [];
+              arr.forEach(ele => {
+                temp.push({ name: ele.plangrade, value: ele.plangradeid, type: 'plan_level' });
+              })
+              opt.options = temp;
+              break;
+            }
+          }
+
+        }
+      })
+      .catch(error => {
+      }));
+
+    this.tools.showLoading('正在加载');
+    Promise.all(promises).then(() => {
+      this.tools.hideLoading();
+
+      this.prepareOptions();
+    })
+      .catch(error => {
+        this.tools.hideLoading();
+
+        this.prepareOptions();
+      });
+  }
+
+  selectProject() {
+    let modal = this.modalCtrl.create('SelectProjectPage',
+      { onlyShowL1Projects: false, currentProject: this.currentProject });
+    modal.onDidDismiss((res) => {
+      if (!res) return;
+
+      this.currentProject.name = res.label;
+      this.currentProject.value = res.value;
+    });
+    modal.present();
+  }
+
   reset() {
+    this.currentProject = Object.assign({}, this.originProject);
     this.prepareOptions();
   }
 
   confirm() {
     let temp = [];
+
     this.options.forEach(opt => {
-      // console.log(opt.selected);
       if (opt.selected) {
         let obj = Object.assign({}, opt.selected);
         obj.closable = true;
-        if (obj.name == '本月' || obj.name == '本季' || obj.name == '本年') {
+        if (obj.type == 'date') {
           obj.closable = false;
         }
         temp.push(obj);
       }
     });
+    if (this.currentProject.name && this.currentProject.value) {
+      temp.push({
+        name: this.currentProject.name,
+        value: this.currentProject.value,
+        closable: true,
+        type: 'project'
+      });
+    }
     this.viewCtrl.dismiss(temp);
   }
 
@@ -87,15 +187,18 @@ export class FilterOptionsPage {
       options: [
         {
           name: '本月',
-          value: 1
+          value: 1,
+          type: 'date'
         },
         {
           name: '本季',
-          value: 2
+          value: 2,
+          type: 'date'
         },
         {
           name: '本年',
-          value: 3
+          value: 3,
+          type: 'date'
         }
       ]
     },
@@ -103,66 +206,12 @@ export class FilterOptionsPage {
       id: 'plan_type',
       name: '计划类型',
       options: [
-        {
-          name: '总裁交办',
-          value: 0
-        },
-        {
-          name: '职能计划',
-          value: 1
-        },
-        {
-          name: '项目计划',
-          value: 2
-        },
-        {
-          name: '专项计划',
-          value: 3
-        }
-      ]
-    },
-    {
-      id: 'project',
-      name: '所属项目',
-      options: [
-        {
-          name: '枫丹西悦二期',
-          value: 2039283
-        },
-        {
-          name: '枫丹铂麓一期',
-          value: 1837362
-        },
-        {
-          name: '枫丹唐悦二期',
-          value: 1928383
-        }
       ]
     },
     {
       id: 'plan_level',
       name: '计划级别',
       options: [
-        {
-          name: '一级',
-          value: 1
-        },
-        {
-          name: '二级',
-          value: 2
-        },
-        {
-          name: '三级',
-          value: 3
-        },
-        {
-          name: '四级',
-          value: 4
-        },
-        {
-          name: '里程碑',
-          value: 5
-        }
       ]
     }
   ];

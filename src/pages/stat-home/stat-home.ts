@@ -125,7 +125,7 @@ export class StatHomePage {
     if (!this.barChart) {
       this.barChart = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
       this.barChart.on('click', (params) => {
-        // console.log(params);
+        console.log(params);
         let itemName = null;
         if (params.componentType == 'series') {
           itemName = params.name;
@@ -133,10 +133,33 @@ export class StatHomePage {
           itemName = params.value;
         }
 
+        let planId = null;
+        for (let i = 0; i < data.length; i++) {
+          let item = data[i];
+          if (item.plantypename === itemName) {
+            planId = item.plantypeid;
+            break;
+          }
+        }
+
         if (itemName == '项目计划') {
-          this.navCtrl.push('StatProjectPage');
+          this.navCtrl.push('StatProjectPage', {
+            dataType: this.dataType,
+            filters: [
+              { name: this.dateTypes[this.currentType], value: this.currentType + 1, closable: false, type: 'date' },
+              { name: itemName, value: planId || '0', closable: true, type: 'plan_type' }
+            ]
+          });
         } else {
-          this.navCtrl.push('StatNoProjectPage');
+
+          this.navCtrl.push('StatNoProjectPage',
+            {
+              dataType: this.dataType,
+              filters: [
+                { name: this.dateTypes[this.currentType], value: this.currentType + 1, closable: false, type: 'date' },
+                { name: itemName, value: planId || '0', closable: true, type: 'plan_type' }
+              ]
+            });
         }
       });
     }

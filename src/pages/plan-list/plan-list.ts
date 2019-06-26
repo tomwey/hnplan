@@ -39,9 +39,9 @@ export class PlanListPage {
       param4: this.navParams.data.plan_level || '0', // 计划级别 
       param5: this.navParams.data.fx_level || '', // 风险等级
       param6: '', // 完成状态
-      param7: this.navParams.data.begin_date || '', // 开始日期
-      param8: this.navParams.data.end_date || '', // 结束日期
-      param9: '1', // 个人计划，组织计划
+      param7: this.navParams.data.begin_date || this.navParams.data.start || '', // 开始日期
+      param8: this.navParams.data.end_date || this.navParams.data.end || '', // 结束日期
+      param9: this.navParams.data.data_type || '1', // 个人计划，组织计划
       param10: Utils.getManID(), // man id
       param11: '1'
     })

@@ -32,7 +32,7 @@
     <div class="total-wrap" tappable (click)="gotoPlanList(1);">
       <div class="state-graph" id="state-graph"></div>
       <div class="total-box">
-        <div class="value">83</div>
+        <div class="value">{{totalPlans}}</div>
         <div class="label">计划总数</div>
       </div>
     </div>
@@ -42,7 +42,7 @@
     <div class="total-wrap" tappable (click)="gotoPlanList(2);">
       <div class="fx-graph" id="fx-graph"></div>
       <div class="total-box">
-        <div class="value">83</div>
+        <div class="value">{{totalPlans}}</div>
         <div class="label">计划总数</div>
       </div>
     </div>
@@ -56,29 +56,31 @@
     <div class="plans">
       <div class="plan" *ngFor="let plan of plans">
         <div class="info-wrap">
-          <div class="name">{{plan.name}}</div>
+          <div class="name">{{plan.project_name || plan.plansourcename || plan.plangrade}}</div>
           <div class="summary">
-            <span class="done">{{plan.done}}</span>
+            <span class="warning">{{plan.warningnum}}</span>
             <span class="line">/</span>
-            <span class="total">{{plan.total}}</span>
+            <span class="done">{{plan.overnum}}</span>
+            <span class="line">/</span>
+            <span class="total">{{plan.totalnum}}</span>
           </div>
         </div>
         <div class="progress">
-          <div class="progress-inner" [style.width]="plan.progress + '%'"></div>
+          <div class="progress-inner" [style.width]="plan.overrate + '%'"></div>
         </div>
       </div>
     </div>
   </div>
-  <div class="panel plan-list" id="fx-plans">
+  <div class="panel plan-list" id="fx-plans" *ngIf="planList.length > 0">
     <h2 class="title">高风险项</h2>
     <ion-list>
       <plan-item *ngFor="let plan of planList" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
         [item]="plan"></plan-item>
     </ion-list>
   </div>
-  <ion-fab right bottom>
+  <ion-fab right bottom *ngIf="planList.length > 0">
     <button ion-fab (click)="gotoBottom();">
-      <div class="digit">13</div>
+      <div class="digit">{{planList.length}}</div>
       <div class="label">高风险</div>
     </button>
   </ion-fab>
