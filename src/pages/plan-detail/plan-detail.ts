@@ -107,7 +107,7 @@ export class PlanDetailPage {
   }
 
   gotoFeedbackList() {
-    this.navCtrl.push('FeedbackListPage');
+    this.navCtrl.push('FeedbackListPage', this.plan);
   }
 
   doClick(type) {
