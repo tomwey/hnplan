@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiService } from '../../provider/api-service';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the ProjectDetailStatPage page.
@@ -49,11 +51,42 @@ export class ProjectDetailStatPage {
   ];
   currentIndex: number = 0;
   planDataType: number = 0;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  item: any;
+  constructor(public navCtrl: NavController,
+    private api: ApiService,
+    public navParams: NavParams) {
+    this.item = Object.assign({}, this.navParams.data);
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad ProjectDetailStatPage');
+    this.loadData();
+  }
+
+  loadData() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取项目全景计划APP',
+      param1: '1',
+      param2: '',
+      param3: '42',
+      param4: this.item.project_id,
+      param5: '0',
+      param6: '0',
+      param7: '',
+      param8: '',
+      param9: '',
+      param10: '0',
+      param11: '1',
+      param12: Utils.getManID(),
+      param13: '1'
+    })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   selectPlan(ev) {

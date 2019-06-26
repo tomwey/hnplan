@@ -255,7 +255,7 @@ export class HomePage {
   }
 
   doFullScape(ev) {
-    this.navCtrl.push('ProjectDetailStatPage');
+    this.navCtrl.push('ProjectDetailStatPage', ev);
   }
 
   selectWeek(index) {
@@ -425,7 +425,7 @@ export class HomePage {
   }
 
   selectProject(proj) {
-    this.navCtrl.push('ProjectDetailStatPage');
+    this.navCtrl.push('ProjectDetailStatPage', proj);
   }
 
   checkIsAndroid() {

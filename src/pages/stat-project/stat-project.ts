@@ -144,7 +144,7 @@ export class StatProjectPage {
   }
 
   selectProject(proj) {
-    this.navCtrl.push('ProjectDetailStatPage');
+    this.navCtrl.push('ProjectDetailStatPage', proj);
   }
 
   openFilter() {
