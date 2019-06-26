@@ -67,6 +67,7 @@
   </div>
 
   <div *ngIf="funcType === 1">
+    <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
     <div class="projects-list">
       <div class="project-wrap" *ngFor="let area of areas">
         <h2 class="area">{{area.name || area}}</h2>
@@ -96,6 +97,7 @@
     </div>
   </div>
   <div *ngIf="funcType === 2">
+    <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
     <feedback-timeline [dates]="feedbackDates" [data]="fbDatesList"></feedback-timeline>
   </div>
 

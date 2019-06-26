@@ -237,7 +237,7 @@ export class HomePage {
   }
 
   search() {
-    this.navCtrl.push('AdvancedSearchPage', { title: this.funcType === 0 ? '计划搜索' : '反馈搜索' });
+    this.navCtrl.push('AdvancedSearchPage', { title: this.funcType !== 2 ? '计划搜索' : '反馈搜索' });
   }
 
   selectPlan(ev) {
@@ -367,6 +367,7 @@ export class HomePage {
   }
 
   loadFeedbackList() {
+    this.error = null;
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '查询进度反馈记录APP',
@@ -408,6 +409,11 @@ export class HomePage {
         }
         this.feedbackDates = temp;
         this.fbDatesList = dateData;
+        if (JSON.stringify(this.fbDatesList) === '{}') {
+          this.error = '暂无反馈记录';
+        } else {
+          this.error = null;
+        }
       })
       .catch(error => {
         // console.log(error);
@@ -416,6 +422,7 @@ export class HomePage {
   }
 
   loadProjectPlans() {
+    this.error = null;
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '获取项目全景计划汇总APP',
@@ -462,6 +469,11 @@ export class HomePage {
           });
           this.areas = temp2;
           this.areaProjects = Object.assign({}, projectTemp);
+          if (JSON.stringify(this.areaProjects) === '{}') {
+            this.error = '暂无全景计划';
+          } else {
+            this.error = null;
+          }
         }
       })
       .catch(error => {
