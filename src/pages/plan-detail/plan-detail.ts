@@ -210,7 +210,6 @@ export class PlanDetailPage {
       case 1:
         {
           // 变更
-          let that = this;
           HNJSBridge.invoke('plan:change', this.plan, (data) => {
             // alert(msg);
             // this.zone.run(() => )
