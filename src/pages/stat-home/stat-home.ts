@@ -34,6 +34,8 @@ export class StatHomePage {
   pieChart: any = null;
   barChart: any = null;
 
+  planList: any = [];
+
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController,
@@ -58,6 +60,46 @@ export class StatHomePage {
     let val = (stat[key] || 0).toString().replace('NULL', 0);
     // console.log(stat);
     return parseInt(val);
+  }
+
+  loadWarningPlans(start, end) {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划明细APP',
+      param1: '', // 关键字搜索
+      param2: '0', // 计划类型
+      param3: '0', // 项目
+      param4: '0', // 计划级别 
+      param5: '高', // 风险等级
+      param6: '', // 完成状态
+      param7: start, // 开始日期
+      param8: end, // 结束日期
+      param9: this.dataType == 0 ? '1' : '2', // 个人计划，组织计划
+      param10: Utils.getManID(), // man id
+      param11: '1'
+    })
+      .then(data => {
+        // console.log(data);
+        if (data['data']) {
+          this.planList = data['data'];
+        }
+
+        // this.error = this.planList.length === 0 ? '暂无计划事项' : null;
+      })
+      .catch(error => {
+        // console.log(error);
+        // this.error = error.message || '服务器超时';
+      });
+  }
+
+  gotoBottom() {
+    let el = document.getElementById('fx-plans');
+    this.content.scrollTo(0, el.offsetTop, 800);
+  }
+
+  selectPlan(ev) {
+    // console.log(ev);
+    this.navCtrl.push('PlanDetailPage', ev);
   }
 
   createGraph1() {
@@ -133,7 +175,7 @@ export class StatHomePage {
     if (!this.barChart) {
       this.barChart = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
       this.barChart.on('click', (params) => {
-        console.log(params);
+        // console.log(params);
         let itemName = null;
         if (params.componentType == 'series') {
           itemName = params.name;
@@ -332,7 +374,7 @@ export class StatHomePage {
       param12: '1'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data['data']) {
           this.createGraph2(data['data']);
         }
@@ -341,6 +383,8 @@ export class StatHomePage {
       .catch(error => {
         // console.log(error);
       });
+
+    this.loadWarningPlans(start, end);
   }
 
   segmentChanged(ev) {
