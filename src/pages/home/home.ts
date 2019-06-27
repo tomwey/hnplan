@@ -168,7 +168,7 @@ export class HomePage {
               cssClass = 'pending'
             }
             if (Utils.dateFormat(new Date()) == ele.planenddate) {
-              cssClass += ' today';
+              cssClass += ' today on-selected';
             }
             _daysConfig.push({
               date: new Date(ele.planenddate),

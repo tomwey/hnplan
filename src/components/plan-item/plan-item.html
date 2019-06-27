@@ -21,7 +21,9 @@
           </div>
           <div class="right">
             <div class="progress progress-{{calcState(item)}}">
-              <p class="value"><span class="days">{{calcResult(item).value}}</span><span class="unit">天</span></p>
+              <p class="value"><span
+                  class="{{item.cal_over_desc == '按时完成' ? '' : 'days'}}">{{calcResult(item).value}}</span><span
+                  class="unit" *ngIf="item.cal_over_desc != '按时完成'">天</span></p>
               <p class="label">{{calcResult(item).label}}</p>
             </div>
             <div class="state state-{{calcState(item)}}">{{item.cal_over_desc}}</div>
