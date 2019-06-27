@@ -7,6 +7,8 @@ import { App } from 'ionic-angular';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+declare var HNJSBridge;
+
 @Component({
   selector: 'feedback-timeline',
   templateUrl: 'feedback-timeline.html'
@@ -20,7 +22,8 @@ export class FeedbackTimelineComponent {
   }
 
   doClick(obj) {
-    this.app.getRootNavs()[0].push('FeedbackDetailPage');
+    // this.app.getRootNavs()[0].push('FeedbackDetailPage');
+    HNJSBridge.invoke('plan:openflow', { mid: obj.flow_mid }, (msg) => { });
   }
 
 }

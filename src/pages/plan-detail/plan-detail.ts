@@ -21,6 +21,9 @@ export class PlanDetailPage {
   plan: any = {};
 
   canHandlePlan: boolean = false;
+
+  canDoPlan: boolean = false;
+
   hasFlow: boolean = false;
 
   error: any = null;
@@ -76,7 +79,8 @@ export class PlanDetailPage {
   }
 
   prepareData() {
-    let mid = parseInt((this.plan.mid || '0').replace('NULL', '0'));
+    // console.log(this.plan.icurdoflowid);
+    let mid = parseInt((this.plan.icurdoflowid || '0').replace('NULL', '0').replace('无', '0'));
     this.canHandlePlan = !this.plan.isover && mid === 0;
 
     this.hasFlow = mid !== 0;
@@ -136,6 +140,8 @@ export class PlanDetailPage {
       // },
     ];
 
+    // console.log(mid);
+
     let val = this.plan.isover ? '已完成' : '未完成';
     if (mid !== 0) {
       let prefix = '';
@@ -175,8 +181,10 @@ export class PlanDetailPage {
           let arr = data['data'];
           if (arr.length > 0) {
             let item = arr[0];
+            // console.log(item);
             let month = parseInt(item.curmonth);
-            let currTimeStr = item.curyear + month >= 10 ? '' : '0' + month;
+            let currTimeStr = item.curyear + (month >= 10 ? '' : '0') + month;
+            // console.log(currTimeStr);
             if (planMonth == currTimeStr) {
               canDo = canDo && true;
             } else {
@@ -196,7 +204,9 @@ export class PlanDetailPage {
           }
         }
 
-        this.canHandlePlan = this.canHandlePlan && canDo;
+        this.canDoPlan = canDo;
+
+        // this.canHandlePlan = this.canHandlePlan && canDo;
       })
       .catch(error => { });
   }
@@ -238,7 +248,9 @@ export class PlanDetailPage {
     }
   }
   openFlow() {
-    HNJSBridge.invoke('plan:openflow', { mid: this.plan.mid }, (msg) => { });
+    // let mid = parseInt((this.plan.icurdoflowid || '0').replace('NULL', '0'));
+    let mid = parseInt((this.plan.icurdoflowid || '0').replace('NULL', '0').replace('无', '0'));
+    HNJSBridge.invoke('plan:openflow', { mid: mid }, (msg) => { });
   }
 
   data: any = [];
