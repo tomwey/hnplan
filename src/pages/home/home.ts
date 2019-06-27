@@ -92,17 +92,19 @@ export class HomePage {
     this.iosFixed.fixedScrollFreeze(this.content);
     this.currentDate = Utils.dateFormat(new Date());
 
-    this.loadPlans(this.currentDate, this.currentDate);
+    setTimeout(() => {
+      this.loadPlans(this.currentDate, this.currentDate);
 
-    let date = new Date(this.currentDate);
-    date.setDate(1);
-    let start = Utils.dateFormat(date);
+      let date = new Date(this.currentDate);
+      date.setDate(1);
+      let start = Utils.dateFormat(date);
 
-    date.setMonth(date.getMonth() + 1);
-    date.setDate(0);
-    let end = Utils.dateFormat(date);
+      date.setMonth(date.getMonth() + 1);
+      date.setDate(0);
+      let end = Utils.dateFormat(date);
 
-    this.loadCalendarData(start, end);
+      this.loadCalendarData(start, end);
+    }, 10);
   }
 
   loadPlans(bDate, eDate) {

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, App, Content } from 'ionic-angular';
 import { HomePage } from '../home/home';
 
 import ECharts from 'echarts';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the StatHomePage page.
@@ -33,15 +34,22 @@ export class StatHomePage {
   pieChart: any = null;
   barChart: any = null;
 
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController,
     private app: App,
+    private iosFixed: iOSFixedScrollFreeze,
     private api: ApiService,
     public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad StatHomePage');
-    this.loadPlanStats();
+    this.iosFixed.fixedScrollFreeze(this.content);
+    setTimeout(() => {
+      this.loadPlanStats();
+    }, 10);
+
 
     // this.createGraph();
   }
