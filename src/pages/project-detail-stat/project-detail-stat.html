@@ -18,8 +18,9 @@
       <div class="menu">
         <div class="menu-item" [class.active]="currentIndex === i" tappable (click)="selectMenu(i);"
           *ngFor="let menu of menus;let i = index;">
-          <span class="name">{{menu.name}}</span>
-          <span class="badge" *ngIf="menu.badge > 0">{{menu.badge}}</span>
+          <span class="name">{{menu.stage_name}}</span>
+          <span class="badge"
+            *ngIf="menu.warningnum && menu.warningnum != '0' && menu.warningnum != 'NULL'">{{menu.warningnum}}</span>
         </div>
       </div>
     </div>

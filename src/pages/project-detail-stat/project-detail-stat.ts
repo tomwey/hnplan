@@ -18,54 +18,105 @@ import { Utils } from '../../provider/Utils';
 export class ProjectDetailStatPage {
 
   menus: any = [
-    {
-      name: '展示区',
-      badge: 0,
-      type: 0,
-    },
-    {
-      name: '主体',
-      badge: 6,
-      type: 1,
-    },
-    {
-      name: '砌体',
-      badge: 0,
-      type: 0,
-    },
-    {
-      name: '外墙',
-      badge: 0,
-      type: 0,
-    },
-    {
-      name: '抹灰',
-      badge: 0,
-      type: 0,
-    },
-    {
-      name: '景观',
-      badge: 0,
-      type: 0,
-    },
+    // {
+    //   name: '展示区',
+    //   badge: 0,
+    //   type: 0,
+    // },
+    // {
+    //   name: '主体',
+    //   badge: 6,
+    //   type: 1,
+    // },
+    // {
+    //   name: '砌体',
+    //   badge: 0,
+    //   type: 0,
+    // },
+    // {
+    //   name: '外墙',
+    //   badge: 0,
+    //   type: 0,
+    // },
+    // {
+    //   name: '抹灰',
+    //   badge: 0,
+    //   type: 0,
+    // },
+    // {
+    //   name: '景观',
+    //   badge: 0,
+    //   type: 0,
+    // },
   ];
   currentIndex: number = 0;
   planDataType: number = 0;
+
+  // showroom: any = '0';
+
   item: any;
   title: any;
+  conds: any;
   constructor(public navCtrl: NavController,
     private api: ApiService,
     public navParams: NavParams) {
-    this.item = Object.assign({}, this.navParams.data.item || this.navParams.data);
+    this.item = Object.assign({}, this.navParams.data.item);
     this.title = this.navParams.data.title;
+    this.conds = this.navParams.data.conds || {};
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad ProjectDetailStatPage');
-    this.loadData();
+    this.loadStageData();
   }
 
-  loadData() {
+  loadPlansData() {
+    if (this.currentIndex >= this.menus.length) {
+      return;
+    }
+    let menu = this.menus[this.currentIndex];
+    this.planDataType = menu.showroom ? 1 : 0;
+
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取项目全景计划APP',
+      param1: '2',
+      param2: '',
+      param3: '1040',
+      param4: this.item.project_id,
+      param5: this.conds.plan_level || '0',
+      param6: '',
+      param7: '',
+      param8: this.conds.start || this.conds.begin_date || '',
+      param9: this.conds.end || this.conds.end_date || '',
+      param10: menu.stage_id || '0',
+      param11: this.planDataType == 0 ? (this.navParams.data.data_type || '1') : '2',
+      param12: Utils.getManID(),
+      param13: this.planDataType == 0 ? '1' : '0'
+    })
+      .then(data => {
+        console.log(data);
+        if (data && data['data']) {
+          if (this.planDataType === 0) {
+            this.planList = data['data'];
+          } else if (this.planDataType === 1) {
+
+          }
+        }
+      })
+      .catch(error => {
+        // console.log(error);
+      });
+  }
+
+  loadStageData() {
+    // overnum: "0"
+    // stage_id: "10"
+    // stage_name: "展示区"
+    // stage_order: "NULL"
+    // totalnum: "3"
+    // warningnum: "0"
+
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '获取项目全景计划APP',
@@ -73,18 +124,22 @@ export class ProjectDetailStatPage {
       param2: '',
       param3: '1040',
       param4: this.item.project_id,
-      param5: '0',
-      param6: '0',
+      param5: this.conds.plan_level || '0',
+      param6: '',
       param7: '',
-      param8: '',
-      param9: '',
+      param8: this.conds.start || this.conds.begin_date || '',
+      param9: this.conds.end || this.conds.end_date || '',
       param10: '0',
-      param11: '1',
+      param11: this.navParams.data.data_type || '1',
       param12: Utils.getManID(),
       param13: '1'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
+        if (data && data['data']) {
+          this.menus = data['data'];
+        }
+        this.loadPlansData();
       })
       .catch(error => {
         console.log(error);
@@ -103,7 +158,10 @@ export class ProjectDetailStatPage {
 
   selectMenu(index) {
     this.currentIndex = index;
-    this.planDataType = this.menus[index].type;
+    console.log(this.menus[index]);
+    console.log(this.menus[index].showroom);
+    this.planDataType = this.menus[index].showroom ? 1 : 0;
+    this.loadPlansData();
   }
 
   selectBuild(index) {

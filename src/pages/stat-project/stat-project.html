@@ -36,17 +36,19 @@
       <div class="value-show">
         <div class="value-inner">
           <div class="complete-rate">
-            <div class="value"><span class="digit">58.3</span><span class="unit">%</span></div>
+            <div class="value"><span
+                class="digit">{{totalStat.plantotaloverrate == 'NULL' ? '--' : totalStat.plantotaloverrate}}</span><span
+                class="unit">%</span></div>
             <div class="label">计划完成率</div>
           </div>
           <div class="plan-stats">
             <div class="done">
-              <div class="value">267</div>
+              <div class="value">{{totalStat.plantotalovernum == 'NULL' ? '--' : totalStat.plantotalovernum}}</div>
               <div class="label">已完成</div>
             </div>
             <div class="splitor">/</div>
             <div class="total">
-              <div class="value">512</div>
+              <div class="value">{{totalStat.plantotalnum == 'NULL' ? '--' : totalStat.plantotalnum}}</div>
               <div class="label">总计划</div>
             </div>
           </div>
@@ -58,18 +60,19 @@
     <div class="other-stats">
       <div class="stat-box">
         <div class="value">
-          <span class="done">12</span>
+          <span
+            class="done">{{totalStat.plantodaytotalovernum == 'NULL' ? '--' : totalStat.plantodaytotalovernum}}</span>
           <span class="splitor">/</span>
-          <span class="total">32</span>
+          <span class="total">{{totalStat.plantodaytotalnum == 'NULL' ? '--' : totalStat.plantodaytotalnum}}</span>
         </div>
         <div class="label">今日计划</div>
       </div>
       <div class="stat-box">
-        <div class="value">16</div>
+        <div class="value">{{totalStat.planoverduenum == 'NULL' ? '--' : totalStat.planoverduenum}}</div>
         <div class="label">超期计划</div>
       </div>
       <div class="stat-box">
-        <div class="value">16</div>
+        <div class="value">{{totalStat.plantotalwarningnum == 'NULL' ? '--' : totalStat.plantotalwarningnum}}</div>
         <div class="label">预警计划</div>
       </div>
     </div>
@@ -81,19 +84,19 @@
       <ion-row>
         <ion-col col-6 *ngFor="let proj of projects">
           <div class="project" tappable (click)="selectProject(proj);">
-            <h3 class="name">枫丹西悦三期</h3>
+            <h3 class="name">{{proj.project_name}}</h3>
             <div class="stats">
               <div class="stat">
                 <div class="label">总计划</div>
-                <div class="digit">123</div>
+                <div class="digit">{{proj.totalnum}}</div>
               </div>
               <div class="stat center">
                 <div class="label">已完成</div>
-                <div class="digit">39</div>
+                <div class="digit">{{proj.overnum}}</div>
               </div>
               <div class="stat right">
                 <div class="label">预警计划</div>
-                <div class="digit">39</div>
+                <div class="digit">{{proj.warningnum}}</div>
               </div>
             </div>
           </div>
@@ -102,7 +105,7 @@
     </div>
   </div>
 
-  <div class="panel plan-list" id="fx-plans">
+  <div class="panel plan-list" id="fx-plans" *ngIf="planList.length > 0">
     <h2 class="title">高风险项</h2>
     <ion-list>
       <plan-item *ngFor="let plan of planList" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
@@ -110,9 +113,9 @@
     </ion-list>
   </div>
 
-  <ion-fab right bottom>
+  <ion-fab right bottom *ngIf="planList.length > 0">
     <button ion-fab (click)="gotoBottom();">
-      <div class="digit">13</div>
+      <div class="digit">{{planList.length}}</div>
       <div class="label">高风险</div>
     </button>
   </ion-fab>
