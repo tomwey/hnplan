@@ -4,21 +4,25 @@ plan-item2 {
         padding: 0;
         width: 100%;
         // border-bottom: 0.55px solid #f7f7f7;
-        &:last-child {
-            border-bottom: 0;
-        }
+        // &:last-child {
+        //     border-bottom: 0;
+        // }
     }
-    ion-item-sliding {
-        border-bottom: 0.55px solid #f7f7f7;
-    }
+    // ion-item-sliding {
+    //     border-bottom: 0.55px solid #f7f7f7;
+    // }
 
     ion-item-options {
         border-bottom: 0!important;
     }
+
+    .item-ios.item-block {
+        border-bottom: 0.55px solid #f7f7f7
+    }
     
     .item-ios.item-block .item-inner {
         padding-right: 0;
-        border-bottom: 0!important;
+        // border-bottom: 0.55px solid #f7f7f7!important;
     }
     .label-ios {
         margin: 0!important;

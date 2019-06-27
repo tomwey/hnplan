@@ -158,8 +158,6 @@ export class ProjectDetailStatPage {
 
   selectMenu(index) {
     this.currentIndex = index;
-    console.log(this.menus[index]);
-    console.log(this.menus[index].showroom);
     this.planDataType = this.menus[index].showroom ? 1 : 0;
     this.loadPlansData();
   }
