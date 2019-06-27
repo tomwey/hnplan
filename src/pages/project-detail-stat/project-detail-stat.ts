@@ -17,42 +17,9 @@ import { Utils } from '../../provider/Utils';
 })
 export class ProjectDetailStatPage {
 
-  menus: any = [
-    // {
-    //   name: '展示区',
-    //   badge: 0,
-    //   type: 0,
-    // },
-    // {
-    //   name: '主体',
-    //   badge: 6,
-    //   type: 1,
-    // },
-    // {
-    //   name: '砌体',
-    //   badge: 0,
-    //   type: 0,
-    // },
-    // {
-    //   name: '外墙',
-    //   badge: 0,
-    //   type: 0,
-    // },
-    // {
-    //   name: '抹灰',
-    //   badge: 0,
-    //   type: 0,
-    // },
-    // {
-    //   name: '景观',
-    //   badge: 0,
-    //   type: 0,
-    // },
-  ];
+  menus: any = [];
   currentIndex: number = 0;
   planDataType: number = 0;
-
-  // showroom: any = '0';
 
   item: any;
   title: any;
@@ -66,16 +33,44 @@ export class ProjectDetailStatPage {
   }
 
   ionViewDidLoad() {
-    // console.log('ionViewDidLoad ProjectDetailStatPage');
     this.loadStageData();
   }
 
-  loadPlansData() {
+  loadBuildings() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取项目楼栋及楼层APP',
+      param1: this.conds.project || this.item.project_id || '0'
+    })
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          this.buildings = data['data'];
+
+          // building_batch_id: "1"
+          // building_id: "3536"
+          // building_name: "6#"
+          // building_type_id: "10"
+          // overground_layer: "31"
+          // project_id: "1291509"
+          // underground_layer: "2"
+        }
+        this.loadRoomPlanData();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  loadRoomPlanData() {
+    if (this.currBuildIndex >= this.buildings.length) {
+      return;
+    }
+
     if (this.currentIndex >= this.menus.length) {
       return;
     }
     let menu = this.menus[this.currentIndex];
-    this.planDataType = menu.showroom ? 1 : 0;
 
     this.api.POST(null, {
       dotype: 'GetData',
@@ -90,9 +85,91 @@ export class ProjectDetailStatPage {
       param8: this.conds.start || this.conds.begin_date || '',
       param9: this.conds.end || this.conds.end_date || '',
       param10: menu.stage_id || '0',
-      param11: this.planDataType == 0 ? (this.navParams.data.data_type || '1') : '2',
-      param12: Utils.getManID(),
-      param13: this.planDataType == 0 ? '1' : '0'
+      param11: this.buildings[this.currBuildIndex].building_id || '0',
+      param12: '2',
+      param13: Utils.getManID(),
+      param14: '0'
+    })
+      .then(data => {
+        console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+
+          // building_id: "3536"
+          // building_name: "6#"
+          // enddate: "NULL"
+          // ilevel: "22"
+          // isover: false
+          // iswarning: false
+          // node_id: "1083"
+          // node_name: "测试主体施工"
+          // showroom: true
+          // floors = [];
+          // floorsData = {};
+          // {
+          //   '1': []
+          // }
+          let node_ids = [];
+          let nodes = [{ id: 'floor', name: '楼层' }];
+          let flData = {};
+          let floors = [];
+          arr.forEach(ele => {
+            if (node_ids.indexOf(ele.node_id) === -1) {
+              node_ids.push(ele.node_id);
+              nodes.push({ name: ele.node_name, id: ele.node_id });
+            }
+
+            let floorData = flData[ele.node_id] || [];
+            floorData.push(ele);
+            flData[ele.node_id] = floorData;
+            if (floors.indexOf(ele.ilevel) === -1) {
+              floors.push(ele.ilevel);
+            }
+          });
+
+          flData['floor'] = floors;
+
+          this.barNodes = nodes;
+          this.allFloorsData = flData;
+
+          // console.log(nodes);
+          // console.log(flData);
+        }
+      })
+      .catch(error => {
+        // console.log(error);
+      });
+  }
+
+  loadPlansData() {
+    if (this.currentIndex >= this.menus.length) {
+      return;
+    }
+    let menu = this.menus[this.currentIndex];
+    this.planDataType = menu.showroom ? 1 : 0;
+
+    if (this.planDataType == 1) {
+      this.loadBuildings();
+      return;
+    }
+
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取项目全景计划APP',
+      param1: '2',
+      param2: '',
+      param3: '1040',
+      param4: this.item.project_id,
+      param5: this.conds.plan_level || '0',
+      param6: '',
+      param7: '',
+      param8: this.conds.start || this.conds.begin_date || '',
+      param9: this.conds.end || this.conds.end_date || '',
+      param10: menu.stage_id || '0',
+      param11: '0',
+      param12: this.navParams.data.data_type || '1',
+      param13: Utils.getManID(),
+      param14: '1'
     })
       .then(data => {
         console.log(data);
@@ -100,6 +177,7 @@ export class ProjectDetailStatPage {
           if (this.planDataType === 0) {
             this.planList = data['data'];
           } else if (this.planDataType === 1) {
+            let arr = data['data'];
 
           }
         }
@@ -130,9 +208,10 @@ export class ProjectDetailStatPage {
       param8: this.conds.start || this.conds.begin_date || '',
       param9: this.conds.end || this.conds.end_date || '',
       param10: '0',
-      param11: this.navParams.data.data_type || '1',
-      param12: Utils.getManID(),
-      param13: '1'
+      param11: '0',
+      param12: this.navParams.data.data_type || '1',
+      param13: Utils.getManID(),
+      param14: '1'
     })
       .then(data => {
         // console.log(data);
@@ -164,270 +243,17 @@ export class ProjectDetailStatPage {
 
   selectBuild(index) {
     this.currBuildIndex = index;
+    this.loadRoomPlanData();
   }
 
-  planList: any = [
-    {
-      type: 1,
-      typename: '职能计划',
-      can_cb: true,
-      level: '四级',
-      name: '计划管理系统APP端功能规划初稿',
-      source: '部门内部',
-      projectname: '集团管理类',
-      manname: '鲜代明'
-    },
-    {
-      type: 2,
-      typename: '项目计划',
-      can_cb: true,
-      name: '计划管理系统APP端功能规划初稿',
-      level: '四级',
-      source: '部门内部',
-      projectname: '集团管理类',
-      manname: '鲜代明'
-    },
-    {
-      type: 3,
-      typename: '专项计划',
-      name: '计划管理系统APP端功能规划初稿',
-      level: '四级',
-      source: '部门内部',
-      projectname: '集团管理类',
-      manname: '鲜代明'
-    }
-  ];
+  planList: any = [];
 
   currBuildIndex: number = 0;
 
-  buildings: any = [
-    {
-      name: '#1楼'
-    },
-    {
-      name: '#2楼'
-    },
-    {
-      name: '#3楼'
-    },
-    {
-      name: '#5楼'
-    },
-    {
-      name: '#6楼'
-    },
-    {
-      name: '#7楼'
-    },
-    {
-      name: '#8楼'
-    },
-    {
-      name: '#9楼'
-    },
-  ];
+  buildings: any = [];
 
-  floorsData: any = [
-    {
-      floor: 20,
-      name: '20',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 0,
-      l5: 0
-    },
-    {
-      floor: 19,
-      name: '19',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 0,
-      l5: 0
-    },
-    {
-      floor: 18,
-      name: '18',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 0,
-      l5: 0
-    },
-    {
-      floor: 17,
-      name: '17',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 2,
-      l5: 0
-    },
-    {
-      floor: 16,
-      name: '16',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 2,
-      l5: 0
-    },
-    {
-      floor: 15,
-      name: '15',
-      l1: 2,
-      l2: 0,
-      l3: 0,
-      l4: 0,
-      l5: 0
-    },
-    {
-      floor: 14,
-      name: '14',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 0,
-      l5: 2
-    },
-    {
-      floor: 13,
-      name: '13',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 12,
-      name: '12',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 11,
-      name: '11',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 10,
-      name: '10',
-      l1: 0,
-      l2: 0,
-      l3: 0,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 9,
-      name: '9',
-      l1: 1,
-      l2: 0,
-      l3: 2,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 8,
-      name: '8',
-      l1: 1,
-      l2: 0,
-      l3: 2,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 7,
-      name: '7',
-      l1: 1,
-      l2: 0,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 6,
-      name: '6',
-      l1: 1,
-      l2: 0,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 5,
-      name: '5',
-      l1: 1,
-      l2: 0,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 4,
-      name: '4',
-      l1: 1,
-      l2: 0,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 3,
-      name: '3',
-      l1: 1,
-      l2: 1,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 2,
-      name: '2',
-      l1: 1,
-      l2: 1,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: 1,
-      name: '1',
-      l1: 1,
-      l2: 1,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: -1,
-      name: '-1',
-      l1: 1,
-      l2: 1,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-    {
-      floor: -2,
-      name: '-2',
-      l1: 1,
-      l2: 1,
-      l3: 1,
-      l4: 1,
-      l5: 1
-    },
-  ]
+  allFloorsData: any = {};
 
-  names: any = ['楼层', '主体', '砌体', '内抹', '外抹', '地坪'];
+  barNodes: any = [];
 
 }

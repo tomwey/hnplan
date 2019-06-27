@@ -35,11 +35,27 @@
         <div class="buildings">
           <span class="building-item" [class.active]="currBuildIndex === i" tappable (click)="selectBuild(i);"
             *ngFor="let b of buildings; let i = index;">
-            {{b.name}}
+            {{b.building_name}}{{b.building_type_id == '10' ? '楼' : ''}}
           </span>
         </div>
         <div class="floors">
-          <div class="head caption">
+          <div class="bar-wrap">
+            <div class="bar" *ngFor="let bar of barNodes">
+              <div class="head">
+                {{bar.name}}
+              </div>
+              <div class="floor-item" *ngFor="let item of allFloorsData[bar.id]">
+                <div class="cell" *ngIf="bar.id == 'floor'">{{item}}</div>
+                <div class="cell block cell-{{item.isover ? '1' : item.iswarning ? '2' : '0'}}"
+                  *ngIf="bar.id != 'floor'" tappable (click)="selectPlan(item)">
+                </div>
+              </div>
+              <div class="foot">
+                {{bar.name}}
+              </div>
+            </div>
+          </div>
+          <!-- <div class="head caption">
             <span class="cell" *ngFor="let n of names">{{n}}</span>
           </div>
           <div class="cells">
@@ -54,7 +70,7 @@
           </div>
           <div class="foot caption">
             <span class="cell" *ngFor="let n of names">{{n}}</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
