@@ -45,7 +45,8 @@ export class FeedbackListPage {
       param6: this.navParams.data.begin_date || '', // 开始日期
       param7: this.navParams.data.end_date || '', // 结束日期
       param8: this.navParams.data.fx_level || '', // 风险等级
-      param9: this.navParams.data.cb_type || '-1', // 催办范围
+      param9: this.navParams.data.cb_type || '-1', // 催办范围,
+      param10: this.navParams.data.id || '0' // 计划ID
     })
       .then(data => {
         // console.log(data);

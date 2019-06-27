@@ -382,7 +382,8 @@ export class HomePage {
       param6: '', // 开始日期
       param7: '', // 结束日期
       param8: '', // 风险等级
-      param9: '-1', // 催办范围
+      param9: '-1', // 催办范围,
+      param10: '0'
     })
       .then(data => {
         // console.log(data);
