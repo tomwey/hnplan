@@ -1,5 +1,7 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiService } from '../../provider/api-service';
+import { Utils } from '../../provider/Utils';
 
 /**
  * Generated class for the PlanDetailPage page.
@@ -16,35 +18,64 @@ declare var HNJSBridge;
   templateUrl: 'plan-detail.html',
 })
 export class PlanDetailPage {
-
-  dataTypes: any = ['基本信息', '反馈记录'];
-  dataType: number = 0;
-
-  msg: any = null;
-
   plan: any = {};
 
   canHandlePlan: boolean = false;
   hasFlow: boolean = false;
 
+  error: any = null;
+
   constructor(public navCtrl: NavController,
     // private events: Events,
     private zone: NgZone,
+    private api: ApiService,
     public navParams: NavParams) {
+  }
 
-    let object = Object.assign({}, this.navParams.data);
-    for (const key in object) {
-      if (object.hasOwnProperty(key)) {
-        let element = (object[key] || '').toString();
-        element = element.replace('NULL', '无');
-        let arr = element.split('T');
-        if (arr.length > 0) {
-          element = arr[0];
+  ionViewDidLoad() {
+    setTimeout(() => {
+      this.loadPlan();
+    }, 300);
+  }
+
+  loadPlan() {
+    this.api.POST(null,
+      {
+        dotype: 'GetData',
+        funname: '通过ID获取计划明细APP',
+        param1: this.navParams.data.id || '0',
+      })
+      .then(data => {
+        if (data && data['data']) {
+          let arr = data['data'];
+          if (arr.length > 0) {
+            this.error = null;
+            let object = arr[0];
+            for (const key in object) {
+              if (object.hasOwnProperty(key)) {
+                let element = (object[key] || '').toString();
+                element = element.replace('NULL', '无');
+                let arr = element.split('T');
+                if (arr.length > 0) {
+                  element = arr[0];
+                }
+                this.plan[key] = element;
+              }
+            }
+            this.prepareData();
+          } else {
+            this.error = '计划不存在';
+          }
+        } else {
+          this.error = '未知错误';
         }
-        this.plan[key] = element;
-      }
-    }
+      })
+      .catch(error => {
+        this.error = error.message || '服务器出错了~';
+      });
+  }
 
+  prepareData() {
     let mid = parseInt((this.plan.mid || '0').replace('NULL', '0'));
     this.canHandlePlan = !this.plan.isover && mid === 0;
 
@@ -120,14 +151,54 @@ export class PlanDetailPage {
       label: '计划状态',
       value: val
     });
+
+    this.checkOperLoad();
   }
 
-  ionViewDidLoad() {
-    // console.log('ionViewDidLoad PlanDetailPage');
-  }
+  checkOperLoad() {
+    this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '工作计划操作限制条件APP'
+    }, '', false)
+      .then(data => {
+        let canDo = true;
 
-  segmentChanged(ev) {
+        // 检查是否是经办人或第一责任人
+        let manID = Utils.getManID();//[user[@"man_id"]description];
+        let liableManIDs = this.plan.liablemannameid;
+        canDo = canDo &&
+          (manID == this.plan.domanid || liableManIDs.indexOf(manID) !== -1);
 
+        let planMonth = this.plan.iplanmonth;
+        // 检查是否是当月计划
+        if (data && data['data']) {
+          let arr = data['data'];
+          if (arr.length > 0) {
+            let item = arr[0];
+            let month = parseInt(item.curmonth);
+            let currTimeStr = item.curyear + month >= 10 ? '' : '0' + month;
+            if (planMonth == currTimeStr) {
+              canDo = canDo && true;
+            } else {
+              month = parseInt(item.premonth);
+              currTimeStr = item.preyear + + month >= 10 ? '' : '0' + month;
+              let curDay = parseInt(item.curday);
+              let premonthcancommitdays = parseInt(item.premonthcancommitdays);
+              if (item.bcancommitpremonth &&
+                planMonth == currTimeStr &&
+                curDay <= premonthcancommitdays
+              ) {
+                canDo = canDo && true;
+              } else {
+                canDo = false;
+              }
+            }
+          }
+        }
+
+        this.canHandlePlan = this.canHandlePlan && canDo;
+      })
+      .catch(error => { });
   }
 
   gotoFeedbackList() {
@@ -140,15 +211,17 @@ export class PlanDetailPage {
         {
           // 变更
           let that = this;
-          HNJSBridge.invoke(null, { foo: 'bar' }, function (msg) {
-            alert(msg);
+          HNJSBridge.invoke('plan:change', this.plan, (data) => {
+            // alert(msg);
+            // this.zone.run(() => )
+            this.loadPlan();
           });
         }
         break;
       case 2:
         {
           // 进度反馈
-          HNJSBridge.invoke('进度反馈', (msg) => {
+          HNJSBridge.invoke('plan:feedback', this.plan, (data) => {
 
           });
         }
@@ -156,8 +229,8 @@ export class PlanDetailPage {
       case 3:
         {
           // 完成确认
-          HNJSBridge.invoke('完成确认', (msg) => {
-
+          HNJSBridge.invoke('plan:done', this.plan, (data) => {
+            this.loadPlan();
           });
         }
         break;
@@ -165,8 +238,8 @@ export class PlanDetailPage {
         break;
     }
   }
-  openFlow(item) {
-    HNJSBridge.invoke('openflow', { mid: item.mid }, (msg) => { });
+  openFlow() {
+    HNJSBridge.invoke('plan:openflow', { mid: this.plan.mid }, (msg) => { });
   }
 
   data: any = [];

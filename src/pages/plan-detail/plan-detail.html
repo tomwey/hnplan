@@ -12,20 +12,11 @@
       <button ion-button (click)="gotoFeedbackList();" small>反馈记录</button>
     </ion-buttons>
   </ion-navbar>
-
-  <!-- <ion-toolbar color="white">
-    <ion-segment [(ngModel)]="dataType" mode="md" (ionChange)="segmentChanged($event)">
-      <ion-segment-button [value]="i" *ngFor="let type of dataTypes;let i=index;">
-        {{type}}
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar> -->
-
 </ion-header>
 
 <ion-content>
+  <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
   <div class="body">
-    <span *ngIf="!!msg">收到消息了</span>
     <table class="table">
       <tr *ngFor="let item of data">
         <td class="label">
@@ -36,7 +27,7 @@
         </td>
         <td class="value value2" *ngIf="item.label == '计划状态'">
           <div class="box" *ngIf="!hasFlow">{{item.value}}</div>
-          <div class="box" *ngIf="hasFlow" tappable (click)="openFlow(item);">{{item.value}}<span class="right-icon">
+          <div class="box" *ngIf="hasFlow" tappable (click)="openFlow();">{{item.value}}<span class="right-icon">
               <ion-icon name="ios-arrow-forward-outline"></ion-icon>
             </span>
           </div>

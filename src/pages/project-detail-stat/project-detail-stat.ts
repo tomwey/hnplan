@@ -172,13 +172,10 @@ export class ProjectDetailStatPage {
       param14: '1'
     })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data && data['data']) {
           if (this.planDataType === 0) {
             this.planList = data['data'];
-          } else if (this.planDataType === 1) {
-            let arr = data['data'];
-
           }
         }
       })
@@ -227,7 +224,7 @@ export class ProjectDetailStatPage {
 
   selectPlan(ev) {
     // console.log(ev);
-    this.navCtrl.push('PlanDetailPage', ev);
+    this.navCtrl.push('PlanDetailPage', { id: ev.planid || ev.id });
   }
 
   doUrge(ev) {

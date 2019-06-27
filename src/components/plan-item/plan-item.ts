@@ -27,7 +27,7 @@ export class PlanItemComponent {
   doClick(sliding) {
     // this.onUrge.emit(this.item);
     sliding.close();
-    HNJSBridge.invoke('urge', this.item, (msg) => {
+    HNJSBridge.invoke('plan:urge', this.item, (msg) => {
 
     });
   }
@@ -45,8 +45,12 @@ export class PlanItemComponent {
   }
 
   doClick2(sliding) {
-    this.onFullScape.emit(this.item);
+    // this.onFullScape.emit(this.item);
     sliding.close();
+    this.app.getRootNavs()[0].push('ProjectDetailStatPage', {
+      item: this.item,
+      title: `${this.item.project_name || this.item.projectname}全景计划`
+    });
   }
 
   doTap() {
