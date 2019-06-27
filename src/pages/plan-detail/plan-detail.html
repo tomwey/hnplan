@@ -35,8 +35,8 @@
           {{item.value}}
         </td>
         <td class="value value2" *ngIf="item.label == '计划状态'">
-          <div class="box" tappable (click)="openFlow(item);">{{item.value}}<span class="right-icon"
-              *ngIf="item.value == '已完成'">
+          <div class="box" *ngIf="!hasFlow">{{item.value}}</div>
+          <div class="box" *ngIf="hasFlow" tappable (click)="openFlow(item);">{{item.value}}<span class="right-icon">
               <ion-icon name="ios-arrow-forward-outline"></ion-icon>
             </span>
           </div>
@@ -46,7 +46,7 @@
   </div>
 
 </ion-content>
-<ion-footer>
+<ion-footer *ngIf="canHandlePlan">
   <ion-row>
     <ion-col col-4>
       <div class="custom-btn outline" tappable (click)="doClick(1);">变更</div>

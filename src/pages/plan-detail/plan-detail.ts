@@ -24,6 +24,9 @@ export class PlanDetailPage {
 
   plan: any = {};
 
+  canHandlePlan: boolean = false;
+  hasFlow: boolean = false;
+
   constructor(public navCtrl: NavController,
     // private events: Events,
     private zone: NgZone,
@@ -41,6 +44,11 @@ export class PlanDetailPage {
         this.plan[key] = element;
       }
     }
+
+    let mid = parseInt((this.plan.mid || '0').replace('NULL', '0'));
+    this.canHandlePlan = !this.plan.isover && mid === 0;
+
+    this.hasFlow = mid !== 0;
 
     this.data = [
       {
@@ -91,11 +99,27 @@ export class PlanDetailPage {
         label: '实际完成日期',
         value: this.plan.actualoverdate
       },
-      {
-        label: '计划状态',
-        value: '已完成'
-      },
+      // {
+      //   label: '计划状态',
+      //   value: '已完成'
+      // },
     ];
+
+    let val = this.plan.isover ? '已完成' : '未完成';
+    if (mid !== 0) {
+      let prefix = '';
+      if (this.plan.icurdotypeid == '2') {
+        prefix = '调整';
+      } else if (this.plan.icurdotypeid == '1') {
+        prefix = "完成确认";
+      }
+      val = prefix + '审批中';
+    }
+
+    this.data.push({
+      label: '计划状态',
+      value: val
+    });
   }
 
   ionViewDidLoad() {
@@ -142,7 +166,7 @@ export class PlanDetailPage {
     }
   }
   openFlow(item) {
-
+    HNJSBridge.invoke('openflow', { mid: item.mid }, (msg) => { });
   }
 
   data: any = [];
