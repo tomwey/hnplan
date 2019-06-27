@@ -172,7 +172,7 @@ export class HomePage {
             }
             _daysConfig.push({
               date: new Date(ele.planenddate),
-              subTitle: '●',
+              subTitle: ' ', // ●
               cssClass: cssClass
             });
           });
@@ -355,6 +355,7 @@ export class HomePage {
 
   segChanged(ev) {
     this.content.resize();
+    this.error = null;
     // console.log(ev);
     if (this.funcType == 1) {
       // 全景计划

@@ -3,15 +3,23 @@ page-home {
         &.pending {
             small {
                 color: #666!important;
+                background: #666!important;
             }
         }
         &.success {
             small {
                 color: #7FB762!important;
+                background: #7FB762!important;
             }
         }
         small {
-            font-size: 10px!important;
+            // font-size: 10px!important;
+            display: block!important;
+            width: 6px!important;
+            height: 6px!important;
+            border-radius: 50%;
+            background: color($colors, primary);
+            margin: 0 auto;
         }
     }
 
