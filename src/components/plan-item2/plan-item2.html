@@ -22,11 +22,11 @@
             </div>
           </div>
           <div class="right">
-            <div class="progress">
-              <p class="value">按期</p>
-              <p class="label">完成</p>
+            <div class="progress progress-{{calcState(item)}}">
+              <p class="value"><span class="days">{{calcResult(item).value}}</span><span class="unit">天</span></p>
+              <p class="label">{{calcResult(item).label}}</p>
             </div>
-            <div class="state state-{{item.state}}">{{item.cal_over_desc}}</div>
+            <div class="state state-{{calcState(item)}}">{{item.cal_over_desc}}</div>
           </div>
         </div>
       </div>

@@ -107,6 +107,18 @@ plan-item2 {
                 text-align: center;
                 margin: 0 auto;
                 padding-top: 16px;
+                &.progress-pending {
+                    border-color: #E8A02A!important;
+                }
+                &.progress-success {
+                    border-color: #54ae3b!important;
+                }
+                &.progress-danger {
+                    border-color: #C93E3B!important;
+                }
+                &.progress-approve {
+                    border-color: #53B2DA!important;
+                }
                 .label,.value {
                     font-size: 12px!important;
                     color: #333!important;
@@ -114,12 +126,33 @@ plan-item2 {
                     padding: 0;
                     line-height: 14px;
                 }
+                .value {
+                    .days {
+                        font-size: 18px;
+                        font-family: 'PingFang SC';
+                    }
+                    .unit {
+                        font-size: 10px;
+                    }
+                }
                 
             }
             .state {
                 text-align: center;
                 margin-top: 5px;
                 font-size: 12px!important;
+                &.state-pending {
+                    color: #E8A02A;
+                }
+                &.state-success {
+                    color: #54ae3b;
+                }
+                &.state-danger {
+                    color: #C93E3B;
+                }
+                &.state-approve {
+                    color: #53B2DA;
+                }
             }
         }
         
