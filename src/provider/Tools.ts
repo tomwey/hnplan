@@ -48,7 +48,7 @@ export class Tools {
                 content: content,
                 spinner: 'circles'//'crescent',
             });
-            loading.present();
+            loading.present().then(() => { }).catch();
             this.loading = loading;
 
             // setTimeout(() => {

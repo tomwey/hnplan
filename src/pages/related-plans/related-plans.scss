@@ -1,0 +1,37 @@
+page-related-plans {
+    .list-ios {
+        margin-bottom: 0;
+        .item-ios {
+            padding-left: 0 !important;
+            .item-inner {
+                padding-right: 0 !important;
+            }
+        }
+    }
+
+    .section-item {
+        padding: 10px;
+        h2 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            // margin-top: 10px;
+        }
+        p {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        ion-textarea {
+            color: #333!important;
+            border: 0.55px solid #eee;
+            // padding-left: 10px;
+            .text-input-ios {
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+        }
+        width: 100%;
+        font-size: 14px;
+    }
+}

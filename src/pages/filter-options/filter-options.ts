@@ -27,7 +27,7 @@ export class FilterOptionsPage {
     private api: ApiService,
     private tools: Tools,
     public navParams: NavParams) {
-    console.log(this.navParams.data);
+    // console.log(this.navParams.data);
     (this.navParams.data || []).forEach(item => {
       this.filterItems.push(item.name);
       if (item.type === 'project') {
@@ -46,6 +46,7 @@ export class FilterOptionsPage {
     this.options.forEach(opt => {
       for (let i = 0; i < opt.options.length; i++) {
         let item = opt.options[i];
+        opt.selectOpt = null;
         if (this.filterItems.indexOf(item.name) !== -1) {
           opt.selected = item;
           break;

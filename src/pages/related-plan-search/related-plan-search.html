@@ -1,0 +1,51 @@
+<!--
+  Generated template for the RelatedPlanSearchPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar color="primary">
+    <ion-title>计划搜索</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content style="background: #fff">
+  <ion-toolbar color="white">
+    <ion-searchbar [(ngModel)]="keyword" cancelButtonText="取消" placeholder="输入计划名称、责任人、经办人" [showCancelButton]="true"
+      [animated]="false" name="search">
+    </ion-searchbar>
+  </ion-toolbar>
+  <div class="select-project">
+    <button ion-item (click)="selectProject();">
+      所属项目
+      <ion-note item-right>{{currentProject.name || '选择项目'}}</ion-note>
+    </button>
+  </div>
+  <div class="panel" *ngFor="let opt of options">
+    <h2 class="title">
+      {{opt.name}}
+    </h2>
+    <div class="options">
+      <span class="item" tappable (click)="selectOpt(opt,item);" [class.active]="item == opt.selected"
+        *ngFor="let item of opt.options">{{item.name}}</span>
+    </div>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col col-6>
+      <div class="custom-btn outline" tappable (click)="reset();">
+        重置
+      </div>
+    </ion-col>
+    <ion-col col-6>
+      <div class="custom-btn" tappable (click)="confirm();">
+        确定
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-footer>

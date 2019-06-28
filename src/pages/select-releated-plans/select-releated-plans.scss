@@ -1,0 +1,45 @@
+page-select-releated-plans {
+    .filter-items-wrap {
+        padding: 10px 15px 0;
+    }
+    .itemname {
+        font-size: 14px;
+        color: #333;
+    }
+    .itemsummary {
+        font-size: 12px;
+        color: #999;
+    }
+    .selected-state {
+        ion-icon {
+            font-size: 20px;
+            vertical-align: -3px;
+            color: #999;
+        }
+    }
+    ion-footer {
+        ion-row,ion-col, [col-6] {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .sec-box {
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            background: #fff;
+            color: #999;
+            font-size: 14px;
+            padding: 0 15px;
+            ion-icon {
+                vertical-align: -3px;
+                font-size: 20px;
+            }
+            &.confirm {
+                background: color($colors, primary);
+                text-align: center;
+                color: #fff;
+            }
+        }
+    }
+}
