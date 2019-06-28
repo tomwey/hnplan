@@ -22,7 +22,7 @@ export class PlanDetailPage {
 
   canHandlePlan: boolean = false;
 
-  canDoPlan: boolean = false;
+  // canDoPlan: boolean = false;
 
   hasFlow: boolean = false;
 
@@ -81,7 +81,7 @@ export class PlanDetailPage {
   prepareData() {
     // console.log(this.plan.icurdoflowid);
     let mid = parseInt((this.plan.icurdoflowid || '0').replace('NULL', '0').replace('无', '0'));
-    this.canHandlePlan = !this.plan.isover && mid === 0;
+    this.canHandlePlan = this.plan.canhandleplan == '1' ? true : false;//!this.plan.isover && mid === 0;
 
     this.hasFlow = mid !== 0;
 
@@ -134,81 +134,31 @@ export class PlanDetailPage {
         label: '实际完成日期',
         value: this.plan.actualoverdate
       },
-      // {
-      //   label: '计划状态',
-      //   value: '已完成'
-      // },
+      {
+        label: '计划状态',
+        value: this.plan.planhandlestate
+      },
     ];
 
     // console.log(mid);
 
-    let val = this.plan.isover ? '已完成' : '未完成';
-    if (mid !== 0) {
-      let prefix = '';
-      if (this.plan.icurdotypeid == '2') {
-        prefix = '调整';
-      } else if (this.plan.icurdotypeid == '1') {
-        prefix = "完成确认";
-      }
-      val = prefix + '审批中';
-    }
+    // let val = this.plan.isover ? '已完成' : '未完成';
+    // if (mid !== 0) {
+    //   let prefix = '';
+    //   if (this.plan.icurdotypeid == '2') {
+    //     prefix = '调整';
+    //   } else if (this.plan.icurdotypeid == '1') {
+    //     prefix = "完成确认";
+    //   }
+    //   val = prefix + '审批中';
+    // }
 
-    this.data.push({
-      label: '计划状态',
-      value: val
-    });
+    // this.data.push({
+    //   label: '计划状态',
+    //   value: val
+    // });
 
-    this.checkOperLoad();
-  }
-
-  checkOperLoad() {
-    this.api.POST(null, {
-      dotype: 'GetData',
-      funname: '工作计划操作限制条件APP'
-    }, '', false)
-      .then(data => {
-        let canDo = true;
-
-        // 检查是否是经办人或第一责任人
-        let manID = Utils.getManID();//[user[@"man_id"]description];
-        let liableManIDs = this.plan.liablemannameid;
-        canDo = canDo &&
-          (manID == this.plan.domanid || liableManIDs.indexOf(manID) !== -1);
-
-        let planMonth = this.plan.iplanmonth;
-        // 检查是否是当月计划
-        if (data && data['data']) {
-          let arr = data['data'];
-          if (arr.length > 0) {
-            let item = arr[0];
-            // console.log(item);
-            let month = parseInt(item.curmonth);
-            let currTimeStr = item.curyear + (month >= 10 ? '' : '0') + month;
-            // console.log(currTimeStr);
-            if (planMonth == currTimeStr) {
-              canDo = canDo && true;
-            } else {
-              month = parseInt(item.premonth);
-              currTimeStr = item.preyear + + month >= 10 ? '' : '0' + month;
-              let curDay = parseInt(item.curday);
-              let premonthcancommitdays = parseInt(item.premonthcancommitdays);
-              if (item.bcancommitpremonth &&
-                planMonth == currTimeStr &&
-                curDay <= premonthcancommitdays
-              ) {
-                canDo = canDo && true;
-              } else {
-                canDo = false;
-              }
-            }
-          }
-        }
-
-        this.canDoPlan = canDo;
-
-        // this.canHandlePlan = this.canHandlePlan && canDo;
-      })
-      .catch(error => { });
+    // this.checkOperLoad();
   }
 
   gotoFeedbackList() {
