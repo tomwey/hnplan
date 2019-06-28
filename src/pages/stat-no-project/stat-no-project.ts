@@ -256,6 +256,25 @@ export class StatNoProjectPage {
     this.navCtrl.push('PlanListPage', obj);
   }
 
+  showPlans(item) {
+    // console.log(item);
+    let obj = Object.assign({}, this.globalConds);
+    if (this.currentOpt == '4') {
+      // 级别
+      obj['plan_level'] = item.plangradeid;
+    } else if (this.currentOpt == '7') {
+      // 来源
+    } else if (this.currentOpt == '3') {
+      // 项目
+      obj['project'] = item.project_id;
+    } else {
+      return;
+    }
+
+    obj['data_type'] = this.dataType == 0 ? '1' : '2';
+    this.navCtrl.push('PlanListPage', obj);
+  }
+
   // 状态图标
   createGraph1(data) {
     if (!this.statePieChart) {

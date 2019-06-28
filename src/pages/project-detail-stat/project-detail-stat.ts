@@ -37,10 +37,11 @@ export class ProjectDetailStatPage {
   }
 
   loadBuildings() {
+    // console.log(this.item);
     this.api.POST(null, {
       dotype: 'GetData',
       funname: '获取项目楼栋及楼层APP',
-      param1: this.conds.project || this.item.project_id || '0'
+      param1: this.item.project_id || this.conds.project || '0'
     })
       .then(data => {
         // console.log(data);

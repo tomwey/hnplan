@@ -54,7 +54,7 @@
         (click)="selectOption(opt)">{{opt.label}}</span>
     </div>
     <div class="plans">
-      <div class="plan" *ngFor="let plan of plans">
+      <div class="plan" *ngFor="let plan of plans" tappable (click)="showPlans(plan);">
         <div class="info-wrap">
           <div class="name">{{plan.project_name || plan.plansourcename || plan.plangrade}}</div>
           <div class="summary">
