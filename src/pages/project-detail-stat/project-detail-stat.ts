@@ -170,7 +170,7 @@ export class ProjectDetailStatPage {
       param11: '0',
       param12: this.navParams.data.data_type || '1',
       param13: Utils.getManID(),
-      param14: '1'
+      param14: '0'
     })
       .then(data => {
         // console.log(data);
@@ -209,7 +209,7 @@ export class ProjectDetailStatPage {
       param11: '0',
       param12: this.navParams.data.data_type || '1',
       param13: Utils.getManID(),
-      param14: '1'
+      param14: '0'
     })
       .then(data => {
         // console.log(data);
