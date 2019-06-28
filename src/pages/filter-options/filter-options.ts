@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ViewController, ModalController, Content } from 'ionic-angular';
 import { Utils } from '../../provider/Utils';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the FilterOptionsPage page.
@@ -21,10 +22,12 @@ export class FilterOptionsPage {
   filterItems: any = [];
   currentProject: any = { value: '', name: '' };
   originProject: any = { value: '', name: '' };
+  @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController,
     private viewCtrl: ViewController,
     private modalCtrl: ModalController,
     private api: ApiService,
+    private iosFixed: iOSFixedScrollFreeze,
     private tools: Tools,
     public navParams: NavParams) {
     // console.log(this.navParams.data);
@@ -39,7 +42,10 @@ export class FilterOptionsPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad FilterOptionsPage');
-    this.loadOptions();
+    this.iosFixed.fixedScrollFreeze(this.content);
+    setTimeout(() => {
+      this.loadOptions();
+    }, 350);
   }
 
   prepareOptions() {

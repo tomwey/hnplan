@@ -4,6 +4,7 @@ import ECharts from 'echarts';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the StatProjectPage page.
@@ -45,10 +46,11 @@ export class StatProjectPage {
   // globalConds: any = {};
 
   projects: any = [];
-
+  // @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController,
     private modalCtrl: ModalController,
     private api: ApiService,
+    private iosFixed: iOSFixedScrollFreeze,
     private tools: Tools,
     public navParams: NavParams) {
     this.dataType = this.navParams.data.dataType;
@@ -56,6 +58,7 @@ export class StatProjectPage {
   }
 
   ionViewDidLoad() {
+    this.iosFixed.fixedScrollFreeze(this.content);
     // console.log('ionViewDidLoad StatProjectPage');
     // setTimeout(() => {
     // this.createGraph();

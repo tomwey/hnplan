@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the ProjectDetailStatPage page.
@@ -24,8 +25,10 @@ export class ProjectDetailStatPage {
   item: any;
   title: any;
   conds: any;
+  @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController,
     private api: ApiService,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.item = Object.assign({}, this.navParams.data.item);
     this.title = this.navParams.data.title;
@@ -33,7 +36,10 @@ export class ProjectDetailStatPage {
   }
 
   ionViewDidLoad() {
-    this.loadStageData();
+    this.iosFixed.fixedScrollFreeze(this.content);
+    setTimeout(() => {
+      this.loadStageData();
+    }, 300);
   }
 
   loadBuildings() {

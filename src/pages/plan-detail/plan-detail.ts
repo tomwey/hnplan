@@ -1,7 +1,8 @@
-import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the PlanDetailPage page.
@@ -28,14 +29,18 @@ export class PlanDetailPage {
 
   error: any = null;
 
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController,
     // private events: Events,
     private zone: NgZone,
+    private iosFixed: iOSFixedScrollFreeze,
     private api: ApiService,
     public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
+    this.iosFixed.fixedScrollFreeze(this.content);
     setTimeout(() => {
       this.loadPlan();
     }, 300);

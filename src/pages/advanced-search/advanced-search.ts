@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the AdvancedSearchPage page.
@@ -21,10 +22,13 @@ export class AdvancedSearchPage {
   title: any = '高级搜索';
   keyword: any = null;
   currentProject: any = { id: '', name: '' };
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
     private modalCtrl: ModalController,
+    private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.title = this.navParams.data.title;
     this.options[0].name = this.title == '计划搜索' ? '计划完成时间' : '反馈进度时间';
@@ -116,7 +120,10 @@ export class AdvancedSearchPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad AdvancedSearchPage');
-    this.loadOptions();
+    this.iosFixed.fixedScrollFreeze(this.content);
+    setTimeout(() => {
+      this.loadOptions();
+    }, 350);
   }
 
   selectProject() {

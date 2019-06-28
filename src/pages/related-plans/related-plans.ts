@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the RelatedPlansPage page.
@@ -18,11 +19,16 @@ declare var HNJSBridge;
 export class RelatedPlansPage {
 
   planSections: any = [];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild(Content) content: Content;
+  constructor(public navCtrl: NavController,
+    private iosFixed: iOSFixedScrollFreeze,
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad RelatedPlansPage');
+    this.iosFixed.fixedScrollFreeze(this.content);
+
     HNJSBridge.invoke('plan:getplans', null, (data) => {
       this.planSections = data || [];
     });

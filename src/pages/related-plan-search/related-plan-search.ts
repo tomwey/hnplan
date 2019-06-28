@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Events, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { Utils } from '../../provider/Utils';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
 /**
  * Generated class for the RelatedPlanSearchPage page.
@@ -26,9 +27,12 @@ export class RelatedPlanSearchPage {
   currentProject: any = { value: '', name: '' };
   originProject: any = { value: '', name: '' };
 
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
+    private iosFixed: iOSFixedScrollFreeze,
     private events: Events,
     private modalCtrl: ModalController,
     public navParams: NavParams) {
@@ -117,7 +121,11 @@ export class RelatedPlanSearchPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad AdvancedSearchPage');
-    this.loadOptions();
+    this.iosFixed.fixedScrollFreeze(this.content)
+    setTimeout(() => {
+      this.loadOptions();
+    }, 300);
+
   }
 
   selectProject() {
