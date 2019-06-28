@@ -4,7 +4,6 @@ import { Utils } from '../../provider/Utils';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
-import { TranslationWidth } from '@angular/common';
 
 /**
  * Generated class for the SelectReleatedPlansPage page.

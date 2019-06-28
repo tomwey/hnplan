@@ -96,6 +96,9 @@ plan-item {
                 vertical-align: middle;
                 background: #f7f7f7;
                 color: #666;
+                &.danger {
+                    color: color($colors, danger);
+                }
             }
         }
         .right {

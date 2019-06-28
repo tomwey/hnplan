@@ -18,6 +18,7 @@
               <span class="tag">{{item.plansource}}</span>
               <span class="tag">{{item.plangrade}}</span>
               <span class="tag">{{item.domanname}}</span>
+              <span class="tag" [class.danger]="item.riskgrade == '高'">{{item.riskgrade}}风险</span>
             </div>
           </div>
           <div class="right">
