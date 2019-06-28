@@ -431,7 +431,8 @@ export class StatNoProjectPage {
 
   gotoBottom() {
     let el = document.getElementById('fx-plans');
-    this.content.scrollTo(0, el.offsetTop, 800);
+    // this.content.scrollTo(0, el.offsetTop, 800);
+    el.scrollIntoView(false);
   }
 
 }

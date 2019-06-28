@@ -94,7 +94,8 @@ export class StatHomePage {
 
   gotoBottom() {
     let el = document.getElementById('fx-plans');
-    this.content.scrollTo(0, el.offsetTop, 800);
+    el.scrollIntoView(false);
+    // this.content.scrollTo(0, el.offsetTop, 800);
   }
 
   showDetailGraph() {
