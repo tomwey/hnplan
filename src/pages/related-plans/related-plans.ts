@@ -8,6 +8,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
  * Ionic pages and navigation.
  */
 
+declare var HNJSBridge;
+
 @IonicPage()
 @Component({
   selector: 'page-related-plans',
@@ -21,17 +23,23 @@ export class RelatedPlansPage {
 
   ionViewDidLoad() {
     // console.log('ionViewDidLoad RelatedPlansPage');
+    HNJSBridge.invoke('plan:getplans', null, (data) => {
+      this.planSections = data || [];
+    });
   }
 
   add() {
-    // this.planSections.push({
-    //   planid: '209302',
-    //   planname: '测试计划一',
-    //   plangrade: '一级',
-    //   planbegindate: '2019-06-01',
-    //   planoverdate: '2019-06-30'
-    // })
-    this.navCtrl.push('SelectReleatedPlansPage')
+    let IDs = [];
+    this.planSections.forEach(plan => {
+      IDs.push(plan.id);
+    });
+    this.navCtrl.push('SelectReleatedPlansPage', {
+      planIDs: IDs,
+      callback: (data) => {
+        this.planSections = data;
+        // console.log(data);
+      }
+    });
   }
 
   doDelete(sliding, sec) {
@@ -43,11 +51,11 @@ export class RelatedPlansPage {
   }
 
   back() {
-
+    HNJSBridge.invoke('back', null, (data) => { });
   }
 
   confirm() {
-
+    HNJSBridge.invoke('plan:sendplans', this.planSections, (data) => { });
   }
 
 }

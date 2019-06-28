@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 import { Utils } from '../../provider/Utils';
 import { ApiService } from '../../provider/api-service';
 import { Tools } from '../../provider/Tools';
+import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
+import { TranslationWidth } from '@angular/common';
 
 /**
  * Generated class for the SelectReleatedPlansPage page.
@@ -28,16 +30,25 @@ export class SelectReleatedPlansPage {
 
   globalConds: any = {};
 
+  selectedPlans: any = [];
+
+  selectedPlanIDs: any = [];
+
+  @ViewChild(Content) content: Content;
+
   constructor(public navCtrl: NavController,
     private api: ApiService,
     // private modalCtrl: ModalController,
     private tools: Tools,
+    private iosFixed: iOSFixedScrollFreeze,
     private events: Events,
     public navParams: NavParams) {
     this.events.subscribe('select.filters', (data) => {
-      console.log(data);
+      // console.log(data);
       this.filterItems = Object.assign([], data);
     });
+
+    this.selectedPlanIDs = Object.assign([], this.navParams.data.planIDs);
 
     // 本月
     let date = new Date();
@@ -52,6 +63,7 @@ export class SelectReleatedPlansPage {
   }
 
   ionViewDidLoad() {
+    this.iosFixed.fixedScrollFreeze(this.content);
     // console.log('ionViewDidLoad SelectReleatedPlansPage');
   }
 
@@ -93,15 +105,45 @@ export class SelectReleatedPlansPage {
   }
 
   selectPlan(plan) {
-
+    plan.selected = !plan.selected;
+    if (plan.selected) {
+      this.selectedPlans.push(plan);
+    } else {
+      let index = this.selectedPlans.indexOf(plan);
+      if (index !== -1) {
+        this.selectedPlans.splice(index, 1);
+      }
+    }
+    this.isAll = this.plans.length === this.selectedPlans.length;
   }
 
   selectAll() {
+    this.isAll = !this.isAll;
 
+    this.plans.map(item => {
+      item.selected = this.isAll;
+    });
+
+    if (this.isAll) {
+      this.selectedPlans = Object.assign([], this.plans);
+    } else {
+      this.selectedPlans = [];
+    }
   }
 
   confirm() {
+    if (this.selectedPlans.length === 0) {
+      return;
+    }
 
+    let callback = this.navParams.data.callback;
+    if (callback) {
+      callback(this.selectedPlans);
+    }
+
+    this.navCtrl.pop().then(() => {
+
+    });
   }
 
   itemsChange() {
@@ -113,7 +155,9 @@ export class SelectReleatedPlansPage {
   }
 
   loadWarningPlans() {
+    this.isAll = false;
     this.plans = [];
+    this.selectedPlans = [];
     this.tools.showLoading('正在加载');
 
     this.api.POST(null, {
@@ -140,12 +184,29 @@ export class SelectReleatedPlansPage {
           this.plans = [];
         }
 
+        if (this.selectedPlanIDs.length > 0) {
+          this.plans.map(plan => {
+            plan.selected = false;
+            if (this.selectedPlanIDs.indexOf(plan.id) !== -1) {
+              plan.selected = true;
+              this.selectedPlans.push(plan);
+            }
+          });
+        }
+
+        if (this.plans.length > 0) {
+          this.isAll = this.plans.length === this.selectedPlans.length;
+        }
+
         this.error = this.plans.length === 0 ? '没搜索到计划' : null;
+
+        this.content.resize();
       })
       .catch(error => {
         this.tools.hideLoading();
         // console.log(error);
         this.error = error.message || '服务器超时';
+        this.content.resize();
       });
   }
 

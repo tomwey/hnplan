@@ -17,6 +17,11 @@ page-select-releated-plans {
             color: #999;
         }
     }
+    .selected {
+        ion-icon {
+            color: color($colors, primary);
+        }
+    }
     ion-footer {
         ion-row,ion-col, [col-6] {
             margin: 0;
@@ -31,6 +36,7 @@ page-select-releated-plans {
             color: #999;
             font-size: 14px;
             padding: 0 15px;
+            border-top: 0.55px solid #eee;
             ion-icon {
                 vertical-align: -3px;
                 font-size: 20px;
@@ -39,6 +45,12 @@ page-select-releated-plans {
                 background: color($colors, primary);
                 text-align: center;
                 color: #fff;
+                border-top: 0;
+            }
+            &.disabled {
+                &.confirm {
+                    background: #ccc;
+                }
             }
         }
     }

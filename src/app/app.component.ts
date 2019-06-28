@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Platform, IonicApp } from 'ionic-angular';
 import { HomePage } from '../pages/home/home';
+// import { Utils } from '../provider/Utils';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = 'RelatedPlansPage';//HomePage;
+  rootPage: any = HomePage;
 
   constructor(
     platform: Platform,

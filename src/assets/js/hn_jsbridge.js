@@ -4,7 +4,8 @@
     window.HNJSBridge = {
         // 获取native bridge
         _getNativeBridge: function () {
-            return window.HNNativeBridge || window.webkit.messageHandlers.HNNativeBridge;
+            let obj = (window.webkit || {}).messageHandlers || {};
+            return window.HNNativeBridge || obj.HNNativeBridge;
         },
         // 调用原生
         invoke: function (cbid = null, data, callback) {
