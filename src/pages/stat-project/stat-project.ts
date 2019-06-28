@@ -175,6 +175,32 @@ export class StatProjectPage {
       });
   }
 
+  showPlans(type) {
+    let conds = {
+      'keyword': '',
+      'project': this.globalConds.project || '0',
+      'plan_type': this.globalConds.plan_type || '0',
+      'plan_level': this.globalConds.plan_level || '0',
+      'fx_level': '',
+      'done_state': '',
+      'start': this.globalConds.start || '',
+      'end': this.globalConds.end || '',
+      'data_type': this.dataType == 0 ? '1' : '2'
+    };
+    if (type == 1) {
+      // 今天
+      conds['start'] = Utils.dateFormat(new Date());
+      conds['end'] = Utils.dateFormat(new Date());
+    } else if (type == 2) {
+      // 超期
+      conds['done_state'] = '超期未完';
+    } else if (type == 3) {
+      // 预警
+      conds['fx_level'] = '高';
+    }
+    this.navCtrl.push('PlanListPage', conds);
+  }
+
   loadTotalProjects() {
     this.api.POST(null, {
       dotype: 'GetData',

@@ -97,6 +97,67 @@ export class StatHomePage {
     this.content.scrollTo(0, el.offsetTop, 800);
   }
 
+  showDetailGraph() {
+    this.navCtrl.push('StatNoProjectPage',
+      {
+        dataType: this.dataType,
+        filters: [
+          { name: this.dateTypes[this.currentType], value: this.currentType + 1, closable: false, type: 'date' },
+          // { name: itemName, value: planId || '0', closable: true, type: 'plan_type' }
+        ]
+      });
+  }
+
+  showPlans(type) {
+    let start = '', end = '';
+    if (this.currentType === 0) {
+      // 本月
+      var date = new Date();
+      date.setDate(1);
+      start = Utils.dateFormat(date);
+      date.setMonth(date.getMonth() + 1);
+      date.setDate(0);
+      end = Utils.dateFormat(date);
+    } else if (this.currentType === 1) {
+      // 本季
+      var now = new Date();
+      var quarter = Math.floor((now.getMonth() / 3));
+      var firstDate = new Date(now.getFullYear(), quarter * 3, 1);
+      var endDate = new Date(firstDate.getFullYear(), firstDate.getMonth() + 3, 0);
+      start = Utils.dateFormat(firstDate);
+      end = Utils.dateFormat(endDate);
+    } else if (this.currentType === 2) {
+      // 本年
+      var first = new Date(new Date().getFullYear(), 0, 1);
+      var last = new Date(new Date().getFullYear(), 11, 31);
+      start = Utils.dateFormat(first);
+      end = Utils.dateFormat(last);
+    }
+    let conds = {
+      'keyword': '',
+      'project': '0',
+      'plan_type': '0',
+      'plan_level': '0',
+      'fx_level': '',
+      'done_state': '',
+      'start': start,
+      'end': end,
+      'data_type': this.dataType == 0 ? '1' : '2'
+    };
+    if (type == 1) {
+      // 今天
+      conds['start'] = Utils.dateFormat(new Date());
+      conds['end'] = Utils.dateFormat(new Date());
+    } else if (type == 2) {
+      // 超期
+      conds['done_state'] = '超期未完';
+    } else if (type == 3) {
+      // 预警
+      conds['fx_level'] = '高';
+    }
+    this.navCtrl.push('PlanListPage', conds);
+  }
+
   selectPlan(ev) {
     // console.log(ev);
     this.navCtrl.push('PlanDetailPage', ev);

@@ -58,7 +58,7 @@
     </div>
 
     <div class="other-stats">
-      <div class="stat-box">
+      <div class="stat-box" tappable (click)="showPlans(1)">
         <div class="value">
           <span
             class="done">{{totalStat.plantodaytotalovernum == 'NULL' ? '--' : totalStat.plantodaytotalovernum}}</span>
@@ -67,11 +67,11 @@
         </div>
         <div class="label">今日计划</div>
       </div>
-      <div class="stat-box">
+      <div class="stat-box" tappable (click)="showPlans(2)">
         <div class="value">{{totalStat.planoverduenum == 'NULL' ? '--' : totalStat.planoverduenum}}</div>
         <div class="label">超期计划</div>
       </div>
-      <div class="stat-box">
+      <div class="stat-box" tappable (click)="showPlans(3)">
         <div class="value">{{totalStat.plantotalwarningnum == 'NULL' ? '--' : totalStat.plantotalwarningnum}}</div>
         <div class="label">预警计划</div>
       </div>

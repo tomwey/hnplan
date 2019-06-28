@@ -244,10 +244,13 @@ export class StatNoProjectPage {
   }
 
   loadAll() {
-    this.loadStatePlanStats();
-    this.loadWarningPlanStats();
-    this.loadOtherPlanStats();
-    this.loadWarningPlans();
+    setTimeout(() => {
+      this.loadStatePlanStats();
+      this.loadWarningPlanStats();
+      this.loadOtherPlanStats();
+      this.loadWarningPlans();
+    }, 50);
+
   }
 
   gotoPlanList(type) {
@@ -300,7 +303,7 @@ export class StatNoProjectPage {
       legend: {
         orient: 'vertical',
         right: 30,
-        top: 72,
+        top: 50,
         data: legData,
         formatter: (name) => {
           return `${name} ${value[name]}`;
@@ -325,7 +328,7 @@ export class StatNoProjectPage {
 
         },
       }],
-      color: ['rgb(225,164,53)', 'rgb(100,142,223)', 'rgb(177,52,33)', 'rgb(155,210,60)'],
+      // color: ['rgb(225,164,53)', 'rgb(100,142,223)', 'rgb(177,52,33)', 'rgb(155,210,60)', 'rgb(177,52,33)'],
     };
 
     // 使用刚指定的配置项和数据显示图表。
@@ -355,7 +358,7 @@ export class StatNoProjectPage {
       legend: {
         orient: 'vertical',
         right: 30,
-        top: 72,
+        top: 50,
         data: legData,
         formatter: (name) => {
           return `${name} ${value[name]}`;
