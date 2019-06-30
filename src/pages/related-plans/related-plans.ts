@@ -1,6 +1,7 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the RelatedPlansPage page.
@@ -23,6 +24,7 @@ export class RelatedPlansPage {
   constructor(public navCtrl: NavController,
     private iosFixed: iOSFixedScrollFreeze,
     private zone: NgZone,
+    private tools: Tools,
     public navParams: NavParams) {
   }
 
@@ -70,6 +72,13 @@ export class RelatedPlansPage {
   }
 
   confirm() {
+    for (let i = 0; i < this.planSections.length; i++) {
+      let val = this.planSections["value"] || "";
+      if (!val) {
+        this.tools.showToast('相关说明不能为空');
+      }
+      return;
+    }
     HNJSBridge.invoke('plan:sendplans', this.planSections, (data) => { });
   }
 

@@ -52,6 +52,7 @@ export class PlanDetailPage {
         dotype: 'GetData',
         funname: '通过ID获取计划明细APP',
         param1: this.navParams.data.id || '0',
+        param2: Utils.getManID()
       })
       .then(data => {
         if (data && data['data']) {
