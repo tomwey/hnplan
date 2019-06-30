@@ -92,6 +92,10 @@ export class StatHomePage {
       });
   }
 
+  search() {
+    this.navCtrl.push('AdvancedSearchPage', { title: '计划搜索', data_type: this.dataType == 0 ? '1' : '2' });
+  }
+
   gotoBottom() {
     let el = document.getElementById('fx-plans');
     el.scrollIntoView(false);

@@ -31,13 +31,23 @@ export class FilterOptionsPage {
     private tools: Tools,
     public navParams: NavParams) {
     // console.log(this.navParams.data);
-    (this.navParams.data || []).forEach(item => {
+    let fItems = this.navParams.data.filter_items || this.navParams.data || [];
+    fItems.forEach(item => {
       this.filterItems.push(item.name);
       if (item.type === 'project') {
         this.currentProject = Object.assign({}, item);
         this.originProject = Object.assign({}, item);
       }
     });
+    if (this.navParams.data.is_project && this.navParams.data.is_project == '1') {
+      this.options[0].options.push({
+        name: '不限',
+        value: '',
+        type: 'date',
+        start: '',
+        end: ''
+      });
+    }
   }
 
   ionViewDidLoad() {
@@ -52,7 +62,7 @@ export class FilterOptionsPage {
     this.options.forEach(opt => {
       for (let i = 0; i < opt.options.length; i++) {
         let item = opt.options[i];
-        opt.selectOpt = null;
+        opt.selected = null;
         if (this.filterItems.indexOf(item.name) !== -1) {
           opt.selected = item;
           break;

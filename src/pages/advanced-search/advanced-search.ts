@@ -86,6 +86,12 @@ export class AdvancedSearchPage {
         });
     }
 
+    if (this.navParams.data.isfullplan == '1') {
+      this.options.splice(0,1);
+    } else {
+      
+    }
+
     let temp = [];
     temp.push({
       name: '当天',
@@ -148,6 +154,17 @@ export class AdvancedSearchPage {
       start: start,
       end: end
     });
+
+    if (this.navParams.data.is_project == '1') {
+      // 项目统计页面
+      temp.push({
+        name: '不限',
+        value: '',
+        start: '',
+        end: ''
+      });
+    }
+
     this.options[0].options = temp;
     // console.log(this.options);
   }
@@ -316,6 +333,15 @@ export class AdvancedSearchPage {
 
     // console.log(conds);
     let page = this.title === '计划搜索' ? 'PlanListPage' : 'FeedbackListPage';
+    if (this.navParams.data.data_type) {
+      conds['data_type'] = this.navParams.data.data_type;
+    }
+    // if (page == 'PlanListPage' && this.navParams.data.isfullplan == '1') {
+    //   conds['start'] = '';
+    //   conds['end'] = '';
+    //   conds['begin_date'] = '';
+    //   conds['end_date'] = '';
+    // }
     this.navCtrl.push(page, conds);
   }
 

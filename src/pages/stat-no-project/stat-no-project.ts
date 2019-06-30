@@ -435,4 +435,8 @@ export class StatNoProjectPage {
     el.scrollIntoView(false);
   }
 
+  search() {
+    this.navCtrl.push('AdvancedSearchPage', { title: '计划搜索', data_type: this.dataType == 0 ? '1' : '2' });
+  }
+
 }

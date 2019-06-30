@@ -15,7 +15,7 @@
             <div class="tags">
               <span class="tag tag-{{item.plantypeid}}">{{item.plantypename}}</span>
               <span class="tag">{{item.projectname}}</span>
-              <span class="tag">{{item.plansource}}</span>
+              <span class="tag" *ngIf="item.plansource && item.plansource != 'NULL'">{{item.plansource}}</span>
               <span class="tag">{{item.plangrade}}</span>
               <span class="tag">{{item.domanname}}</span>
               <span class="tag" [class.danger]="item.riskgrade == '高'">{{item.riskgrade}}风险</span>

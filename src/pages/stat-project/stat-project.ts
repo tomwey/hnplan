@@ -136,7 +136,7 @@ export class StatProjectPage {
   }
 
   openFilter() {
-    let modal = this.modalCtrl.create('FilterOptionsPage', this.filterItems);
+    let modal = this.modalCtrl.create('FilterOptionsPage', {filter_items: this.filterItems, is_project: '1' });
     modal.onDidDismiss((res) => {
       if (res) {
         this.filterItems = Object.assign([], res);
@@ -319,6 +319,10 @@ export class StatProjectPage {
     let el = document.getElementById('fx-plans');
     // this.content.scrollTo(0, el.offsetTop, 800);
     el.scrollIntoView(false);
+  }
+
+  search() {
+    this.navCtrl.push('AdvancedSearchPage', { title: '计划搜索', is_project: '1', data_type: this.dataType == 0 ? '1' : '2' });
   }
 
 }
