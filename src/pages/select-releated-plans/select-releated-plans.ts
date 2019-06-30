@@ -33,6 +33,8 @@ export class SelectReleatedPlansPage {
 
   selectedPlanIDs: any = [];
 
+  selectedPlanVals: any = {};
+
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController,
@@ -48,6 +50,8 @@ export class SelectReleatedPlansPage {
     });
 
     this.selectedPlanIDs = Object.assign([], this.navParams.data.planIDs);
+
+    this.selectedPlanVals = Object.assign({}, this.navParams.data.idVals);
 
     // 本月
     let date = new Date();
@@ -188,6 +192,7 @@ export class SelectReleatedPlansPage {
             plan.selected = false;
             if (this.selectedPlanIDs.indexOf(plan.id) !== -1) {
               plan.selected = true;
+              plan.value = this.selectedPlanVals[plan.id];
               this.selectedPlans.push(plan);
             }
           });

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 
@@ -22,6 +22,7 @@ export class RelatedPlansPage {
   @ViewChild(Content) content: Content;
   constructor(public navCtrl: NavController,
     private iosFixed: iOSFixedScrollFreeze,
+    private zone: NgZone,
     public navParams: NavParams) {
   }
 
@@ -30,17 +31,25 @@ export class RelatedPlansPage {
     this.iosFixed.fixedScrollFreeze(this.content);
 
     HNJSBridge.invoke('plan:getplans', null, (data) => {
-      this.planSections = data || [];
+      // alert(123);
+      // alert(data);
+      this.zone.run(() => {
+        this.planSections = data || [];
+      });
+
     });
   }
 
   add() {
     let IDs = [];
+    let idValues = {};
     this.planSections.forEach(plan => {
       IDs.push(plan.id);
+      idValues[plan.id] = plan.value;
     });
     this.navCtrl.push('SelectReleatedPlansPage', {
       planIDs: IDs,
+      idVals: idValues,
       callback: (data) => {
         this.planSections = data;
         // console.log(data);

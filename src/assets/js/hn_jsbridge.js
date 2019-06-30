@@ -27,16 +27,32 @@
 
         // 从原生获取消息
         receiveMessage: function (msg) {
-            // alert(msg);
+            if (typeof msg === 'object') {
+                msg = JSON.stringify(msg);
+            }
+            msg = JSON.parse(msg);
+
             var cbid = msg.cbid,
                 data = msg.data || {};
+            // alert(cbid);
+            // alert(data);
             if (cbid) {
+                // alert(callbacks[cbid]);
                 if (callbacks[cbid]) {
                     callbacks[cbid](data);
                 }
                 delete callbacks[cbid];
                 delete cbid;
             }
+        },
+
+        // 测试
+        showMsg: function (msg) {
+            alert(msg);
         }
     };
 })();
+
+// function showMsg(msg) {
+//     alert(msg);
+// }

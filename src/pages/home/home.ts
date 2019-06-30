@@ -369,7 +369,19 @@ export class HomePage {
 
   }
 
+  getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+
   loadFeedbackList() {
+    let date = this.getMonday(new Date());
+    let start = Utils.dateFormat(date);
+    date.setDate(date.getDate() + 6);
+    let end = Utils.dateFormat(date);
+
     this.error = null;
     this.api.POST(null, {
       dotype: 'GetData',
@@ -379,8 +391,8 @@ export class HomePage {
       param3: '-1', // 计划类型
       param4: '-1', // 计划级别 
       param5: '-1', // 项目
-      param6: '', // 开始日期
-      param7: '', // 结束日期
+      param6: start, // 开始日期
+      param7: end, // 结束日期
       param8: '', // 风险等级
       param9: '-1', // 催办范围,
       param10: '0'
