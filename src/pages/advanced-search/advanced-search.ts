@@ -4,7 +4,6 @@ import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
-import { OverlayPortal } from 'ionic-angular/umd/components/app/overlay-portal';
 
 /**
  * Generated class for the AdvancedSearchPage page.
