@@ -4,6 +4,7 @@ import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { Tools } from '../../provider/Tools';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
+import { OverlayPortal } from 'ionic-angular/umd/components/app/overlay-portal';
 
 /**
  * Generated class for the AdvancedSearchPage page.
@@ -50,6 +51,39 @@ export class AdvancedSearchPage {
           ]
         },
       );
+    } else {
+      this.options.push(
+        {
+          id: 'done_state',
+          name: '完成状态',
+          multiselect: true,
+          options: [
+            {
+              name: '取消',
+              value: '取消'
+            },
+            {
+              name: '未到期',
+              value: '未到期'
+            },
+            {
+              name: '超期未完',
+              value: '超期未完'
+            },
+            {
+              name: '按时完成',
+              value: '按时完成'
+            },
+            {
+              name: '提前完成',
+              value: '提前完成'
+            },
+            {
+              name: '超期完成',
+              value: '超期完成'
+            },
+          ]
+        });
     }
 
     let temp = [];
@@ -215,14 +249,25 @@ export class AdvancedSearchPage {
   }
 
   selectOpt(opt, item) {
-    if (opt.selected) {
-      if (opt.selected == item) {
-        opt.selected = null;
+    if (opt.multiselect) {
+      let arr = opt.selected || [];
+      let index = arr.indexOf(item);
+      if (index !== -1) {
+        arr.splice(index, 1);
+      } else {
+        arr.push(item);
+      }
+      opt.selected = arr;
+    } else {
+      if (opt.selected) {
+        if (opt.selected == item) {
+          opt.selected = null;
+        } else {
+          opt.selected = item;
+        }
       } else {
         opt.selected = item;
       }
-    } else {
-      opt.selected = item;
     }
   }
 
@@ -237,12 +282,22 @@ export class AdvancedSearchPage {
   confirm() {
     let conds = {};
     this.options.forEach(opt => {
-      if (opt.selected) {
-        if (opt.id == 'date') {
-          conds['begin_date'] = opt.selected.start || '';
-          conds['end_date'] = opt.selected.end || '';
-        } else {
-          conds[opt.id] = opt.selected.value;
+      if (opt.multiselect) {
+        // 多选
+        let arr = opt.selected || [];
+        let temp = [];
+        arr.forEach(obj => {
+          temp.push(obj.value || '');
+        });
+        conds[opt.id] = temp.join(',');
+      } else {
+        if (opt.selected) {
+          if (opt.id == 'date') {
+            conds['begin_date'] = opt.selected.start || '';
+            conds['end_date'] = opt.selected.end || '';
+          } else {
+            conds[opt.id] = opt.selected.value;
+          }
         }
       }
     });

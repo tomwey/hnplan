@@ -218,14 +218,25 @@ export class RelatedPlanSearchPage {
   }
 
   selectOpt(opt, item) {
-    if (opt.selected) {
-      if (opt.selected == item && opt.id !== 'date' && opt.id !== 'plan_scope') {
-        opt.selected = null;
+    if (opt.multiselect) {
+      let arr = opt.selected || [];
+      let index = arr.indexOf(item);
+      if (index !== -1) {
+        arr.splice(index, 1);
+      } else {
+        arr.push(item);
+      }
+      opt.selected = arr;
+    } else {
+      if (opt.selected) {
+        if (opt.selected == item && opt.id !== 'date' && opt.id !== 'plan_scope') {
+          opt.selected = null;
+        } else {
+          opt.selected = item;
+        }
       } else {
         opt.selected = item;
       }
-    } else {
-      opt.selected = item;
     }
   }
 
@@ -326,6 +337,37 @@ export class RelatedPlanSearchPage {
         }
       ]
     },
+    // {
+    //   id: 'done_state',
+    //   name: '完成状态',
+    //   multiselect: true,
+    //   options: [
+    //     {
+    //       name: '取消',
+    //       value: '取消'
+    //     },
+    //     {
+    //       name: '未到期',
+    //       value: '未到期'
+    //     },
+    //     {
+    //       name: '超期未完',
+    //       value: '超期未完'
+    //     },
+    //     {
+    //       name: '按时完成',
+    //       value: '按时完成'
+    //     },
+    //     {
+    //       name: '提前完成',
+    //       value: '提前完成'
+    //     },
+    //     {
+    //       name: '超期完成',
+    //       value: '超期完成'
+    //     },
+    //   ]
+    // },
     {
       id: 'plan_scope',
       name: '计划范围',

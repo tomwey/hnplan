@@ -29,7 +29,8 @@
       {{opt.name}}
     </h2>
     <div class="options">
-      <span class="item" tappable (click)="selectOpt(opt,item);" [class.active]="item == opt.selected"
+      <span class="item" tappable (click)="selectOpt(opt,item);"
+        [class.active]="(opt.multiselect && (opt.selected||[]).indexOf(item) !== -1) || (!opt.multiselect && item == opt.selected)"
         *ngFor="let item of opt.options">{{item.name}}</span>
     </div>
   </div>
