@@ -32,9 +32,12 @@
         </ion-list>
       </div>
       <div class="plan-graph-wrap" *ngIf="planDataType === 1">
-        <div class="buildings">
-          <span class="building-item" [class.active]="currBuildIndex === i" tappable (click)="selectBuild(i);"
-            *ngFor="let b of buildings; let i = index;">
+        <span class="open-btn" tappable (click)="expand();" *ngIf="buildings.length > 3">
+          <ion-icon name="{{buildingsClose ? 'ios-arrow-down-outline' : 'ios-arrow-up-outline'}}"></ion-icon>
+        </span>
+        <div class="buildings" [class.close]="buildingsClose">
+          <span class="building-item" [class.hide]="buildingsClose && i > 2" [class.active]="currBuildIndex === i"
+            tappable (click)="selectBuild(i);" *ngFor="let b of buildings; let i = index;">
             {{b.building_name}}{{b.building_type_id == '10' ? '楼' : ''}}
           </span>
         </div>

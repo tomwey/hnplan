@@ -22,10 +22,13 @@ export class ProjectDetailStatPage {
   currentIndex: number = 0;
   planDataType: number = 0;
 
+  buildingsClose: boolean = false;
+
   item: any;
   title: any;
   conds: any;
   @ViewChild(Content) content: Content;
+  // @ViewChild('planBody') planBody: ElementRef;
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private iosFixed: iOSFixedScrollFreeze,
@@ -40,6 +43,10 @@ export class ProjectDetailStatPage {
     setTimeout(() => {
       this.loadStageData();
     }, 300);
+  }
+
+  expand() {
+    this.buildingsClose = !this.buildingsClose;
   }
 
   loadBuildings() {
@@ -61,6 +68,7 @@ export class ProjectDetailStatPage {
           // overground_layer: "31"
           // project_id: "1291509"
           // underground_layer: "2"
+          this.buildingsClose = this.buildings.length > 3;
         }
         this.loadRoomPlanData();
       })
