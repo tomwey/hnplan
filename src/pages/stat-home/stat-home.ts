@@ -282,14 +282,25 @@ export class StatHomePage {
 
     var option2: any = {
       legend: {
-        data: ['总计划', '完成计划', '预警计划', '计划完成率']
+        data: ['总计划', '完成计划', '预警计划', '计划完成率'],
+        textStyle: {
+          color: '#999'
+        }
       },
-      color: ['rgb(80,108,162)', 'rgb(155,210,60)', 'rgb(231,90,22)', 'rgb(155,210,60)'],
+      color: ['rgb(172,235,254)', 'rgba(155,210,60, 0.6)', 'rgba(231,90,22,0.6)', 'rgba(155,210,60, 0.6)'],
       xAxis: [
         {
           type: 'category',
           data: xAxisData,
           triggerEvent: true,
+          axisLabel: {
+            color: '#999'
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#999'
+            }
+          }
         }
       ],
       yAxis: [
@@ -361,7 +372,8 @@ export class StatHomePage {
           label: {
             show: true,
             position: 'top',
-            formatter: '{c}%'
+            formatter: '{c}%',
+            offset: [30, 5]
           }
         }
       ]
