@@ -76,8 +76,8 @@ export class RelatedPlansPage {
       let val = this.planSections[i]["value"] || "";
       if (!val) {
         this.tools.showToast('相关说明不能为空');
+        return;
       }
-      return;
     }
     HNJSBridge.invoke('plan:sendplans', this.planSections, (data) => { });
   }
