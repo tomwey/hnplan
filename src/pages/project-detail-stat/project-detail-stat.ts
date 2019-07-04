@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
+import { DomSanitizer } from "@angular/platform-browser";
 
 /**
  * Generated class for the ProjectDetailStatPage page.
@@ -10,6 +11,8 @@ import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+
+declare var HNJSBridge;
 
 @IonicPage()
 @Component({
@@ -27,15 +30,20 @@ export class ProjectDetailStatPage {
   item: any;
   title: any;
   conds: any;
+  secUrl: any;
+  frameClosed: boolean = false;
+
   @ViewChild(Content) content: Content;
   // @ViewChild('planBody') planBody: ElementRef;
   constructor(public navCtrl: NavController,
     private api: ApiService,
+    private saniter: DomSanitizer,
     private iosFixed: iOSFixedScrollFreeze,
     public navParams: NavParams) {
     this.item = Object.assign({}, this.navParams.data.item);
     this.title = this.navParams.data.title;
     this.conds = this.navParams.data.conds || {};
+    this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
   }
 
   ionViewDidLoad() {
@@ -47,6 +55,24 @@ export class ProjectDetailStatPage {
 
   expand() {
     this.buildingsClose = !this.buildingsClose;
+  }
+
+  openFrame(ev: Event) {
+    // ev.stopPropagation();
+    // console.log(123);
+  }
+
+  closeFrame(ev: Event) {
+    ev.stopPropagation();
+
+    this.frameClosed = true;
+    // console.log(123);
+  }
+
+  fullscreen(ev: Event) {
+    ev.stopPropagation();
+    // console.log(123);
+    HNJSBridge.invoke('plan:fullscreen', { pid: this.item.project_id }, (data) => { });
   }
 
   loadBuildings() {

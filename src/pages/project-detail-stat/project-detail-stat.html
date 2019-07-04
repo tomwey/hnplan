@@ -13,7 +13,20 @@
 </ion-header>
 
 <ion-content style="background: #fff;">
-  <div class="main">
+  <div class="frame-box" *ngIf="!frameClosed">
+    <iframe id="iframe" class="iframe" scrolling="no" sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin 
+      allow-popups allow-forms" [src]="secUrl">
+    </iframe>
+    <!-- <div class="clickable" tappable (click)="openFrame($event);"> -->
+    <span class="custom-close" tappable (click)="closeFrame($event);">
+      <ion-icon name="ios-close-outline"></ion-icon>
+    </span>
+    <span class="fullscreen-btn" tappable (click)="fullscreen($event);">
+      <ion-icon name="ios-expand-outline"></ion-icon>
+    </span>
+    <!-- </div> -->
+  </div>
+  <div class="main" [class.close-frame]="frameClosed">
     <div class="leftside">
       <div class="menu">
         <div class="menu-item menu-type-{{menu.sumdiv}}" [class.active]="currentIndex === i" tappable
