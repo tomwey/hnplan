@@ -99,11 +99,12 @@ export class ProjectDetailStatPage {
       param7: '',
       param8: this.conds.start || this.conds.begin_date || '',
       param9: this.conds.end || this.conds.end_date || '',
-      param10: menu.stage_id || '0',
+      param10: menu.sumdiv == '1' ? menu.stage_id || '0' : menu.spec_id || '0',
       param11: this.buildings[this.currBuildIndex].building_id || '0',
       param12: '2',
       param13: Utils.getManID(),
-      param14: '0'
+      param14: '0',
+      param15: menu.sumdiv || '0'
     })
       .then(data => {
         console.log(data);
@@ -180,11 +181,12 @@ export class ProjectDetailStatPage {
       param7: '',
       param8: this.conds.start || this.conds.begin_date || '',
       param9: this.conds.end || this.conds.end_date || '',
-      param10: menu.stage_id || '0',
+      param10: menu.sumdiv == '1' ? menu.stage_id || '0' : menu.spec_id || '0',
       param11: '0',
       param12: this.navParams.data.data_type || '1',
       param13: Utils.getManID(),
-      param14: '0'
+      param14: '0',
+      param15: menu.sumdiv || '0'
     })
       .then(data => {
         // console.log(data);
@@ -223,7 +225,8 @@ export class ProjectDetailStatPage {
       param11: '0',
       param12: this.navParams.data.data_type || '1',
       param13: Utils.getManID(),
-      param14: '0'
+      param14: '0',
+      param15: '0'
     })
       .then(data => {
         // console.log(data);

@@ -9,6 +9,12 @@ page-project-detail-stat {
             height: 100%;
             overflow: auto;
             background: #f7f7f7;
+            &::-webkit-scrollbar {
+                display: none;
+                width: 0!important;
+            }
+            -ms-overflow-style: none;
+
             .menu-item {
                 position: relative;
                 padding: 0 15px;
@@ -22,6 +28,29 @@ page-project-detail-stat {
                     background: #fff;
                     color: rgb(231,90,22);
                 }
+                &::before {
+                    content: "";
+                    display: block;
+                    width: 2px;
+                    height: 46px;
+                    position: absolute;
+                    top: 2px;
+                    left: 0;
+                    // background: red;
+                }
+
+                &.menu-type-1 {
+                    &::before {
+                        background: gray;
+                    }
+                }
+
+                &.menu-type-2 {
+                    &::before {
+                        background: rgb(92, 154, 216);
+                    }
+                }
+
                 .badge {
                     position: absolute;
                     right: 10px;
