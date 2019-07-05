@@ -185,3 +185,5 @@ ion-label[fixed] {
         max-width: 32px;
     }
 }
+
+ion-app.platform-ios12 ion-content { pointer-events: auto; /*fix scroll lock on ios12.2*/ }
