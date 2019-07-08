@@ -24,6 +24,17 @@ export class AdvancedSearchPage {
   currentProject: any = { id: '', name: '' };
   @ViewChild(Content) content: Content;
 
+  planScopes: any = [
+    {
+      name: '全部催办',
+      value: '-1'
+    },
+    {
+      name: '我的催办',
+      value: Utils.getManID()
+    }
+  ];
+
   constructor(public navCtrl: NavController,
     private api: ApiService,
     private tools: Tools,
@@ -38,16 +49,8 @@ export class AdvancedSearchPage {
         {
           id: 'cb_type',
           name: '反馈范围',
-          options: [
-            {
-              name: '全部催办',
-              value: '-1'
-            },
-            {
-              name: '我的催办',
-              value: Utils.getManID()
-            }
-          ]
+          options: this.planScopes,
+          selected: this.planScopes[1]
         },
       );
     } else {
@@ -86,9 +89,9 @@ export class AdvancedSearchPage {
     }
 
     if (this.navParams.data.isfullplan == '1') {
-      this.options.splice(0,1);
+      this.options.splice(0, 1);
     } else {
-      
+
     }
 
     let temp = [];
@@ -293,6 +296,9 @@ export class AdvancedSearchPage {
       this.keyword = null;
       this.currentProject = { id: '', name: '' };
     });
+    if (this.title != '计划搜索') {
+      this.options[this.options.length - 1].selected = this.planScopes[1];
+    }
   }
 
   confirm() {

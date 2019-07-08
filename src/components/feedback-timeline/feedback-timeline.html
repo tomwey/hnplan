@@ -9,8 +9,8 @@
         </div>
         <div class="item-content">
           <div class="feedback-item" *ngFor="let obj of data[date]" tappable (click)="doClick(obj)">
-            <div class="name">{{obj.billdesc}}</div>
-            <div class="time">{{obj.create_date}}</div>
+            <div class="name">【{{obj.projectname}}】{{obj.billdesc}}</div>
+            <div class="time">{{obj.create_date}}&emsp;{{obj.backmanname}}</div>
           </div>
         </div>
       </div>
