@@ -36,6 +36,8 @@ export class StatHomePage {
 
   planList: any = [];
 
+  barData: any = [];
+
   @ViewChild(Content) content: Content;
 
   constructor(public navCtrl: NavController,
@@ -238,8 +240,12 @@ export class StatHomePage {
       warningPlans.push(warning);
       planRates.push(parseFloat((ele.overrate || '0.00').replace('NULL', '0.00')));
     });
+
+    this.barData = Object.assign([], data);
+
     if (!this.barChart) {
       this.barChart = ECharts.init(document.getElementById('plan-graph') as HTMLDivElement);
+
       this.barChart.on('click', (params) => {
         // console.log(params);
         let itemName = null;
@@ -250,8 +256,8 @@ export class StatHomePage {
         }
 
         let planId = null;
-        for (let i = 0; i < data.length; i++) {
-          let item = data[i];
+        for (let i = 0; i < this.barData.length; i++) {
+          let item = this.barData[i];
           if (item.plantypename === itemName) {
             planId = item.plantypeid;
             break;
@@ -278,6 +284,7 @@ export class StatHomePage {
             });
         }
       });
+
     }
 
     var option2: any = {
