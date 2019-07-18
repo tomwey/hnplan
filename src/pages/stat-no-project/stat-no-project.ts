@@ -271,6 +271,7 @@ export class StatNoProjectPage {
       obj['plan_level'] = item.plangradeid;
     } else if (this.currentOpt == '7') {
       // 来源
+      obj['source'] = item.plansourceid || "0";
     } else if (this.currentOpt == '3') {
       // 项目
       obj['project'] = item.project_id;

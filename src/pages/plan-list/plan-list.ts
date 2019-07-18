@@ -50,7 +50,8 @@ export class PlanListPage {
       param8: this.navParams.data.end_date || this.navParams.data.end || '', // 结束日期
       param9: this.navParams.data.data_type || '1', // 个人计划，组织计划
       param10: Utils.getManID(), // man id
-      param11: '1'
+      param11: '1',
+      param12: this.navParams.data.source || "0" // 来源
     })
       .then(data => {
         // console.log(data);
