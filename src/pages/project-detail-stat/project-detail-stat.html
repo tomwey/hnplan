@@ -13,20 +13,20 @@
 </ion-header>
 
 <ion-content style="background: #fff;">
-  <div class="frame-box" *ngIf="!frameClosed">
+  <div class="frame-box" *ngIf="!frameClosed" [class.fullscreen]="isLandscape">
     <iframe id="iframe" class="iframe" scrolling="no" sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin 
       allow-popups allow-forms" [src]="secUrl">
     </iframe>
     <!-- <div class="clickable" tappable (click)="openFrame($event);"> -->
-    <span class="custom-close" tappable (click)="closeFrame($event);">
+    <span class="custom-close" [hidden]="isLandscape" tappable (click)="closeFrame($event);">
       <ion-icon name="ios-close-outline"></ion-icon>
     </span>
-    <span class="fullscreen-btn" tappable (click)="fullscreen($event);">
+    <span class="fullscreen-btn" [hidden]="isLandscape" tappable (click)="fullscreen($event);">
       <ion-icon name="ios-expand-outline"></ion-icon>
     </span>
     <!-- </div> -->
   </div>
-  <div class="main" [class.close-frame]="frameClosed">
+  <div class="main" [class.close-frame]="frameClosed" [class.hide-me]="isLandscape">
     <div class="leftside">
       <div class="menu">
         <div class="menu-item menu-type-{{menu.sumdiv}}" [class.active]="currentIndex === i" tappable

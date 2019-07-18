@@ -5,6 +5,9 @@ page-project-detail-stat {
         border-bottom: 1px solid #eee;
         position: relative;
         background: #fff;
+        &.fullscreen {
+            height: 100%;
+        }
         .iframe {
             width: 100%;
             height: 100%;
@@ -62,6 +65,9 @@ page-project-detail-stat {
         display: flex;
         height: calc(100% - 200px);
         width: 100%;
+        &.hide-me {
+            display: none;
+        }
         &.close-frame {
             height: 100%;
         }

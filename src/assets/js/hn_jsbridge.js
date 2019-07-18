@@ -41,8 +41,10 @@
                 if (callbacks[cbid]) {
                     callbacks[cbid](data);
                 }
-                delete callbacks[cbid];
-                delete cbid;
+                if (cbid != 'plan:rotate') {
+                    delete callbacks[cbid];
+                    delete cbid;
+                }
             }
         },
 

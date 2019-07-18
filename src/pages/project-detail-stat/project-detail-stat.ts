@@ -33,6 +33,8 @@ export class ProjectDetailStatPage {
   secUrl: any;
   frameClosed: boolean = false;
 
+  isLandscape: boolean = false;
+
   @ViewChild(Content) content: Content;
   // @ViewChild('planBody') planBody: ElementRef;
   constructor(public navCtrl: NavController,
@@ -51,6 +53,22 @@ export class ProjectDetailStatPage {
     setTimeout(() => {
       this.loadStageData();
     }, 300);
+    this.regRotateCallback();
+  }
+
+  ionViewWillLeave() {
+    HNJSBridge.invoke('plan:rotate', "0", (msg) => { });
+  }
+
+  regRotateCallback() {
+    HNJSBridge.invoke('plan:rotate', "1", (msg) => {
+      // console.log(msg);
+      if (msg == 0) {
+        this.isLandscape = false;
+      } else if (msg == 1) {
+        this.isLandscape = true;
+      }
+    });
   }
 
   expand() {
@@ -73,6 +91,7 @@ export class ProjectDetailStatPage {
     ev.stopPropagation();
     // console.log(123);
     HNJSBridge.invoke('plan:fullscreen', { pid: this.item.project_id }, (data) => { });
+    // HNJSBridge.invoke('plan:rotate', "2", (msg) => { });
   }
 
   loadBuildings() {
