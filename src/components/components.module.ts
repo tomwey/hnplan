@@ -8,6 +8,7 @@ import { PlanItemComponent } from './plan-item/plan-item';
 import { PlanItem2Component } from './plan-item2/plan-item2';
 import { FeedbackTimelineComponent } from './feedback-timeline/feedback-timeline';
 import { CustomMonthPickerComponent } from './custom-month-picker/custom-month-picker';
+import { ExpandableComponent } from './expandable/expandable';
 
 @NgModule({
     declarations: [AccordionListComponent,
@@ -16,7 +17,8 @@ import { CustomMonthPickerComponent } from './custom-month-picker/custom-month-p
     PlanItemComponent,
     PlanItem2Component,
     FeedbackTimelineComponent,
-    CustomMonthPickerComponent],
+    CustomMonthPickerComponent,
+    ExpandableComponent],
     imports: [IonicPageModule.forChild([AccordionListComponent]), PipesModule],
     exports: [AccordionListComponent,
         CallPhoneComponent,
@@ -24,6 +26,7 @@ import { CustomMonthPickerComponent } from './custom-month-picker/custom-month-p
     PlanItemComponent,
     PlanItem2Component,
     FeedbackTimelineComponent,
-    CustomMonthPickerComponent]
+    CustomMonthPickerComponent,
+    ExpandableComponent]
 })
 export class ComponentsModule { }

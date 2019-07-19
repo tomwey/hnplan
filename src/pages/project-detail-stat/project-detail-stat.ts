@@ -4,6 +4,7 @@ import { ApiService } from '../../provider/api-service';
 import { Utils } from '../../provider/Utils';
 import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
 import { DomSanitizer } from "@angular/platform-browser";
+import { Tools } from '../../provider/Tools';
 
 /**
  * Generated class for the ProjectDetailStatPage page.
@@ -25,6 +26,8 @@ export class ProjectDetailStatPage {
   currentIndex: number = 0;
   planDataType: number = 0;
 
+  frameHeight: number = 200;
+
   buildingsClose: boolean = false;
 
   item: any;
@@ -41,18 +44,27 @@ export class ProjectDetailStatPage {
     private api: ApiService,
     private saniter: DomSanitizer,
     private iosFixed: iOSFixedScrollFreeze,
+    private tools: Tools,
     public navParams: NavParams) {
     this.item = Object.assign({}, this.navParams.data.item);
     this.title = this.navParams.data.title;
     this.conds = this.navParams.data.conds || {};
-    this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
   }
 
   ionViewDidLoad() {
     this.iosFixed.fixedScrollFreeze(this.content);
     setTimeout(() => {
       this.loadStageData();
+      this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
     }, 300);
+    // setTimeout(() => {
+    //   this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
+    // }, 300);
+
+    this.tools.showToast('横屏可查看项目计划地铁图', 3000, 'top');
+  }
+
+  ionViewWillEnter() {
     this.regRotateCallback();
   }
 
@@ -63,6 +75,7 @@ export class ProjectDetailStatPage {
   regRotateCallback() {
     HNJSBridge.invoke('plan:rotate', "1", (msg) => {
       // console.log(msg);
+      // alert(msg);
       if (msg == 0) {
         this.isLandscape = false;
       } else if (msg == 1) {

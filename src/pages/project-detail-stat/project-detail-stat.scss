@@ -2,12 +2,18 @@ page-project-detail-stat {
     .frame-box {
         width: 100%;
         height: 200px;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        background: #fff;
         &.fullscreen {
             height: 100%;
         }
+        border-bottom: 1px solid #eee;
+        box-sizing: content-box;
+        // position: relative;
+        background: #fff;
+        opacity: 1.0;
+        transition: 0.2s linear;
+        // &.fullscreen {
+        //     height: 100%;
+        // }
         .iframe {
             width: 100%;
             height: 100%;
@@ -63,19 +69,22 @@ page-project-detail-stat {
 
     .main {
         display: flex;
-        height: calc(100% - 200px);
+        // height: calc(100% - 200px);
         width: 100%;
-        &.hide-me {
-            display: none;
-        }
+        height: 100%;
         &.close-frame {
             height: 100%;
         }
         .leftside {
             flex: 0 0 100px;
             width: 100px;
-            height: 100%;
+            // height: 100%;
             overflow: auto;
+            // position: fixed;
+            // top: 0;
+            // left: 0;
+            // bottom: 0;
+            // z-index: 100;
             background: #f7f7f7;
             &::-webkit-scrollbar {
                 display: none;
@@ -259,4 +268,9 @@ page-project-detail-stat {
             }
         }
     }
+
+    .hide-me {
+        display: none;
+    }
+
 }

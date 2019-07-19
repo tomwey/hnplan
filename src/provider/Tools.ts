@@ -17,11 +17,11 @@ export class Tools {
     * @param message 信息内容
     * @param duration 显示时长
     */
-    showToast(message: string = '操作完成', duration: number = 2000): void {
+    showToast(message: string = '操作完成', duration: number = 2000, position: string = 'middle'): void {
         this.toastCtrl.create({
             message: message,
             duration: duration,
-            position: 'middle',
+            position: position,
             showCloseButton: false,
             cssClass: 'custom-toast',
         }).present();
