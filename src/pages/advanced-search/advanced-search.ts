@@ -257,7 +257,7 @@ export class AdvancedSearchPage {
 
   showSelectPage(arr, title, type) {
     let data = [];
-    console.log(arr);
+    // console.log(arr);
     if (type == 1) {
       arr.forEach(element => {
         // "project_id":"1291428","project_name":"珍宝金楠一期"
@@ -484,6 +484,23 @@ export class AdvancedSearchPage {
 
     if (this.currentProject.id) {
       conds['project'] = this.currentProject.id || '0';
+    }
+
+    let opt = this.options2[0];
+    if (opt.selected) {
+      conds['area'] = opt.selected.value || '';
+    }
+
+    if (this.currentDept.id) {
+      conds['dept'] = this.currentDept.id || '';
+    }
+
+    if (this.currentMajor.id) {
+      conds['major'] = this.currentMajor.id || '';
+    }
+
+    if (this.currentPlanItem.id) {
+      conds['plan_flow'] = this.currentPlanItem.id || '';
     }
 
     if (JSON.stringify(conds) === '{}') {

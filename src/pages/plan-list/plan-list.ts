@@ -51,7 +51,11 @@ export class PlanListPage {
       param9: this.navParams.data.data_type || '1', // 个人计划，组织计划
       param10: Utils.getManID(), // man id
       param11: '1',
-      param12: this.navParams.data.source || "0" // 来源
+      param12: this.navParams.data.source || "0", // 来源,
+      param13: this.navParams.data.area || "0",  // 区域
+      param14: this.navParams.data.major || "0",  // 区域
+      param15: this.navParams.data.dept || "0",  // 区域
+      param16: this.navParams.data.plan_flow || "0",  // 区域
     })
       .then(data => {
         // console.log(data);

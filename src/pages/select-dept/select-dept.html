@@ -21,7 +21,7 @@
   <ion-list>
     <button ion-item *ngFor="let item of depts" (click)="selectItem(item,$event);">
       {{item.deptname}}
-      <button ion-button *ngIf="item.haschildnum" item-right (click)="openNext(item,$event);">下级</button>
+      <button ion-button *ngIf="item.haschildnum" outline item-right (click)="openNext(item,$event);">下级</button>
     </button>
   </ion-list>
 </ion-content>
