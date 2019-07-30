@@ -56,7 +56,25 @@
     <div class="options">
       <span class="item" tappable (click)="selectOpt(opt,item);"
         [class.active]="(opt.multiselect && (opt.selected||[]).indexOf(item) !== -1) || (!opt.multiselect && item == opt.selected)"
-        *ngFor="let item of opt.options">{{item.name}}</span>
+        *ngFor="let item of opt.options">{{item.name}}
+      </span>
+      <span class="item custom-dates" *ngIf="opt.id == 'date' && opt.selected && opt.selected.value == 6">
+        <div class="custom-dates-range">
+          <ion-datetime [(ngModel)]="opt.selected.start" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"
+            cancelText="取消" doneText="确定" placeholder="开始日期" [max]="opt.selected.end" class="custom-date-control">
+          </ion-datetime>
+          <span class="date-line">-</span>
+          <ion-datetime [(ngModel)]="opt.selected.end" displayFormat="YYYY-MM-DD" pickerFormat="YYYY-MM-DD"
+            cancelText="取消" doneText="确定" placeholder="截止日期" [min]="opt.selected.start" class="custom-date-control">
+          </ion-datetime>
+        </div>
+      </span>
+    </div>
+    <div class="select-project" *ngIf="opt.id == 'plan_type' && opt.selected && opt.selected.value == 1020">
+      <button ion-item (click)="selectPlanItem();">
+        计划事项
+        <ion-note item-right>{{currentPlanItem.name || '选择计划事项'}}</ion-note>
+      </button>
     </div>
   </div>
 </ion-content>

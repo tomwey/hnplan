@@ -24,7 +24,7 @@ export class AdvancedSearchPage {
   currentProject: any = { id: '', name: '' };
   currentMajor: any = { id: '', name: '' };
   currentDept: any = { id: '', name: '' };
-
+  currentPlanItem: any = { id: '', name: '' };
   @ViewChild(Content) content: Content;
 
   planScopes: any = [
@@ -170,6 +170,14 @@ export class AdvancedSearchPage {
       });
     }
 
+    // 自定义
+    temp.push({
+      name: '自定义',
+      value: 6,
+      start: null,
+      end: null
+    });
+
     this.options[0].options = temp;
     // console.log(this.options);
   }
@@ -192,26 +200,77 @@ export class AdvancedSearchPage {
         // console.log(data);
         if (data && data['data']) {
           let arr = data['data'];
-          this.showSelectPage(arr, '选择所属专业');
+          this.showSelectPage(arr, '选择所属专业', 1);
 
         }
       })
       .catch(error => {
-        this.tools.showToast(error.message || '获取证件类型失败');
+        this.tools.showToast(error.message || '服务器超时，请重试');
       });
   }
 
   selectDept() {
+    // this.api.POST(null, {
+    //   "dotype": "GetData",
+    //   "funname": "获取计划区域或专业APP",
+    //   "param1": '2'
+    // })
+    //   .then(data => {
+    //     console.log(data);
+    //     if (data && data['data']) {
+    //       let arr = data['data'];
+    //       // this.showSelectPage(arr, '选择所属部门', 2);
 
+    //     }
+    //   })
+    //   .catch(error => {
+    //     this.tools.showToast(error.message || '服务器超时，请重试');
+    //   });
+    let modal = this.modalCtrl.create('SelectDeptPage', { pid: '0' })
+    modal.onDidDismiss((res) => {
+      if (res) {
+        this.currentDept.name = res.name;
+        this.currentDept.id = res.id;
+      }
+    });
+    modal.present();
   }
 
-  showSelectPage(arr, title) {
+  selectPlanItem() {
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "获取计划区域或专业APP",
+      "param1": '3'
+    })
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+          this.showSelectPage(arr, '选择计划事项', 3);
+
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '服务器超时，请重试');
+      });
+  }
+
+  showSelectPage(arr, title, type) {
     let data = [];
-    // console.log(arr);
-    arr.forEach(element => {
-      // "project_id":"1291428","project_name":"珍宝金楠一期"
-      data.push(`${element.spec_name}|${element.spec_id}`);
-    });
+    console.log(arr);
+    if (type == 1) {
+      arr.forEach(element => {
+        // "project_id":"1291428","project_name":"珍宝金楠一期"
+        data.push(`${element.spec_name}|${element.spec_id}`);
+      });
+    } else if (type == 3) {
+      // data.push(`${element.spec_name}|${element.spec_id}`);
+      arr.forEach(element => {
+        // "project_id":"1291428","project_name":"珍宝金楠一期"
+        data.push(`【${element.down_corp_name} - ${element.project_name}】${element.plan_name}|${element.mid}`);
+      });
+    }
+
     let selectedItem = null;
     // if (this.person.srctypename && this.person.srctypeid) {
     //   selectedItem = `${this.person.srctypename}|${this.person.srctypeid}`;
@@ -223,8 +282,14 @@ export class AdvancedSearchPage {
     modal.onDidDismiss((res) => {
       if (res) {
         // this.storage.set('selected.project', JSON.stringify(data));
-        this.currentMajor.name = res.label;
-        this.currentMajor.id = res.value;
+        if (type == 1) {
+          this.currentMajor.name = res.label;
+          this.currentMajor.id = res.value;
+        } else if (type == 3) {
+          this.currentPlanItem.name = res.label;
+          this.currentPlanItem.id = res.value;
+        }
+
       }
     });
     modal.present();
@@ -369,6 +434,11 @@ export class AdvancedSearchPage {
   reset() {
     this.options.forEach(opt => {
       opt.selected = null;
+      if (opt.id == 'date') {
+        let item = opt.options[opt.options.length - 1]
+        item.start = null;
+        item.end = null;
+      }
       this.keyword = null;
     });
 
@@ -379,6 +449,7 @@ export class AdvancedSearchPage {
 
     this.currentProject = { id: '', name: '' };
     this.currentMajor = { id: '', name: '' };
+    this.currentPlanItem = { id: '', name: '' };
 
     if (this.title != '计划搜索') {
       this.options[this.options.length - 1].selected = this.planScopes[1];
