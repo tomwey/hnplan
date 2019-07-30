@@ -18,12 +18,37 @@
       [animated]="false" name="search">
     </ion-searchbar>
   </ion-toolbar>
+  <div class="panel" *ngFor="let opt of options2">
+    <h2 class="title">
+      {{opt.name}}
+    </h2>
+    <div class="options">
+      <span class="item" tappable (click)="selectOpt(opt,item);"
+        [class.active]="(opt.multiselect && (opt.selected||[]).indexOf(item) !== -1) || (!opt.multiselect && item == opt.selected)"
+        *ngFor="let item of opt.options">{{item.name}}</span>
+    </div>
+  </div>
+
+  <div class="select-project">
+    <button ion-item (click)="selectMajor();">
+      所属专业
+      <ion-note item-right>{{currentMajor.name || '选择专业'}}</ion-note>
+    </button>
+  </div>
+
   <div class="select-project">
     <button ion-item (click)="selectProject();">
       所属项目
       <ion-note item-right>{{currentProject.name || '选择项目'}}</ion-note>
     </button>
   </div>
+  <div class="select-project">
+    <button ion-item (click)="selectDept();">
+      所属部门
+      <ion-note item-right>{{currentDept.name || '选择部门'}}</ion-note>
+    </button>
+  </div>
+
   <div class="panel" *ngFor="let opt of options">
     <h2 class="title">
       {{opt.name}}

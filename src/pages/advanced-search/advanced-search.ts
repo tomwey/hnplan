@@ -22,6 +22,9 @@ export class AdvancedSearchPage {
   title: any = '高级搜索';
   keyword: any = null;
   currentProject: any = { id: '', name: '' };
+  currentMajor: any = { id: '', name: '' };
+  currentDept: any = { id: '', name: '' };
+
   @ViewChild(Content) content: Content;
 
   planScopes: any = [
@@ -179,6 +182,54 @@ export class AdvancedSearchPage {
     }, 350);
   }
 
+  selectMajor() {
+    this.api.POST(null, {
+      "dotype": "GetData",
+      "funname": "获取计划区域或专业APP",
+      "param1": '1'
+    })
+      .then(data => {
+        // console.log(data);
+        if (data && data['data']) {
+          let arr = data['data'];
+          this.showSelectPage(arr, '选择所属专业');
+
+        }
+      })
+      .catch(error => {
+        this.tools.showToast(error.message || '获取证件类型失败');
+      });
+  }
+
+  selectDept() {
+
+  }
+
+  showSelectPage(arr, title) {
+    let data = [];
+    // console.log(arr);
+    arr.forEach(element => {
+      // "project_id":"1291428","project_name":"珍宝金楠一期"
+      data.push(`${element.spec_name}|${element.spec_id}`);
+    });
+    let selectedItem = null;
+    // if (this.person.srctypename && this.person.srctypeid) {
+    //   selectedItem = `${this.person.srctypename}|${this.person.srctypeid}`;
+    // }
+    let modal = this.modalCtrl.create('CommSelectPage', {
+      selectedItem: selectedItem,
+      title: title, data: data
+    })
+    modal.onDidDismiss((res) => {
+      if (res) {
+        // this.storage.set('selected.project', JSON.stringify(data));
+        this.currentMajor.name = res.label;
+        this.currentMajor.id = res.value;
+      }
+    });
+    modal.present();
+  }
+
   selectProject() {
     let modal = this.modalCtrl.create('SelectProjectPage',
       { onlyShowL1Projects: false, currentProject: this.currentProject });
@@ -251,6 +302,31 @@ export class AdvancedSearchPage {
         // console.info('grades error:', error);
       }));
 
+    // 获取区域
+    promises.push(this.api.POST(null, {
+      dotype: 'GetData',
+      funname: '获取计划区域或专业APP',
+      param1: '0'
+    }, '', false)
+      .then(data => {
+        if (data && data['data']) {
+          let arr = data['data'];
+          // console.log(arr);
+          for (let i = 0; i < this.options2.length; i++) {
+            let opt = this.options2[i];
+            if (opt.id == 'area') {
+              let temp = [];
+              arr.forEach(ele => {
+                temp.push({ name: ele.area_name, value: ele.area_id });
+              });
+              opt.options = temp;
+            }
+          }
+        }
+      })
+      .catch(error => { })
+    );
+
     this.tools.showLoading('正在加载');
     Promise.all(promises).then(() => {
       this.tools.hideLoading();
@@ -294,8 +370,16 @@ export class AdvancedSearchPage {
     this.options.forEach(opt => {
       opt.selected = null;
       this.keyword = null;
-      this.currentProject = { id: '', name: '' };
     });
+
+    this.options2.forEach(opt => {
+      opt.selected = null;
+      // this.keyword = null;
+    });
+
+    this.currentProject = { id: '', name: '' };
+    this.currentMajor = { id: '', name: '' };
+
     if (this.title != '计划搜索') {
       this.options[this.options.length - 1].selected = this.planScopes[1];
     }
@@ -349,6 +433,14 @@ export class AdvancedSearchPage {
     // }
     this.navCtrl.push(page, conds);
   }
+
+  options2: any = [
+    {
+      id: 'area',
+      name: '所属区域',
+      options: [],
+    }
+  ];
 
   options: any = [
     {
