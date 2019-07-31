@@ -179,6 +179,10 @@ export class AdvancedSearchPage {
     });
 
     this.options[0].options = temp;
+    if (this.options[0].options.length > 2) {
+      this.options[0].selected = this.options[0].options[2];
+    }
+
     // console.log(this.options);
   }
 
@@ -450,6 +454,11 @@ export class AdvancedSearchPage {
     this.currentProject = { id: '', name: '' };
     this.currentMajor = { id: '', name: '' };
     this.currentPlanItem = { id: '', name: '' };
+    this.currentDept = { id: '', name: '' };
+
+    if (this.options[0].options.length > 2) {
+      this.options[0].selected = this.options[0].options[2];
+    }
 
     if (this.title != '计划搜索') {
       this.options[this.options.length - 1].selected = this.planScopes[1];
