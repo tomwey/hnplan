@@ -183,6 +183,9 @@ export class AdvancedSearchPage {
       this.options[0].selected = this.options[0].options[2];
     }
 
+    const dt = parseInt(this.navParams.data.data_type || '1');
+    this.options2[1].selected = this.options2[1].options[dt - 1];
+
     // console.log(this.options);
   }
 
@@ -519,9 +522,14 @@ export class AdvancedSearchPage {
 
     // console.log(conds);
     let page = this.title === '计划搜索' ? 'PlanListPage' : 'FeedbackListPage';
-    if (this.navParams.data.data_type) {
-      conds['data_type'] = this.navParams.data.data_type;
+    // if (this.navParams.data.data_type) {
+    //   conds['data_type'] = this.navParams.data.data_type;
+    // }
+
+    if (this.options2[1].selected) {
+      conds['data_type'] = this.options2[1].selected.value;
     }
+
     // if (page == 'PlanListPage' && this.navParams.data.isfullplan == '1') {
     //   conds['start'] = '';
     //   conds['end'] = '';
@@ -536,6 +544,20 @@ export class AdvancedSearchPage {
       id: 'area',
       name: '所属区域',
       options: [],
+    },
+    {
+      id: 'scope',
+      name: '计划范围',
+      options: [
+        {
+          name: '个人计划',
+          value: '1'
+        },
+        {
+          name: '部门计划',
+          value: '2'
+        },
+      ]
     }
   ];
 

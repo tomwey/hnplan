@@ -239,8 +239,10 @@ export class HomePage {
   }
 
   search() {
-    this.navCtrl.push('AdvancedSearchPage', { isfullplan: this.funcType == 1 ? '1' : '0', 
-      title: this.funcType !== 2 ? '计划搜索' : '反馈搜索' });
+    this.navCtrl.push('AdvancedSearchPage', {
+      isfullplan: this.funcType == 1 ? '1' : '0',
+      title: this.funcType !== 2 ? '计划搜索' : '反馈搜索', data_type: '1'
+    });
   }
 
   selectPlan(ev) {
