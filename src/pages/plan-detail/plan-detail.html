@@ -37,7 +37,7 @@
   </div>
 
 </ion-content>
-<ion-footer *ngIf="canHandlePlan">
+<ion-footer *ngIf="canHandlePlan && canHandleBack">
   <ion-row>
     <ion-col col-4>
       <div class="custom-btn outline" tappable (click)="doClick(1);">计划变更</div>
@@ -48,5 +48,33 @@
     <ion-col col-4>
       <div class="custom-btn" tappable (click)="doClick(3);">完成确认</div>
     </ion-col>
+  </ion-row>
+</ion-footer>
+
+<ion-footer *ngIf="canHandlePlan && !canHandleBack">
+  <ion-row>
+    <ion-col col-6>
+      <div class="custom-btn outline" tappable (click)="doClick(1);">计划变更</div>
+    </ion-col>
+    <!-- <ion-col col-4>
+      <div class="custom-btn blue" tappable (click)="doClick(2);">进度反馈</div>
+    </ion-col> -->
+    <ion-col col-6>
+      <div class="custom-btn" tappable (click)="doClick(3);">完成确认</div>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
+<ion-footer *ngIf="!canHandlePlan && canHandleBack">
+  <ion-row>
+    <!-- <ion-col col-6>
+      <div class="custom-btn outline" tappable (click)="doClick(1);">计划变更</div>
+    </ion-col> -->
+    <ion-col col-12>
+      <div class="custom-btn blue" tappable (click)="doClick(2);">进度反馈</div>
+    </ion-col>
+    <!-- <ion-col col-6>
+      <div class="custom-btn" tappable (click)="doClick(3);">完成确认</div>
+    </ion-col> -->
   </ion-row>
 </ion-footer>

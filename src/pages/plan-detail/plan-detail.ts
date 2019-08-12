@@ -23,6 +23,8 @@ export class PlanDetailPage {
 
   canHandlePlan: boolean = false;
 
+  canHandleBack: boolean = false;
+
   // canDoPlan: boolean = false;
 
   hasFlow: boolean = false;
@@ -88,6 +90,8 @@ export class PlanDetailPage {
     // console.log(this.plan.icurdoflowid);
     let mid = parseInt((this.plan.icurdoflowid || '0').replace('NULL', '0').replace('无', '0'));
     this.canHandlePlan = this.plan.canhandleplan == '1' ? true : false;//!this.plan.isover && mid === 0;
+
+    this.canHandleBack = this.plan.iscanback == '1' ? true : false;
 
     this.hasFlow = mid !== 0;
 
