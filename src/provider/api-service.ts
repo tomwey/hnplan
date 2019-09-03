@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 import { Md5 } from 'ts-md5';
 import { Tools } from './Tools';
 import 'rxjs/add/operator/timeout';
+import { Utils } from './Utils';
 
 /*
   Generated class for the ApiService provider.
@@ -16,6 +17,7 @@ import 'rxjs/add/operator/timeout';
 const API_HOST: string = "http://cys.afterwind.cn/api/v1";
 const API_KEY: string = "c2fb2548ed4460dd10c7f62b33d9082e";
 const API_SERVER: string = "http://erp20-app.heneng.cn:16681";
+const HT_API_SERVER: string = "http://ht.heneng.cn:16581";
 
 // 测试账号和测试服务器
 // const API_HOST: string = "http://0.0.0.0:3000/api/v1";
@@ -47,7 +49,8 @@ export class ApiService {
       this.showLoading(loadingText);
     }
 
-    let url = API_SERVER + '/' + uri;
+    const env = Utils.getQueryString("env");
+    let url = (env === 'ht' ? HT_API_SERVER : API_SERVER) + '/' + uri;
 
     // 获取时间戳
     // let i = new Date().getTime();
@@ -140,7 +143,8 @@ export class ApiService {
       this.showLoading(loadingText);
     }
 
-    let url = API_SERVER; //+ '/api';//API_HOST + '/' + uri;
+    const env = Utils.getQueryString("env");
+    let url = (env === 'ht' ? HT_API_SERVER : API_SERVER); //+ '/api';//API_HOST + '/' + uri;
 
     // 参数签名
     // params.sign = ApiService.signParams(params);
@@ -182,7 +186,8 @@ export class ApiService {
 
   // 上传文件
   upload(uri, body: FormData) {
-    let url = API_HOST + '/' + uri;
+    const env = Utils.getQueryString("env");
+    let url = (env === 'ht' ? HT_API_SERVER : API_SERVER) + '/' + uri;
 
     // 组装参数
     let i = new Date().getTime();
@@ -204,7 +209,8 @@ export class ApiService {
       this.showLoading(loadingText);
     }
 
-    let url = API_SERVER + '/scm';
+    const env = Utils.getQueryString("env");
+    let url = (env === 'ht' ? HT_API_SERVER : API_SERVER) + '/scm';
 
     // 组装参数
     // let i  = new Date().getTime();
