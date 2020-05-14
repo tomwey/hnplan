@@ -1,10 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
-import { ApiService } from '../../provider/api-service';
-import { Utils } from '../../provider/Utils';
-import { iOSFixedScrollFreeze } from '../../provider/iOSFixedScrollFreeze';
-import { DomSanitizer } from "@angular/platform-browser";
-import { Tools } from '../../provider/Tools';
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 /**
  * Generated class for the ProjectDetailStatPage page.
@@ -13,326 +8,179 @@ import { Tools } from '../../provider/Tools';
  * Ionic pages and navigation.
  */
 
-declare var HNJSBridge;
-
 @IonicPage()
 @Component({
-  selector: 'page-project-detail-stat',
-  templateUrl: 'project-detail-stat.html',
+  selector: "page-project-detail-stat",
+  templateUrl: "project-detail-stat.html",
 })
 export class ProjectDetailStatPage {
-
-  menus: any = [];
-  currentIndex: number = 0;
-  planDataType: number = 0;
-
-  frameHeight: number = 200;
-
-  buildingsClose: boolean = false;
-
-  item: any;
-  title: any;
-  conds: any;
-  secUrl: any;
-  frameClosed: boolean = false;
-
-  isLandscape: boolean = false;
-
-  @ViewChild(Content) content: Content;
-  // @ViewChild('planBody') planBody: ElementRef;
-  constructor(public navCtrl: NavController,
-    private api: ApiService,
-    private saniter: DomSanitizer,
-    private iosFixed: iOSFixedScrollFreeze,
-    private tools: Tools,
-    public navParams: NavParams) {
-    this.item = Object.assign({}, this.navParams.data.item);
-    this.title = this.navParams.data.title;
-    this.conds = this.navParams.data.conds || {};
-  }
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
-    this.iosFixed.fixedScrollFreeze(this.content);
-    setTimeout(() => {
-      this.loadStageData();
-      const env = Utils.getQueryString('env');
-      if (env === 'ht') {
-        this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://ht.heneng.cn:16581/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
-      } else {
-        this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
-      }
-
-    }, 300);
-    // setTimeout(() => {
-    //   this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
-    // }, 300);
-
-    this.tools.showToast('横屏可查看项目计划地铁图', 3000, 'top');
+    console.log("ionViewDidLoad ProjectDetailStatPage");
   }
 
-  ionViewWillEnter() {
-    this.regRotateCallback();
-  }
+  changeStats() {}
 
-  ionViewWillLeave() {
-    HNJSBridge.invoke('plan:rotate', "0", (msg) => { });
-  }
+  selectFilter(item) {
+    this.showFilterPanel = true;
 
-  regRotateCallback() {
-    HNJSBridge.invoke('plan:rotate', "1", (msg) => {
-      // console.log(msg);
-      // alert(msg);
-      if (msg == 0) {
-        this.isLandscape = false;
-      } else if (msg == 1) {
-        this.isLandscape = true;
+    const selectedObj = this.currentFilterData[item.field];
+
+    const data = this.filterBaseData[item.field];
+    data.forEach((config) => {
+      config.selected = false;
+      if (
+        selectedObj &&
+        selectedObj.value === config.value &&
+        selectedObj.name === config.name
+      ) {
+        config.selected = true;
       }
     });
+    this.filterConfigData = data;
   }
 
-  expand() {
-    this.buildingsClose = !this.buildingsClose;
+  selectFilterItem(item) {
+    // if (item.field === "year" && item.value === "-1") {
+    //   return;
+    // }
+
+    this.showFilterPanel = false;
+
+    // if (!(item.field === "quater" && item.value === "-1")) {
+    //   if (item.selected) {
+    //     return;
+    //   }
+    // }
+    this.currentFilterData[item.field] = item;
+    console.log(this.currentFilterData);
+    // this.loadData();
   }
-
-  openFrame(ev: Event) {
-    // ev.stopPropagation();
-    // console.log(123);
-  }
-
-  closeFrame(ev: Event) {
-    ev.stopPropagation();
-
-    this.frameClosed = true;
-    // console.log(123);
-  }
-
-  fullscreen(ev: Event) {
-    ev.stopPropagation();
-    // console.log(123);
-    HNJSBridge.invoke('plan:fullscreen', { pid: this.item.project_id }, (data) => { });
-    // HNJSBridge.invoke('plan:rotate', "2", (msg) => { });
-  }
-
-  loadBuildings() {
-    // console.log(this.item);
-    this.api.POST(null, {
-      dotype: 'GetData',
-      funname: '获取项目楼栋及楼层APP',
-      param1: this.item.project_id || this.conds.project || '0'
-    })
-      .then(data => {
-        // console.log(data);
-        if (data && data['data']) {
-          this.buildings = data['data'];
-
-          // building_batch_id: "1"
-          // building_id: "3536"
-          // building_name: "6#"
-          // building_type_id: "10"
-          // overground_layer: "31"
-          // project_id: "1291509"
-          // underground_layer: "2"
-          this.buildingsClose = this.buildings.length > 3;
-        }
-        this.loadRoomPlanData();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  loadRoomPlanData() {
-    if (this.currBuildIndex >= this.buildings.length) {
-      return;
+  filterMenuName(item) {
+    const obj = this.currentFilterData[item.field];
+    if (!obj) {
+      return item.name;
     }
-
-    if (this.currentIndex >= this.menus.length) {
-      return;
-    }
-    let menu = this.menus[this.currentIndex];
-
-    this.api.POST(null, {
-      dotype: 'GetData',
-      funname: '获取项目全景计划APP',
-      param1: '2',
-      param2: '',
-      param3: '1040',
-      param4: this.item.project_id,
-      param5: this.conds.plan_level || '0',
-      param6: '',
-      param7: '',
-      param8: this.conds.start || this.conds.begin_date || '',
-      param9: this.conds.end || this.conds.end_date || '',
-      param10: menu.sumdiv == '1' ? menu.stage_id || '0' : menu.spec_id || '0',
-      param11: this.buildings[this.currBuildIndex].building_id || '0',
-      param12: '2',
-      param13: Utils.getManID(),
-      param14: '0',
-      param15: menu.sumdiv || '0'
-    })
-      .then(data => {
-        console.log(data);
-        if (data && data['data']) {
-          let arr = data['data'];
-
-          // building_id: "3536"
-          // building_name: "6#"
-          // enddate: "NULL"
-          // ilevel: "22"
-          // isover: false
-          // iswarning: false
-          // node_id: "1083"
-          // node_name: "测试主体施工"
-          // showroom: true
-          // floors = [];
-          // floorsData = {};
-          // {
-          //   '1': []
-          // }
-          let node_ids = [];
-          let nodes = [{ id: 'floor', name: '楼层' }];
-          let flData = {};
-          let floors = [];
-          arr.forEach(ele => {
-            if (node_ids.indexOf(ele.node_id) === -1) {
-              node_ids.push(ele.node_id);
-              nodes.push({ name: ele.node_name, id: ele.node_id });
-            }
-
-            let floorData = flData[ele.node_id] || [];
-            floorData.push(ele);
-            flData[ele.node_id] = floorData;
-            if (floors.indexOf(ele.ilevel) === -1) {
-              floors.push(ele.ilevel);
-            }
-          });
-
-          flData['floor'] = floors;
-
-          this.barNodes = nodes;
-          this.allFloorsData = flData;
-
-          // console.log(nodes);
-          // console.log(flData);
-        }
-      })
-      .catch(error => {
-        // console.log(error);
-      });
+    return obj.name;
   }
 
-  loadPlansData() {
-    if (this.currentIndex >= this.menus.length) {
-      return;
-    }
-    let menu = this.menus[this.currentIndex];
-    this.planDataType = menu.showroom ? 1 : 0;
-
-    if (this.planDataType == 1) {
-      this.loadBuildings();
-      return;
-    }
-
-    this.api.POST(null, {
-      dotype: 'GetData',
-      funname: '获取项目全景计划APP',
-      param1: '2',
-      param2: '',
-      param3: '1040',
-      param4: this.item.project_id,
-      param5: this.conds.plan_level || '0',
-      param6: '',
-      param7: '',
-      param8: this.conds.start || this.conds.begin_date || '',
-      param9: this.conds.end || this.conds.end_date || '',
-      param10: menu.sumdiv == '1' ? menu.stage_id || '0' : menu.spec_id || '0',
-      param11: '0',
-      param12: this.navParams.data.data_type || '1',
-      param13: Utils.getManID(),
-      param14: '0',
-      param15: menu.sumdiv || '0'
-    })
-      .then(data => {
-        // console.log(data);
-        if (data && data['data']) {
-          if (this.planDataType === 0) {
-            this.planList = data['data'];
-          }
-        }
-      })
-      .catch(error => {
-        // console.log(error);
-      });
+  closeFilter() {
+    this.showFilterPanel = false;
   }
 
-  loadStageData() {
-    // overnum: "0"
-    // stage_id: "10"
-    // stage_name: "展示区"
-    // stage_order: "NULL"
-    // totalnum: "3"
-    // warningnum: "0"
+  nodes = [
+    {
+      name: "土地摘牌",
+      state: 1,
+    },
+    {
+      name: "用地证",
+      state: 1,
+    },
+    {
+      name: "国土证",
+      state: 1,
+    },
+    {
+      name: "产品定位",
+      state: 1,
+    },
+    {
+      name: "方案正式",
+      state: 1,
+    },
+    {
+      name: "文本规正",
+      state: 1,
+    },
+    {
+      name: "清水施工",
+      state: 1,
+    },
+    {
+      name: "预售条件",
+      state: 2,
+    },
+    {
+      name: "预售证",
+      state: 0,
+    },
+    {
+      name: "主体封顶",
+      state: 0,
+    },
+  ];
 
-    this.api.POST(null, {
-      dotype: 'GetData',
-      funname: '获取项目全景计划APP',
-      param1: '1',
-      param2: '',
-      param3: '1040',
-      param4: this.item.project_id,
-      param5: this.conds.plan_level || '0',
-      param6: '',
-      param7: '',
-      param8: this.conds.start || this.conds.begin_date || '',
-      param9: this.conds.end || this.conds.end_date || '',
-      param10: '0',
-      param11: '0',
-      param12: this.navParams.data.data_type || '1',
-      param13: Utils.getManID(),
-      param14: '0',
-      param15: '0'
-    })
-      .then(data => {
-        // console.log(data);
-        if (data && data['data']) {
-          this.menus = data['data'];
-        }
-        this.loadPlansData();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  selectPlan(ev) {
-    // console.log(ev);
-    this.navCtrl.push('PlanDetailPage', { id: ev.planid || ev.id });
-  }
-
-  doUrge(ev) {
-    // console.log(ev);
-    // console.log(124);
-  }
-
-  selectMenu(index) {
-    this.currentIndex = index;
-    this.planDataType = this.menus[index].showroom ? 1 : 0;
-    this.loadPlansData();
-  }
-
-  selectBuild(index) {
-    this.currBuildIndex = index;
-    this.loadRoomPlanData();
-  }
-
-  planList: any = [];
-
-  currBuildIndex: number = 0;
-
-  buildings: any = [];
-
-  allFloorsData: any = {};
-
-  barNodes: any = [];
-
+  filterItems: any[] = [
+    {
+      name: "计划层级",
+      field: "grade",
+    },
+    {
+      name: "专业线",
+      field: "special",
+    },
+    {
+      name: "完成状态",
+      field: "state",
+    },
+  ];
+  filterConfigData: any = [];
+  currentFilterData: any = {};
+  filterBaseData: any = {
+    grade: [
+      {
+        name: "全部",
+        value: "-1",
+        field: "grade",
+      },
+      {
+        name: "一级",
+        value: "1",
+        field: "grade",
+      },
+      {
+        name: "二级",
+        value: "2",
+        field: "grade",
+      },
+      {
+        name: "三级",
+        value: "3",
+        field: "grade",
+      },
+    ],
+    special: [
+      {
+        name: "全部",
+        value: "-1",
+        field: "special",
+      },
+    ],
+    state: [
+      {
+        name: "全部",
+        value: "-1",
+        field: "state",
+      },
+      {
+        name: "已完成",
+        value: "1",
+        field: "state",
+      },
+      {
+        name: "延期",
+        value: "2",
+        field: "state",
+      },
+      {
+        name: "预警",
+        value: "4",
+        field: "state",
+      },
+    ],
+  };
+  hideMe = false;
+  showFilterPanel = false;
 }

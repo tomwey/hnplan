@@ -6,112 +6,68 @@
 -->
 <ion-header no-border>
   <ion-navbar color="primary">
-    <ion-title>{{title}}</ion-title>
+    <ion-title>枫丹铂麓3期</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only small (click)="changeStats();">
+        <ion-icon name="ios-stats-outline"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-</ion-header>
-
-<ion-content fullscreen style="background: #fff;" #scrollArea>
-  <!-- <div class="frame-box" *ngIf="!frameClosed" [class.fullscreen]="isLandscape">
-    <iframe id="iframe" class="iframe" scrolling="no" sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin 
-      allow-popups allow-forms" [src]="secUrl">
-    </iframe>
-    <span class="custom-close" [hidden]="isLandscape" tappable (click)="closeFrame($event);">
-      <ion-icon name="ios-close-outline"></ion-icon>
-    </span>
-    <span class="fullscreen-btn" [hidden]="isLandscape" tappable (click)="fullscreen($event);">
-      <ion-icon name="ios-expand-outline"></ion-icon>
-    </span>
-  </div> -->
-  <!-- <ion-scroll style="width: 100%;height: 100%;" (ionScroll)="scroll($event);"> -->
-  <expandable [scrollArea]="scrollArea" height="200" [fixedArea]="rightArea" [class.hide-me]="isLandscape">
-    <div class="frame-box">
-      <iframe id="iframe" class="iframe" *ngIf="!!secUrl" sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin 
-              allow-popups allow-forms" [src]="secUrl">
-      </iframe>
+  <div class="subhead">
+    <div class="dropdown">
+      一标段一批次 <ion-icon name="md-arrow-dropdown"></ion-icon>
     </div>
-  </expandable>
-
-  <div class="frame-box fullscreen" *ngIf="isLandscape">
-    <iframe id="iframe" class="iframe" sandbox="allow-scripts allow-top-navigation allow-pointer-lock allow-same-origin 
-      allow-popups allow-forms" [src]="secUrl">
-    </iframe>
-    <!-- <span class="custom-close" [hidden]="isLandscape" tappable (click)="closeFrame($event);">
-      <ion-icon name="ios-close-outline"></ion-icon>
-    </span>
-    <span class="fullscreen-btn" [hidden]="isLandscape" tappable (click)="fullscreen($event);">
-      <ion-icon name="ios-expand-outline"></ion-icon>
-    </span> -->
-  </div>
-
-  <div class="main" [class.hide-me]="isLandscape" id="main-area">
-
-    <div class="leftside">
-      <div class="menu">
-        <div class="menu-item menu-type-{{menu.sumdiv}}" [class.active]="currentIndex === i" tappable
-          (click)="selectMenu(i);" *ngFor="let menu of menus;let i = index;">
-          <span class="name">{{menu.stage_name}}</span>
-          <span class="badge"
-            *ngIf="menu.warningnum && menu.warningnum != '0' && menu.warningnum != 'NULL'">{{menu.warningnum}}</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="rightside" #rightArea>
-
-      <div class="plan-list-wrap" *ngIf="planDataType === 0">
-        <ion-list>
-          <plan-item2 [item]="item" (onSelect)="selectPlan($event);" (onUrge)="doUrge($event);"
-            *ngFor="let item of planList"></plan-item2>
-        </ion-list>
-      </div>
-      <div class="plan-graph-wrap" *ngIf="planDataType === 1">
-        <span class="open-btn" tappable (click)="expand();" *ngIf="buildings.length > 3">
-          <ion-icon name="{{buildingsClose ? 'ios-arrow-down-outline' : 'ios-arrow-up-outline'}}"></ion-icon>
+    <div class="node-box">
+      <div class="node-wrap">
+        <span class="node-item state-{{node.state}}" *ngFor="let node of nodes">
+          {{node.name}}
         </span>
-        <div class="buildings" [class.close]="buildingsClose">
-          <span class="building-item" [class.hide]="buildingsClose && i > 2" [class.active]="currBuildIndex === i"
-            tappable (click)="selectBuild(i);" *ngFor="let b of buildings; let i = index;">
-            {{b.building_name}}{{b.building_type_id == '10' ? '楼' : ''}}
+      </div>
+    </div>
+
+    <div class="topbar" [class.show-me]="!hideMe">
+      <div class="filter-bar">
+        <div
+          class="filter-item"
+          tappable
+          (click)="selectFilter(filterItem);"
+          *ngFor="let filterItem of filterItems"
+        >
+          <span class="name">{{filterMenuName(filterItem)}}</span>
+          <span class="icon-wrap">
+            <ion-icon name="md-arrow-dropdown"></ion-icon>
           </span>
         </div>
-        <div class="floors">
-          <div class="bar-wrap">
-            <div class="bar" *ngFor="let bar of barNodes">
-              <div class="head">
-                {{bar.name}}
-              </div>
-              <div class="floor-item" *ngFor="let item of allFloorsData[bar.id]">
-                <div class="cell" *ngIf="bar.id == 'floor'">{{item}}</div>
-                <div class="cell block cell-{{item.isover ? '1' : item.iswarning ? '2' : '0'}}"
-                  *ngIf="bar.id != 'floor'" tappable (click)="selectPlan(item)">
-                </div>
-              </div>
-              <div class="foot">
-                {{bar.name}}
-              </div>
-            </div>
-          </div>
-          <!-- <div class="head caption">
-            <span class="cell" *ngFor="let n of names">{{n}}</span>
-          </div>
-          <div class="cells">
-            <div class="row-box" *ngFor="let item of floorsData">
-              <span class="cell">{{item.floor}}</span>
-              <span class="cell block cell-{{item.l1}}" tappable (click)="selectPlan(item)"></span>
-              <span class="cell block cell-{{item.l2}}" tappable (click)="selectPlan(item)"></span>
-              <span class="cell block cell-{{item.l3}}" tappable (click)="selectPlan(item)"></span>
-              <span class="cell block cell-{{item.l4}}" tappable (click)="selectPlan(item)"></span>
-              <span class="cell block cell-{{item.l5}}" tappable (click)="selectPlan(item)"></span>
-            </div>
-          </div>
-          <div class="foot caption">
-            <span class="cell" *ngFor="let n of names">{{n}}</span>
-          </div> -->
-        </div>
       </div>
-
     </div>
-
   </div>
-  <!-- </ion-scroll> -->
-</ion-content>
+</ion-header>
+
+<ion-content> </ion-content>
+
+<div
+  class="filters-overlap"
+  id="filters-overlap"
+  *ngIf="showFilterPanel"
+  tappable
+  (click)="closeFilter();"
+>
+  <div class="filter-wrap" [style.opacity]="showFilterPanel ? '1.0' : '0.0'">
+    <ion-list>
+      <ion-item
+        tappable
+        *ngFor="let item of filterConfigData"
+        (click)="selectFilterItem(item);"
+      >
+        <ion-label class="name">{{item.name}}</ion-label>
+        <ion-icon
+          color="primary"
+          name="ios-checkmark"
+          item-right
+          *ngIf="item.value !== '100' && item.selected"
+        >
+        </ion-icon>
+      </ion-item>
+    </ion-list>
+  </div>
+</div>
