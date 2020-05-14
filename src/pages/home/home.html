@@ -5,7 +5,6 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-
   <ion-navbar color="primary">
     <ion-buttons start>
       <button ion-button icon-only (click)="back();">
@@ -13,8 +12,15 @@
       </button>
     </ion-buttons>
     <ion-title>
-      <ion-segment [(ngModel)]="funcType" color="white" (ionChange)="segChanged($event)">
-        <ion-segment-button [value]="i" *ngFor="let type of funcTypes;let i=index;">
+      <ion-segment
+        [(ngModel)]="funcType"
+        color="white"
+        (ionChange)="segChanged($event)"
+      >
+        <ion-segment-button
+          [value]="i"
+          *ngFor="let type of funcTypes;let i=index;"
+        >
           {{type}}
         </ion-segment-button>
       </ion-segment>
@@ -31,37 +37,63 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar color="white" *ngIf="funcType === 0">
-    <ion-segment [(ngModel)]="dataType" mode="md" (ionChange)="segmentChanged($event)">
+    <ion-segment
+      [(ngModel)]="dataType"
+      mode="md"
+      (ionChange)="segmentChanged($event)"
+    >
       <ion-segment-button value="{{type.value}}" *ngFor="let type of dataTypes">
         {{type.label}}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
-
 </ion-header>
 
 <ion-content>
   <div *ngIf="funcType === 0">
-    <ion-calendar *ngIf="dataType === '0'" [(ngModel)]="currentDate" #calendar [options]="dateOptions"
-      (onChange)="changeDate($event);" (monthChange)="changeMonth($event);" [format]="'YYYY-MM-DD'">
+    <ion-calendar
+      *ngIf="dataType === '0'"
+      [(ngModel)]="currentDate"
+      #calendar
+      [options]="dateOptions"
+      (onChange)="changeDate($event);"
+      (monthChange)="changeMonth($event);"
+      [format]="'YYYY-MM-DD'"
+    >
     </ion-calendar>
     <div class="custom-select-month" *ngIf="dataType != '0'">
-      <custom-month-picker [(date)]="currDate" (dateChange)="dateChanged($event);"></custom-month-picker>
+      <custom-month-picker
+        [(date)]="currDate"
+        (dateChange)="dateChanged($event);"
+      ></custom-month-picker>
     </div>
     <div class="weeks" *ngIf="dataType === '1'">
       <div class="week-wrap">
-        <div class="week" [class.active]="weekIndex === i" tappable (click)="selectWeek(i);"
-          *ngFor="let week of weeks;let i = index">
+        <div
+          class="week"
+          [class.active]="weekIndex === i"
+          tappable
+          (click)="selectWeek(i);"
+          *ngFor="let week of weeks;let i = index"
+        >
           <h4 class="name">第{{i+1}}周</h4>
-          <p class="date">{{week.start == week.end ? week.start : (week.start + '~' + week.end)}}</p>
+          <p class="date">
+            {{week.start == week.end ? week.start : (week.start + '~' +
+            week.end)}}
+          </p>
         </div>
       </div>
     </div>
     <div class="empty-error-box1" *ngIf="!!error">{{error}}</div>
     <div class="plan-list">
       <ion-list>
-        <plan-item [item]="item" (onSelect)="selectPlan($event);" (onFullScape)="doFullScape($event);"
-          (onUrge)="doUrge($event);" *ngFor="let item of planList"></plan-item>
+        <plan-item
+          [item]="item"
+          (onSelect)="selectPlan($event);"
+          (onFullScape)="doFullScape($event);"
+          (onUrge)="doUrge($event);"
+          *ngFor="let item of planList"
+        ></plan-item>
       </ion-list>
     </div>
   </div>
@@ -93,12 +125,13 @@
           </ion-col>
         </ion-row>
       </div>
-
     </div>
   </div>
   <div *ngIf="funcType === 2">
     <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
-    <feedback-timeline [dates]="feedbackDates" [data]="fbDatesList"></feedback-timeline>
+    <feedback-timeline
+      [dates]="feedbackDates"
+      [data]="fbDatesList"
+    ></feedback-timeline>
   </div>
-
 </ion-content>

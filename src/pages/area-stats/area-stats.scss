@@ -1,0 +1,81 @@
+page-area-stats {
+  .areas {
+    background-color: #fff;
+    padding: 0 10px;
+    white-space: nowrap;
+    overflow: auto;
+    border-bottom: 1px solid #f2f2f2;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+      display: none;
+    }
+    .area {
+      display: inline-block;
+      padding: 10px 12px;
+      font-size: 14px;
+      color: #888;
+      background-color: #fff;
+      &.active {
+        border-bottom: 2px solid color($colors, primary);
+        color: color($colors, primary);
+      }
+    }
+  }
+
+  .panel {
+    background-color: #fff;
+    .head {
+      font-size: 16px;
+      color: #333;
+    }
+
+    padding: 15px;
+  }
+  .rank {
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    padding: 2px 5px;
+    background-color: color($colors, primary);
+    margin-left: 20px;
+    border-radius: 3px;
+    vertical-align: 1px;
+  }
+  .total {
+    margin-bottom: 15px;
+    margin-top: 10px;
+  }
+
+  .subhead {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    .seg-item {
+      //   display: inline-block;
+      display: block;
+      height: 36px;
+      line-height: 36px;
+      font-size: 14px;
+      color: #666;
+      flex: 0 0 33.333333333%;
+      width: 33.333333333%;
+      text-align: center;
+      margin-right: 2px;
+      box-sizing: border-box;
+      background-color: #f8f8f8;
+      &.active {
+        color: color($colors, primary);
+      }
+      &:last-child {
+        margin-right: 0;
+        border-radius: 0 36px 36px 0;
+      }
+      &:first-child {
+        margin-left: -2px;
+        border-radius: 36px 0 0 36px;
+      }
+    }
+  }
+}
