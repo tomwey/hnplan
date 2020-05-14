@@ -98,7 +98,41 @@
     </div>
   </div>
 
-  <div *ngIf="funcType === 1">
+  <div [hidden]="funcType !== 1">
+    <div class="panel total">
+      <div class="head">
+        <div class="title">
+          计划汇总
+        </div>
+      </div>
+      <div class="body">
+        <div id="total-graph"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="head">
+        <div class="title">各地区计划</div>
+        <div class="subhead">
+          <span
+            class="seg-item"
+            tappable
+            (click)="selectNode(item);"
+            *ngFor="let item of nodes"
+            [class.active]="item.id === currNodeID"
+          >
+            {{item.name}}
+          </span>
+        </div>
+      </div>
+      <div class="body">
+        <div id="proj-graph"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div *ngIf="funcType === 1">
+    老版本全景计划
     <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
     <div class="projects-list">
       <div class="project-wrap" *ngFor="let area of areas">
@@ -126,7 +160,7 @@
         </ion-row>
       </div>
     </div>
-  </div>
+  </div> -->
   <div *ngIf="funcType === 2">
     <div class="empty-error-box" *ngIf="!!error">{{error}}</div>
     <feedback-timeline
