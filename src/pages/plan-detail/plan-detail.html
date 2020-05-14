@@ -5,7 +5,6 @@
   Ionic pages and navigation.
 -->
 <ion-header no-border>
-
   <ion-navbar color="primary">
     <ion-title>计划详情</ion-title>
     <ion-buttons end>
@@ -27,7 +26,8 @@
         </td>
         <td class="value value2" *ngIf="item.label == '计划状态'">
           <div class="box" *ngIf="!hasFlow">{{item.value}}</div>
-          <div class="box" *ngIf="hasFlow" tappable (click)="openFlow();">{{item.value}}<span class="right-icon">
+          <div class="box" *ngIf="hasFlow" tappable (click)="openFlow();">
+            {{item.value}}<span class="right-icon">
               <ion-icon name="ios-arrow-forward-outline"></ion-icon>
             </span>
           </div>
@@ -35,12 +35,13 @@
       </tr>
     </table>
   </div>
-
 </ion-content>
-<ion-footer *ngIf="canHandlePlan && canHandleBack">
+<ion-footer *ngIf="canHandlePlan && canAdjustPlan && canHandleBack">
   <ion-row>
     <ion-col col-4>
-      <div class="custom-btn outline" tappable (click)="doClick(1);">计划变更</div>
+      <div class="custom-btn outline" tappable (click)="doClick(1);">
+        计划变更
+      </div>
     </ion-col>
     <ion-col col-4>
       <div class="custom-btn blue" tappable (click)="doClick(2);">进度反馈</div>
@@ -51,10 +52,23 @@
   </ion-row>
 </ion-footer>
 
+<ion-footer *ngIf="canHandlePlan && !canAdjustPlan && canHandleBack">
+  <ion-row>
+    <ion-col col-6>
+      <div class="custom-btn blue" tappable (click)="doClick(2);">进度反馈</div>
+    </ion-col>
+    <ion-col col-6>
+      <div class="custom-btn" tappable (click)="doClick(3);">完成确认</div>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
 <ion-footer *ngIf="canHandlePlan && !canHandleBack">
   <ion-row>
     <ion-col col-6>
-      <div class="custom-btn outline" tappable (click)="doClick(1);">计划变更</div>
+      <div class="custom-btn outline" tappable (click)="doClick(1);">
+        计划变更
+      </div>
     </ion-col>
     <!-- <ion-col col-4>
       <div class="custom-btn blue" tappable (click)="doClick(2);">进度反馈</div>

@@ -55,7 +55,13 @@ export class ProjectDetailStatPage {
     this.iosFixed.fixedScrollFreeze(this.content);
     setTimeout(() => {
       this.loadStageData();
-      this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
+      const env = Utils.getQueryString('env');
+      if (env === 'ht') {
+        this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://ht.heneng.cn:16581/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
+      } else {
+        this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
+      }
+
     }, 300);
     // setTimeout(() => {
     //   this.secUrl = this.saniter.bypassSecurityTrustResourceUrl(`http://erp20-app.heneng.cn:16681/ui?path=plan&ui=plan&param1=${this.item.project_id}&param2=0&param3=0&param4=${Utils.getManID()}`);
