@@ -43,7 +43,35 @@
   </div>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <div class="timeline-wrap">
+    <ul class="timeline">
+      <li
+        class="timeline-item"
+        [class.has-year]="plan.year"
+        *ngFor="let plan of plans"
+      >
+        <div class="year" *ngIf="plan.year">{{plan.year}}</div>
+        <div class="tail"></div>
+        <div
+          class="node node-normal level-{{plan.level}} state-{{plan.state || '0'}}"
+        ></div>
+        <div class="content-wrapper" tappable (click)="selectPlan(plan);">
+          <div class="timestamp is-top">
+            <span class="title"
+              >{{plan.itemname}}<span class="tag level gray"
+                >{{plan.levelname || '三级'}}</span
+              ><span class="tag tag-outline light-blue">工程</span></span
+            >
+          </div>
+          <span class="progress state-{{plan.state || '0'}}">
+            <span class="progress-inner">07/31</span>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</ion-content>
 
 <div
   class="filters-overlap"

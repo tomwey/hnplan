@@ -14,6 +14,108 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
   templateUrl: "project-detail-stat.html",
 })
 export class ProjectDetailStatPage {
+  plans = [
+    {
+      id: 1,
+      itemname: "售楼部建筑设计单位定标",
+      level: 3,
+      levelname: "三级",
+      plandate: "2019-12-01",
+      state: "1",
+    },
+    {
+      id: 2,
+      itemname: "展示区选址、定位及策划建议",
+      level: 2,
+      levelname: "二级",
+      plandate: "2019-12-30",
+      state: "1",
+      year: "2019年",
+    },
+    {
+      id: 3,
+      itemname: "主体结构封顶完成",
+      level: 2,
+      levelname: "二级",
+      plandate: "2019-03-01",
+      state: "2",
+    },
+    {
+      id: 4,
+      itemname: "售楼部建筑方案设计并通过内部评审",
+      level: 2,
+      levelname: "二级",
+      plandate: "2019-03-01",
+      state: "1",
+    },
+    {
+      id: 5,
+      itemname: "售楼部建筑设计单位定标",
+      level: 3,
+      levelname: "三级",
+      plandate: "2019-04-01",
+      state: "1",
+    },
+    {
+      id: 6,
+      itemname: "售楼部建筑方案设计并通过内部评审",
+      level: 3,
+      levelname: "三级",
+      state: "1",
+    },
+    {
+      id: 7,
+      itemname: "经营性现金流回正",
+      level: 1,
+      levelname: "一级",
+      plandate: "2019-04-21",
+    },
+    {
+      id: 115,
+      itemname: "售楼部建筑方案设计并通过内部评审",
+      level: 3,
+      levelname: "三级",
+      plandate: "2019-04-21",
+    },
+    {
+      id: 123,
+      itemname: "景观石材防护处理",
+      level: 2,
+      levelname: "三级",
+      plandate: "2019-04-21",
+      state: "1",
+    },
+    {
+      id: 1113,
+      itemname: "售楼部建筑方案设计并通过内部评审",
+      level: 3,
+      levelname: "三级",
+      plandate: "2019-04-21",
+      state: "2",
+    },
+    {
+      id: 113,
+      itemname: "户内房间、厨房烟道渗水部分整改完成",
+      level: 3,
+      levelname: "三级",
+      plandate: "2019-04-21",
+    },
+    {
+      id: 112,
+      itemname: "景观石材防护处理",
+      level: 3,
+      levelname: "三级",
+      plandate: "2019-04-21",
+    },
+    {
+      id: 111,
+      itemname: "形象进度达预售条件",
+      level: 1,
+      levelname: "一级",
+      plandate: "2019-04-21",
+    },
+  ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
@@ -21,6 +123,8 @@ export class ProjectDetailStatPage {
   }
 
   changeStats() {}
+
+  selectPlan(plan) {}
 
   selectFilter(item) {
     this.showFilterPanel = true;
