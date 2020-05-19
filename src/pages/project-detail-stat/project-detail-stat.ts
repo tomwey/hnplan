@@ -126,6 +126,9 @@ export class ProjectDetailStatPage {
 
   selectPlan(plan) {}
 
+  // 选择标段批次
+  selectBP() {}
+
   selectFilter(item) {
     this.showFilterPanel = true;
 
