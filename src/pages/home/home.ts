@@ -587,27 +587,59 @@ export class HomePage {
 
   drawBarGraph() {
     if (!this.barChart) {
-      const pieDiv = document.getElementById("proj-graph") as HTMLDivElement;
+      const pieDiv = document.getElementById("area-graph") as HTMLDivElement;
       pieDiv.style.width = window.innerWidth - 30 + "px";
       pieDiv.style.height = 6 * 60 + "px";
+
       this.barChart = ECharts.init(pieDiv);
+
+      var g_clickTime = null;
+      var g_TimeFn = null;
+      var g_onItemName = null;
+
+      this.barChart.on("click", (params) => {
+        this.navCtrl.push("AreaStatsPage");
+        var myDate = new Date();
+        if (g_clickTime == null) {
+          //第一次进来
+          g_clickTime = myDate.getMilliseconds();
+          g_onItemName = params.name;
+          //起一个定时器，进行重置
+          g_TimeFn = setTimeout(function () {
+            //要执行的代码
+            g_clickTime = null;
+          }, 300);
+        } else {
+          clearTimeout(g_TimeFn);
+          //第二次进来，
+          if (
+            Math.abs(myDate.getMilliseconds() - g_clickTime) < 300 &&
+            g_onItemName == params.name
+          ) {
+            //是双击操作
+            // console.log(params);
+            // this.nav.push("AreaStatsPage");
+            this.navCtrl.push("AreaStatsPage");
+          }
+          g_clickTime = null;
+        }
+      });
     }
 
     const options = {
       legend: {
-        data: ["预警", "完成", "延期", "未完成", "达成率"],
+        data: ["预警", "完成", "延期", "未完成"], //["预警", "完成", "延期", "未完成", "达成率"],
       },
-      tooltip: {
-        trigger: "axis",
-        axisPointer: {
-          type: "cross",
-          crossStyle: {
-            color: "#999",
-          },
-        },
-        formatter:
-          "{b0}<br /><br />{a4}: {c4}%<br />{a0}: {c0}<br />{a1}: {c1}<br />{a2}: {c2}<br />{a3}: {c3}",
-      },
+      // tooltip: {
+      //   trigger: "axis",
+      //   axisPointer: {
+      //     type: "cross",
+      //     crossStyle: {
+      //       color: "#999",
+      //     },
+      //   },
+      //   formatter: "{a0}: {c0}<br />{a1}: {c1}<br />{a2}: {c2}<br />{a3}: {c3}",
+      // },
       grid: {
         left: "3%",
         right: "5%",
@@ -616,29 +648,36 @@ export class HomePage {
         containLabel: true,
       },
       xAxis: [
+        // {
+        //   type: "category",
+        //   data: ["集团", "成都", "西安", "重庆", "郑州", "宁波", "长沙"],
+        // },
+        {
+          type: "value",
+          // name: "计划数",
+          // splitLine: {
+          //   show: false,
+          // },
+        },
+      ],
+      yAxis: [
+        // {
+        //   type: "value",
+        //   name: "计划数",
+        //   splitLine: {
+        //     show: false,
+        //   },
+        // },
         {
           type: "category",
           data: ["集团", "成都", "西安", "重庆", "郑州", "宁波", "长沙"],
         },
-      ],
-      yAxis: [
-        {
-          type: "value",
-          name: "计划数",
-          splitLine: {
-            show: false,
-          },
-        },
-        {
-          type: "value",
-          name: "达成率",
-          // interval: 5,
-          min: 0,
-          max: 100,
-          // axisLabel: {
-          //   formatter: "{value} %",
-          // },
-        },
+        // {
+        //   type: "value",
+        //   name: "达成率",
+        //   min: 0,
+        //   max: 100,
+        // },
       ],
       series: [
         {
@@ -685,22 +724,22 @@ export class HomePage {
           data: [150, 212, 201, 154, 190, 330, 300],
           barWidth: "20",
         },
-        {
-          name: "达成率",
-          type: "line",
-          data: [99.0, 75, 79, 88, 90, 85, 40],
-          yAxisIndex: 1,
-          label: {
-            formatter: "{b}: {c}%",
-          },
-        },
+        // {
+        //   name: "达成率",
+        //   type: "line",
+        //   data: [99.0, 75, 79, 88, 90, 85, 40],
+        //   yAxisIndex: 1,
+        //   label: {
+        //     formatter: "{b}: {c}%",
+        //   },
+        // },
       ],
       color: [
         "rgb(227,130,95)",
         "rgb(143,203,193)",
         "rgb(237,191,121)",
         "rgb(219,219,219)",
-        "rgb(91,166,213)",
+        // "rgb(91,166,213)",
       ],
     };
     this.barChart.setOption(options);

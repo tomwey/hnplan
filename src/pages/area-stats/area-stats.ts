@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, NgZone } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import ECharts from "echarts";
 
@@ -17,15 +17,22 @@ import ECharts from "echarts";
 export class AreaStatsPage {
   pieChart;
   barChart;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private zone: NgZone
+  ) {}
 
   ionViewDidLoad() {
     // console.log("ionViewDidLoad AreaStatsPage");
-    this.drawPieGraph();
-    this.drawBarGraph();
+    setTimeout(() => {
+      this.drawPieGraph();
+      this.drawBarGraph();
+    }, 300);
   }
 
   drawBarGraph() {
+    console.log(123);
     if (!this.barChart) {
       const pieDiv = document.getElementById("proj-graph") as HTMLDivElement;
       pieDiv.style.width = window.innerWidth - 30 + "px";
@@ -120,7 +127,7 @@ export class AreaStatsPage {
 
   drawPieGraph() {
     if (!this.pieChart) {
-      const pieDiv = document.getElementById("total-graph") as HTMLDivElement;
+      const pieDiv = document.getElementById("total-graph2") as HTMLDivElement;
       pieDiv.style.width = window.innerWidth - 30 + "px";
       pieDiv.style.height = "300px";
       this.pieChart = ECharts.init(pieDiv);
