@@ -1,5 +1,13 @@
-import { Component, Input } from "@angular/core";
+import {
+  Component,
+  ViewChild,
+  ElementRef,
+  Input,
+  EventEmitter,
+  Output,
+} from "@angular/core";
 import { Tools } from "../../provider/Tools";
+import * as moment from "moment";
 
 /**
  * Generated class for the FilterBarComponent component.
@@ -12,6 +20,12 @@ import { Tools } from "../../provider/Tools";
   templateUrl: "filter-bar.html",
 })
 export class FilterBarComponent {
+  @ViewChild("filterBar") filterBar: ElementRef;
+  @ViewChild("filterOverlay") filterOverlay: ElementRef;
+
+  @Input() top = "44px";
+  @Output() onChange: EventEmitter<any> = new EventEmitter();
+
   filterConfigData: any = [];
   currentFilterData: any = {};
   dateObj = new Date();
@@ -26,6 +40,8 @@ export class FilterBarComponent {
   showFilterPanel = false;
 
   constructor(private tools: Tools) {
+    moment.locale("zh-cn");
+
     this.initData();
   }
 
@@ -85,6 +101,70 @@ export class FilterBarComponent {
       value: month + 1 + "",
       field: "month",
     };
+
+    // console.log(this.currentFilterData);
+    setTimeout(() => {
+      this.itemDidSelect();
+    }, 300);
+  }
+
+  closeFilter() {
+    this.showFilterPanel = false;
+  }
+
+  selectFilterItem(item) {
+    this.showFilterPanel = false;
+
+    this.currentFilterData[item.field] = item;
+    if (item.field === "year") {
+      //重置季度和月份
+      this.currentFilterData["quarter"] = this.filterBaseData.quarter[0];
+      this.currentFilterData["month"] = this.monthList[0][0];
+    } else if (item.field === "quarter") {
+      this.currentFilterData["month"] = this.monthList[0][0];
+      this.filterBaseData.month = this.monthList[item.value - 1];
+    }
+    console.log(this.currentFilterData);
+
+    this.itemDidSelect();
+
+    //请求数据
+  }
+
+  itemDidSelect() {
+    // console.log(this.currentFilterData.year);
+    // console.log(this.currentFilterData.quarter);
+    // console.log(this.currentFilterData.month);
+
+    const year = parseInt(this.currentFilterData.year.value);
+    const quarter = parseInt(this.currentFilterData.quarter.value);
+    const month = parseInt(this.currentFilterData.month.value);
+
+    let beginDate, endDate;
+    if (year + quarter + month === -3) {
+      beginDate = "";
+      endDate = "";
+    } else if (quarter + month === -2) {
+      beginDate = moment(`${year}-01-01`).startOf("year").format("YYYY-MM-DD");
+      endDate = moment(`${year}-01-01`).endOf("year").format("YYYY-MM-DD");
+    } else if (month === -1) {
+      // moment().quarter(quarter).startOf("quarter").format("YYYY-MM-DD");
+      beginDate = moment(`${year}-01-01`)
+        .quarter(quarter)
+        .startOf("quarter")
+        .format("YYYY-MM-DD");
+      endDate = moment(`${year}-01-01`)
+        .quarter(quarter)
+        .endOf("quarter")
+        .format("YYYY-MM-DD");
+    } else {
+      // console.log(123);
+      const date = new Date(`${year}-${month}-01`);
+      beginDate = moment(date).startOf("month").format("YYYY-MM-DD");
+      endDate = moment(date).endOf("month").format("YYYY-MM-DD");
+    }
+
+    this.onChange.emit({ beginDate, endDate });
   }
 
   selectFilter(item) {
@@ -95,7 +175,24 @@ export class FilterBarComponent {
     ) {
       this.tools.showToast("请先选择季度");
       return;
+    } else if (
+      selectedObj.field === "quarter" &&
+      this.currentFilterData["year"].value === "-1"
+    ) {
+      this.tools.showToast("请先选择年份");
+      return;
     }
+
+    // document.getElementById('')
+    const filterBarNode = this.filterBar.nativeElement as HTMLDivElement;
+    // console.log(filterBarNode.getBoundingClientRect());
+    const bottom = filterBarNode.getBoundingClientRect().bottom;
+
+    const filterOverlayNode = this.filterOverlay
+      .nativeElement as HTMLDivElement;
+    filterOverlayNode.style.top = bottom + "px";
+    filterOverlayNode.style.height = window.innerHeight - bottom + "px";
+
     this.showFilterPanel = true;
     const data = this.filterBaseData[item.field];
     data.forEach((config) => {

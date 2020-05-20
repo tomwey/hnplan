@@ -99,7 +99,6 @@
   </div>
 
   <div [hidden]="funcType !== 1">
-    <filter-bar></filter-bar>
     <div class="panel total">
       <div class="head">
         <div class="title">
@@ -170,3 +169,5 @@
     ></feedback-timeline>
   </div>
 </ion-content>
+
+<filter-bar *ngIf="funcType === 1"></filter-bar>

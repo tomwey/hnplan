@@ -1,5 +1,18 @@
 filter-bar {
+  //   position: fixed;
+  //   z-index: 99;
+  //   left: 0;
+  //   right: 0;
+  //   top: 44px;
+  //   width: 100%;
   .filter-bar {
+    position: fixed;
+    z-index: 99;
+    left: 0;
+    right: 0;
+    // top: 44px;
+    width: 100%;
+
     display: flex;
     background: #fff;
     padding: 5px 10px;
@@ -36,6 +49,70 @@ filter-bar {
           color: #999;
           margin-top: 2px;
         }
+      }
+    }
+  }
+
+  .filters-overlap {
+    position: fixed;
+    z-index: 100;
+    // top: calc(84px + var(--ion-safe-area-top)) !important;
+    left: 0;
+    width: 100%;
+    // height: calc(
+    //   100% - 84px - var(--ion-safe-area-top) - var(--ion-safe-area-bottom)
+    // ) !important;
+    background: rgba(0, 0, 0, 0.6);
+    .item-inner {
+      //   border-bottom: 0 !important;
+    }
+    .filter-wrap {
+      height: 100%;
+      overflow: auto;
+
+      .name {
+        font-size: 14px;
+      }
+    }
+
+    .date-control-wrap {
+      width: 180px;
+      display: flex;
+      align-items: center;
+      .date-line {
+        display: inline-block;
+        flex: 0 0 10px;
+        line-height: 37px;
+        vertical-align: middle;
+        text-align: center;
+        color: #999;
+      }
+
+      .flex-1 {
+        flex: 1;
+        display: inline-block;
+        font-size: 12px;
+        text-align: center;
+        padding: 10px 0;
+      }
+
+      .custom-date-control {
+        font-size: 12px;
+        flex: 1;
+        padding-left: 8px;
+        padding-right: 8px;
+        .item-cover {
+          width: 0 !important;
+        }
+        &:first-child {
+          text-align: right;
+        }
+        &:last-child {
+          text-align: left;
+          // padding-left: 8px;
+          // padding-right: 8px;
+        }
+        // padding: 10px 5px;
       }
     }
   }

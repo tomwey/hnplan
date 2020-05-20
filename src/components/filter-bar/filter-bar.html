@@ -1,4 +1,4 @@
-<div class="filter-bar">
+<div class="filter-bar" #filterBar [ngStyle]="{ top: top }">
   <div
     class="filter-item"
     tappable
@@ -9,5 +9,33 @@
     <span class="icon-wrap">
       <ion-icon name="md-arrow-dropdown"></ion-icon>
     </span>
+  </div>
+</div>
+
+<div
+  class="filters-overlap"
+  id="filters-overlap"
+  [hidden]="!showFilterPanel"
+  tappable
+  (click)="closeFilter();"
+  #filterOverlay
+>
+  <div class="filter-wrap" [style.opacity]="showFilterPanel ? '1.0' : '0.0'">
+    <ion-list>
+      <ion-item
+        tappable
+        *ngFor="let item of filterConfigData"
+        (click)="selectFilterItem(item);"
+      >
+        <ion-label class="name">{{item.name}}</ion-label>
+        <ion-icon
+          color="primary"
+          name="ios-checkmark"
+          item-right
+          *ngIf="item.value !== '100' && item.selected"
+        >
+        </ion-icon>
+      </ion-item>
+    </ion-list>
   </div>
 </div>
