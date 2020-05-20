@@ -745,6 +745,10 @@ export class HomePage {
     this.barChart.setOption(options);
   }
 
+  dateChanged2(ev) {
+    console.log(ev);
+  }
+
   drawPieGraph() {
     if (!this.pieChart) {
       const pieDiv = document.getElementById("total-graph") as HTMLDivElement;

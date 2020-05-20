@@ -170,4 +170,7 @@
   </div>
 </ion-content>
 
-<filter-bar *ngIf="funcType === 1"></filter-bar>
+<filter-bar
+  *ngIf="funcType === 1"
+  (onChange)="dateChanged2($event)"
+></filter-bar>

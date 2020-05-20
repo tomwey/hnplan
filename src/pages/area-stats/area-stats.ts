@@ -31,6 +31,10 @@ export class AreaStatsPage {
     }, 300);
   }
 
+  dateChanged2(ev) {
+    console.log(ev);
+  }
+
   drawBarGraph() {
     console.log(123);
     if (!this.barChart) {
