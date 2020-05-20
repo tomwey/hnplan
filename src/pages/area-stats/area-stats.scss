@@ -1,10 +1,10 @@
 page-area-stats {
   .areas {
-    background-color: #fff;
+    background-color: color($colors, primary);
     padding: 0 10px;
     white-space: nowrap;
     overflow: auto;
-    border-bottom: 1px solid #f2f2f2;
+    // border-bottom: 1px solid #f2f2f2;
     &::-webkit-scrollbar {
       width: 0;
       height: 0;
@@ -14,11 +14,11 @@ page-area-stats {
       display: inline-block;
       padding: 10px 12px;
       font-size: 14px;
-      color: #888;
-      background-color: #fff;
+      color: #fff;
+      // background-color: #fff;
       &.active {
-        border-bottom: 2px solid color($colors, primary);
-        color: color($colors, primary);
+        border-bottom: 2px solid #fff; //color($colors, primary);
+        // color: color($colors, primary);
       }
     }
   }
@@ -44,7 +44,7 @@ page-area-stats {
   }
   .total {
     margin-bottom: 15px;
-    margin-top: 10px;
+    margin-top: 40px;
   }
 
   .subhead {

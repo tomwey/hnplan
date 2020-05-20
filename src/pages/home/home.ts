@@ -630,16 +630,16 @@ export class HomePage {
       legend: {
         data: ["预警", "完成", "延期", "未完成"], //["预警", "完成", "延期", "未完成", "达成率"],
       },
-      // tooltip: {
-      //   trigger: "axis",
-      //   axisPointer: {
-      //     type: "cross",
-      //     crossStyle: {
-      //       color: "#999",
-      //     },
-      //   },
-      //   formatter: "{a0}: {c0}<br />{a1}: {c1}<br />{a2}: {c2}<br />{a3}: {c3}",
-      // },
+      tooltip: {
+        trigger: "axis",
+        axisPointer: {
+          type: "cross",
+          crossStyle: {
+            color: "#999",
+          },
+        },
+        formatter: "{a0}: {c0}<br />{a1}: {c1}<br />{a2}: {c2}<br />{a3}: {c3}",
+      },
       grid: {
         left: "3%",
         right: "5%",
