@@ -1,0 +1,42 @@
+filter-bar {
+  .filter-bar {
+    display: flex;
+    background: #fff;
+    padding: 5px 10px;
+    border-bottom: 0.5px solid #f7f7f7;
+    height: 40px;
+    box-sizing: border-box;
+    .filter-item {
+      flex: 1;
+      text-align: center;
+      border-radius: 4px;
+      padding: 6px 0;
+      font-size: 12px;
+      font-family: -apple-system, "Helvetica Neue", sans-serif;
+      color: #666;
+      &:last-child {
+        border-right: 0;
+      }
+
+      border-right: 0.5px solid var(--global-color-light-gray);
+
+      .name {
+        display: inline-block;
+        max-width: 75%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: top;
+      }
+      .icon-wrap {
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: top;
+        ion-icon {
+          color: #999;
+          margin-top: 2px;
+        }
+      }
+    }
+  }
+}

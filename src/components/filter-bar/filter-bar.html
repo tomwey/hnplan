@@ -1,0 +1,13 @@
+<div class="filter-bar">
+  <div
+    class="filter-item"
+    tappable
+    (click)="selectFilter(filterItem);"
+    *ngFor="let filterItem of filterItems"
+  >
+    <span class="name">{{filterMenuName(filterItem)}}</span>
+    <span class="icon-wrap">
+      <ion-icon name="md-arrow-dropdown"></ion-icon>
+    </span>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import { PlanItem2Component } from './plan-item2/plan-item2';
 import { FeedbackTimelineComponent } from './feedback-timeline/feedback-timeline';
 import { CustomMonthPickerComponent } from './custom-month-picker/custom-month-picker';
 import { ExpandableComponent } from './expandable/expandable';
+import { FilterBarComponent } from './filter-bar/filter-bar';
 
 @NgModule({
     declarations: [AccordionListComponent,
@@ -18,7 +19,8 @@ import { ExpandableComponent } from './expandable/expandable';
     PlanItem2Component,
     FeedbackTimelineComponent,
     CustomMonthPickerComponent,
-    ExpandableComponent],
+    ExpandableComponent,
+    FilterBarComponent],
     imports: [IonicPageModule.forChild([AccordionListComponent]), PipesModule],
     exports: [AccordionListComponent,
         CallPhoneComponent,
@@ -27,6 +29,7 @@ import { ExpandableComponent } from './expandable/expandable';
     PlanItem2Component,
     FeedbackTimelineComponent,
     CustomMonthPickerComponent,
-    ExpandableComponent]
+    ExpandableComponent,
+    FilterBarComponent]
 })
 export class ComponentsModule { }
