@@ -740,7 +740,7 @@ export class HomePage {
             g_onItemName == params.name
           ) {
             //是双击操作
-            // console.log(params);
+            console.log(params);
             // this.nav.push("AreaStatsPage");
             this.navCtrl.push("AreaStatsPage");
           }
