@@ -40,6 +40,16 @@ export class HomePage {
   funcType: number = 0;
   funcTypes: any = ["个人计划", "全景计划", "反馈记录"];
 
+  planBeginDate = null;
+  planEndDate = null;
+
+  currPlanData = [];
+  currPlanData2 = [];
+
+  statAreas = [];
+  areaStatData = {};
+  areaProjectsData = {};
+
   dataType: any = "0";
   dataTypes: any = [
     {
@@ -404,9 +414,7 @@ export class HomePage {
     // console.log(ev);
     if (this.funcType == 1) {
       // 全景计划
-      this.loadProjectPlans();
-      this.drawPieGraph();
-      this.drawBarGraph();
+      // this.loadProjectPlans();
     } else if (this.funcType == 2) {
       // 反馈记录
       this.loadFeedbackList();
@@ -499,8 +507,8 @@ export class HomePage {
         param4: "0", // 计划级别
         param5: "", // 风险等级
         param6: "", // 完成状态
-        param7: "", // 开始日期
-        param8: "", // 结束日期
+        param7: this.planBeginDate || "", // 开始日期
+        param8: this.planEndDate || "", // 结束日期
         param9: "1", // 个人计划，组织计划
         param10: Utils.getManID(), // man id
         param11: "0",
@@ -508,6 +516,11 @@ export class HomePage {
       .then((data) => {
         // console.log(data);
         if (data && data["data"]) {
+          this.currPlanData = data["data"];
+
+          this.drawPieGraph();
+          // this.drawBarGraph();
+
           // area_id: "1679352"
           // area_name: "成都"
           // area_order: "2"
@@ -517,30 +530,94 @@ export class HomePage {
           // projectovernum: "28"
           // projecttotalnum: "234"
           // projectwarningnum: "0"
-          let arr = data["data"];
-          let temp = [];
-          let temp2 = [];
-          let projectTemp = {};
-          arr.forEach((ele) => {
-            if (temp.indexOf(ele.area_name) === -1) {
-              temp.push(ele.area_name);
-              temp2.push({
-                id: ele.area_id,
-                name: ele.area_name,
-              });
-            }
+          // let arr = data["data"];
+          // let temp = [];
+          // let temp2 = [];
+          // let projectTemp = {};
+          // arr.forEach((ele) => {
+          //   if (temp.indexOf(ele.area_name) === -1) {
+          //     temp.push(ele.area_name);
+          //     temp2.push({
+          //       id: ele.area_id,
+          //       name: ele.area_name,
+          //     });
+          //   }
+          //   let items = projectTemp[ele.area_name] || [];
+          //   items.push(ele);
+          //   projectTemp[ele.area_name] = items;
+          // });
+          // this.areas = temp2;
+          // this.areaProjects = Object.assign({}, projectTemp);
+          // if (JSON.stringify(this.areaProjects) === "{}") {
+          //   this.error = "暂无全景计划";
+          // } else {
+          //   this.error = null;
+          // }
+        }
+      })
+      .catch((error) => {
+        // console.log(error);
+        this.error = error.message || "服务器出错了~";
+      });
+  }
 
-            let items = projectTemp[ele.area_name] || [];
-            items.push(ele);
-            projectTemp[ele.area_name] = items;
-          });
-          this.areas = temp2;
-          this.areaProjects = Object.assign({}, projectTemp);
-          if (JSON.stringify(this.areaProjects) === "{}") {
-            this.error = "暂无全景计划";
-          } else {
-            this.error = null;
-          }
+  loadPlanForLevel(gradeid) {
+    this.api
+      .POST(null, {
+        dotype: "GetData",
+        funname: "获取项目全景计划汇总APP",
+        param1: "", // 关键字搜索
+        param2: "1040", // 计划类型
+        param3: "0", // 项目
+        param4: "0", // 计划级别
+        param5: "", // 风险等级
+        param6: "", // 完成状态
+        param7: this.planBeginDate || "", // 开始日期
+        param8: this.planEndDate || "", // 结束日期
+        param9: "1", // 个人计划，组织计划
+        param10: Utils.getManID(), // man id
+        param11: "0",
+      })
+      .then((data) => {
+        // console.log(data);
+        if (data && data["data"]) {
+          this.currPlanData2 = data["data"];
+
+          // this.drawPieGraph();
+          this.drawBarGraph();
+
+          // area_id: "1679352"
+          // area_name: "成都"
+          // area_order: "2"
+          // project_id: "1291509"
+          // project_name: "珍宝锦城二期"
+          // project_order: "4300"
+          // projectovernum: "28"
+          // projecttotalnum: "234"
+          // projectwarningnum: "0"
+          // let arr = data["data"];
+          // let temp = [];
+          // let temp2 = [];
+          // let projectTemp = {};
+          // arr.forEach((ele) => {
+          //   if (temp.indexOf(ele.area_name) === -1) {
+          //     temp.push(ele.area_name);
+          //     temp2.push({
+          //       id: ele.area_id,
+          //       name: ele.area_name,
+          //     });
+          //   }
+          //   let items = projectTemp[ele.area_name] || [];
+          //   items.push(ele);
+          //   projectTemp[ele.area_name] = items;
+          // });
+          // this.areas = temp2;
+          // this.areaProjects = Object.assign({}, projectTemp);
+          // if (JSON.stringify(this.areaProjects) === "{}") {
+          //   this.error = "暂无全景计划";
+          // } else {
+          //   this.error = null;
+          // }
         }
       })
       .catch((error) => {
@@ -586,6 +663,52 @@ export class HomePage {
   }
 
   drawBarGraph() {
+    this.statAreas = [];
+    const areaStatData = {};
+    const areaProjectsData = {};
+    this.currPlanData2.forEach((plan) => {
+      if (this.statAreas.indexOf(plan.area_name) === -1) {
+        this.statAreas.push(plan.area_name);
+      }
+
+      const stat = areaStatData[plan.area_name] || {
+        total: 0,
+        over: 0,
+        warning: 0,
+        delay: 0,
+        undone: 0,
+      };
+
+      stat.total += parseInt(plan.projecttotalnum);
+      stat.over += parseInt(plan.projectovernum);
+      stat.warning += parseInt(plan.projectwarningnum);
+      stat.delay += parseInt(plan.projectlatenum);
+
+      areaStatData[plan.area_name] = stat;
+
+      const arr = areaProjectsData[plan.area_name] || [];
+      arr.push(plan);
+      areaProjectsData[plan.area_name] = arr;
+    });
+
+    this.areaProjectsData = areaProjectsData;
+    this.areaStatData = areaStatData;
+
+    const warning = [];
+    const over = [];
+    const delay = [];
+    const undone = [];
+
+    const temp = this.statAreas.reverse();
+
+    temp.forEach((area) => {
+      const stat = this.areaStatData[area];
+      warning.push(stat.warning);
+      over.push(stat.over);
+      delay.push(stat.delay);
+      undone.push(stat.total - stat.warning - stat.over - stat.delay);
+    });
+
     if (!this.barChart) {
       const pieDiv = document.getElementById("area-graph") as HTMLDivElement;
       pieDiv.style.width = window.innerWidth - 30 + "px";
@@ -670,7 +793,7 @@ export class HomePage {
         // },
         {
           type: "category",
-          data: ["集团", "成都", "西安", "重庆", "郑州", "宁波", "长沙"],
+          data: temp,
         },
         // {
         //   type: "value",
@@ -688,7 +811,7 @@ export class HomePage {
             show: true,
             position: "insideRight",
           },
-          data: [320, 302, 301, 334, 390, 330, 333],
+          data: warning,
           barWidth: "20",
         },
         {
@@ -699,7 +822,7 @@ export class HomePage {
             show: true,
             position: "insideRight",
           },
-          data: [120, 132, 101, 134, 90, 230, 220],
+          data: over,
           barWidth: "20",
         },
         {
@@ -710,7 +833,7 @@ export class HomePage {
             show: true,
             position: "insideRight",
           },
-          data: [220, 182, 191, 234, 290, 330, 230],
+          data: delay,
           barWidth: "20",
         },
         {
@@ -721,7 +844,7 @@ export class HomePage {
             show: true,
             position: "insideRight",
           },
-          data: [150, 212, 201, 154, 190, 330, 300],
+          data: undone,
           barWidth: "20",
         },
         // {
@@ -746,10 +869,44 @@ export class HomePage {
   }
 
   dateChanged2(ev) {
-    console.log(ev);
+    // console.log(ev);
+    this.planBeginDate = ev.beginDate || "";
+    this.planEndDate = ev.endDate || "";
+    this.loadProjectPlans();
+    this.loadPlanForLevel(null);
   }
 
   drawPieGraph() {
+    // let sum = 0;
+    const stat = {
+      total: 0,
+      over: 0,
+      lateover: 0,
+      warning: 0,
+      undone: 0,
+      delay: 0,
+      doneRate: "",
+    };
+
+    this.currPlanData.forEach((plan) => {
+      // projectovernum: "182"
+      // projecttotalnum: "228"
+      // projectwarningnum: "3"
+      stat.total += parseInt(plan.projecttotalnum);
+      stat.over += parseInt(plan.projectovernum);
+      stat.warning += parseInt(plan.projectwarningnum);
+      stat.delay += parseInt(plan.projectlatenum);
+      stat.lateover += parseInt(plan.projectoverlatenum);
+    });
+
+    stat.undone = stat.total - stat.over - stat.warning - stat.delay;
+    console.log(stat.over - stat.lateover);
+    console.log(stat.total);
+    const doneRate = (
+      (parseFloat((stat.over - stat.lateover).toString()) / stat.total) *
+      100
+    ).toFixed(1);
+
     if (!this.pieChart) {
       const pieDiv = document.getElementById("total-graph") as HTMLDivElement;
       // console.log(pieDiv);
@@ -776,7 +933,7 @@ export class HomePage {
         top: "center",
         left: "center",
         style: {
-          text: "89%\n达成率",
+          text: doneRate + "%\n达成率",
           fill: "#333",
           fontSize: 16,
           fontWeight: "bold",
@@ -793,10 +950,10 @@ export class HomePage {
           // radius: ["45%", "60%"],
           // silent: true,
           data: [
-            { value: 98, name: "预警" },
-            { value: 123, name: "延期" },
-            { value: 980, name: "完成" },
-            { value: 678, name: "未完成" },
+            { value: stat.warning, name: "预警" },
+            { value: stat.delay, name: "延期" },
+            { value: stat.over, name: "完成" },
+            { value: stat.undone, name: "未完成" },
           ],
           itemStyle: {
             normal: {
@@ -823,6 +980,7 @@ export class HomePage {
 
   selectNode(node) {
     this.currNodeID = node.id;
+    this.loadPlanForLevel(null);
   }
 
   currNodeID = 1;

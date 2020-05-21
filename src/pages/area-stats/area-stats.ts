@@ -1,4 +1,4 @@
-import { Component, NgZone } from "@angular/core";
+import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import ECharts from "echarts";
 
@@ -17,11 +17,7 @@ import ECharts from "echarts";
 export class AreaStatsPage {
   pieChart;
   barChart;
-  constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private zone: NgZone
-  ) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ionViewDidLoad() {
     // console.log("ionViewDidLoad AreaStatsPage");
